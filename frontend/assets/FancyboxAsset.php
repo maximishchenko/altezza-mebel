@@ -9,10 +9,10 @@ class FancyboxAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        '/libs/fancybox/fancybox.css',
+        '/css/fancybox.css',
     ];
     public $js = [
-        '/libs/fancybox/fancybox.umd.js',
+        '/js/fancybox.umd.js',
     ];
     public $depends = [
     ];

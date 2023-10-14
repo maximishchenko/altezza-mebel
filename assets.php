@@ -9,6 +9,7 @@ return [
     'deleteSource' => false,
     'bundles' => [
         'frontend\assets\AppAsset',
+        'frontend\assets\FancyboxAsset',
     ],
     'targets' => [
         'all' => [
@@ -22,6 +23,7 @@ return [
             'css' => 'assets/all-{hash}.min.css',
             'depends' => [
                 'frontend\assets\AppAsset',
+                'frontend\assets\FancyboxAsset',
                 'frontend\assets\NpmAsset',
             ],
         ],

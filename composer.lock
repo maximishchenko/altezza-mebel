@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7fa37fe59812b1ae16a02d5ebd01d307",
+    "content-hash": "91d64ca0fac21d6214e9d0a2de673612",
     "packages": [
         {
             "name": "aki/yii2-bot-telegram",
@@ -975,6 +975,18 @@
             "type": "npm-asset",
             "license": [
                 "MIT"
+            ]
+        },
+        {
+            "name": "npm-asset/fancybox",
+            "version": "3.0.1",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/fancybox/-/fancybox-3.0.1.tgz"
+            },
+            "type": "npm-asset",
+            "license": [
+                "CC BY-NC 3.0 (http://creativecommons.org/licenses/by-nc/3.0/)"
             ]
         },
         {
@@ -6514,7 +6526,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": [],
-    "prefer-stable": false,
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": ">=7.4.0"

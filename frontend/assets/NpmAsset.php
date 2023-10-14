@@ -15,6 +15,7 @@ class NpmAsset extends AssetBundle
         'swiper/swiper.min.js',
         'choices.js/public/assets/scripts/choices.min.js',
         'hc-sticky/dist/hc-sticky.js',
+
     ];
     public $depends = [
     ];
