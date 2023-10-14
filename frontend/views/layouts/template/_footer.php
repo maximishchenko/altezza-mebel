@@ -32,7 +32,6 @@
 
     <?php if(Yii::$app->configManager->getItemValue('contactWhatsapp')): ?>
       <a href="<?= Yii::$app->configManager->getItemValue('contactWhatsapp'); ?>">
-        <!-- <img src="/static/svg/whatsapp.svg" alt="whatsapp" class="icon"> -->
         <svg role="image" class="icon">
             <use xlink:href="/static/sprite.svg#whatsapp" />
         </svg>
@@ -40,9 +39,7 @@
     <?php endif; ?>
 
     <?php if(Yii::$app->configManager->getItemValue('contactTelegram')): ?>
-      <a href="<?= Yii::$app->configManager->getItemValue('contactTelegram'); ?>">
-        <!-- <img src="/static/svg/telegram.svg" alt="telegram" class="icon"> -->
-        
+      <a href="<?= Yii::$app->configManager->getItemValue('contactTelegram'); ?>">        
         <svg role="image" class="icon">
             <use xlink:href="/static/sprite.svg#tg" />
         </svg>

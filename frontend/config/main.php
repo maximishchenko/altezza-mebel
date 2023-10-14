@@ -33,6 +33,7 @@ return [
     },
     'components' => [
         'assetManager' => [
+            'bundles' => YII_ENV_PROD ? require(__DIR__.'/assets-prod.php') : [],
             'linkAssets' => true,
             'appendTimestamp' => true,
         ],

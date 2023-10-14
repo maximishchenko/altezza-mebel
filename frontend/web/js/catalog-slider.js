@@ -1,3 +1,5 @@
+
+
 let pickedFilters = document.querySelectorAll(".js-slider-picked-filters");
 
 if (pickedFilters != null) {

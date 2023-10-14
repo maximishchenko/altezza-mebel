@@ -9,18 +9,13 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'libs/swiper/swiper.min.css',
-        'libs/Choices/public/assets/styles/choices.min.css',
-        'libs/SwipeAxisXCarousel/css/SwipeAxisXCarousel.min.css',
-        'libs/graph-modal/dist/graph-modal.min.css',
+        'css/SwipeAxisXCarousel.min.css',
+        'css/graph-modal.min.css',
         'css/style.css',
     ];
     public $js = [
-        'libs/swiper/swiper.min.js',
-        'libs/hc-sticky-2.2.7/dist/hc-sticky.js',
-        'libs/Choices/public/assets/scripts/choices.min.js',
-        'libs/SwipeAxisXCarousel/js/SwipeAxisXCarousel.min.js',
-        'libs/graph-modal/dist/graph-modal.min.js',
+        'js/SwipeAxisXCarousel.js',
+        'js/graph-modal.min.js',
         'js/PhoneMaskInputRus.min.js',
         'js/slider.js',
         'js/sidebar.js',
@@ -31,6 +26,7 @@ class AppAsset extends AssetBundle
         'js/app.js',
     ];
     public $depends = [
+        'frontend\assets\NpmAsset',
     ];
     public $jsOptions = [
         'position' => \yii\web\View::POS_HEAD,

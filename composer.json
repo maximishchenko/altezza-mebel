@@ -13,6 +13,7 @@
         "source": "https://github.com/yiisoft/yii2"
     },
     "minimum-stability": "stable",
+    "prefer-stable" : true,
     "require": {
         "php": ">=7.4.0",
         "yiisoft/yii2": "~2.0.45",
@@ -22,7 +23,10 @@
         "yiisoft/yii2-queue": "^2.3",
         "vova07/yii2-imperavi-widget": "^2.0",
         "yii2tech/config": "^1.0",
-        "aki/yii2-bot-telegram": "^3.1"
+        "aki/yii2-bot-telegram": "^3.1",
+        "npm-asset/swiper": "*",
+        "npm-asset/hc-sticky": "*",
+        "npm-asset/choices.js": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
@@ -35,8 +39,7 @@
         "codeception/module-yii2": "^1.1",
         "codeception/module-filesystem": "^3.0 || ^2.0 || ^1.1",
         "codeception/verify": "^3.0 || ^2.2",
-        "symfony/browser-kit": "^6.0 || >=2.7 <=4.2.4",
-        "elisdn/yii2-gii-fixture-generator": "^1.1"
+        "symfony/browser-kit": "^6.0 || >=2.7 <=4.2.4"
     },
     "autoload-dev": {
         "psr-4": {
