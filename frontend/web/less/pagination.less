@@ -1,0 +1,30 @@
+.pagination-nav {
+  display: flex;
+  list-style: none;
+  margin-top: 30px;
+  
+  &__item {
+    width: 40px;
+    line-height: 40px;
+    transition: .5s;
+    text-align: center;
+
+    & > a {
+      display: block;
+    }
+  }
+  
+  &__prev > a::after {
+    content: 	'\25C4';
+  }
+  
+  &__next > a::after {
+    content: 	'\25BA';
+  }
+  
+  &__active {
+    box-sizing: border-box;
+    border: 1px solid black;
+  }
+}
+  

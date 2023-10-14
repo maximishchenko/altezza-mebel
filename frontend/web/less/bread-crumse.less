@@ -1,0 +1,20 @@
+.bread-crumse {
+    margin: 20px var(--padding-x-defult);
+  
+  &__list {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  
+    &__item {
+      font-size: 12px;
+      display: flex;
+      gap: inherit;
+    
+      &:not(:last-child):after {
+        content: '/';
+      }
+    }
+  }
+}

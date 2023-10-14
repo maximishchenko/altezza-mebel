@@ -1,0 +1,58 @@
+.about-us {
+      
+  &__item {
+    height: fit-content;
+
+    &__title{
+      position: relative;
+      padding: 10px 20px;
+      margin: 10px 20px;
+      background-color: var(--main-bg-color-dark);
+      color: white;
+      width: fit-content;
+      height: auto;
+      text-transform: uppercase;
+
+      &-wraper{
+        width: 100%;
+        height: calc(100vh - 80px);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        & > .parallax {
+          opacity: .75;
+          z-index: -1;
+        }
+      }
+    }
+
+    &__content {
+      width: 100%;
+      padding: 80px var(--padding-x-defult);
+      @media screen and (max-width: @breakpoint-medium) {
+        padding: 80px 20px;
+      }
+
+      &__title {
+        margin: 0 auto 30px;
+        width: fit-content;
+        text-transform: uppercase;
+      }
+
+      & > .button {
+        display: block;
+        margin: 30px auto 0;
+      }
+    }
+
+    &__to-content {
+      & > img {
+        width: 40px;
+        height: 40px;
+      }
+    }
+  }
+}

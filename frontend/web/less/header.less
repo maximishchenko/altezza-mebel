@@ -1,0 +1,24 @@
+.header {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  &__logo {
+    margin: 10px;
+  }
+  
+  &__contacts {
+    margin-right: 10px;
+  }
+
+  @media screen and (max-width: @breakpoint-medium) {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 10;
+  }
+}
+

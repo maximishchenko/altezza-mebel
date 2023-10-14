@@ -1,0 +1,39 @@
+.kitchen-characteristics {
+  list-style: none;
+  margin: 5px 20px;
+    
+  &__item {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5em;
+    justify-content: space-between;
+    line-height: 2em;
+    font-size: 14px;
+    text-transform: capitalize;
+    position: relative;
+  
+    &::after {
+      content: "";
+      display: block;
+      height: 1px;
+      width: 100%;
+      border-bottom: 1px dashed #a8aaac;
+      position: absolute;
+      bottom: 0;
+    }
+    
+    &__name {
+      /* width: 190px; */
+      width: fit-content; 
+      font-weight: 600;
+      display: flex;
+      align-items: start;
+      z-index: 1;
+    }
+    
+    &__value {
+      flex: 1 1;
+      z-index: 1;
+    }
+  }
+}

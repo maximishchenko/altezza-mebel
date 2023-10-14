@@ -1,0 +1,23 @@
+.our-story {
+  padding: var(--padding-y-defult) var(--padding-x-defult);
+  height: 555px;
+  display: flex;
+  
+  &__img {
+    width: 650px;
+    height: 555px;
+    margin-right: 70px;
+  }
+  
+  &__text {
+    overflow-y: auto;
+  
+    &__title {
+      font-size: 35px;
+      margin: 30px 0;
+    }
+  }
+  @media screen and (max-width: @breakpoint-small) {
+    display: none;
+  }
+}

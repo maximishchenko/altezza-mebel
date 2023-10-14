@@ -1,0 +1,109 @@
+.faq {
+  background-color: var(--main-bg-color-dark);
+  padding: var(--padding-y-defult) var(--padding-x-defult);
+  
+  &__title {
+    font-size: 54px;
+    color: white;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+
+  }
+  
+  &__lists-wraper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    gap: 1em;
+  }
+  
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 50%;
+    max-width: 750px;
+  
+    &__item {
+      list-style: none;
+
+      ul{
+        padding-left: 1em;
+      }
+
+      & > details {
+        padding: 0 1em;
+        position: relative;
+        border-radius: 6px;
+        background-color: #ECEFF1;
+        color: #263238;
+        transition: all 1.35s ease-in-out;
+        overflow: hidden;
+      }
+
+      & > details[open] {
+        background-color: #FFF;
+        // max-height: 600px;
+        // transition: all 1.35s ease-in-out;
+      }
+
+      & > details[open]::before {
+        opacity: .6;
+      }
+
+      &__question {
+        padding: 1em 2em 1em 0;
+        display: block;
+        position: relative;
+        font-size: 1.33em;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      &__question::before,
+      &__question::after {
+        width: .75em;
+        height: 2px;
+        position: absolute;
+        top: 50%;
+        right: 0;
+        content: '';
+        background-color: currentColor;
+        text-align: right;
+        transform: translateY(-50%);
+        transition: transform .2s ease-in-out;
+      }
+
+      &__question::after {
+        transform: translateY(-50%) rotate(90deg);
+      }
+      & > details[open] &__question::after {
+        transform: translateY(-50%) rotate(180deg);
+      }
+
+      &__question::-webkit-details-marker {
+        display: none;
+      }
+
+      &__answer {
+        padding-bottom: 1em;
+      }
+    }
+  }
+
+  @media screen and (max-width: @breakpoint-small) {
+    &__lists-wraper {
+      flex-direction: column;
+    }
+
+    &__list {
+      width: 100%;
+    }
+  }
+
+  @media screen and (max-width: 550px) {
+    &__title {
+      font-size: 40px;
+    }
+  }
+}
