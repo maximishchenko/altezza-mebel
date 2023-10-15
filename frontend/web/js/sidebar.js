@@ -34,12 +34,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 const toggle_sidebar_button = document.querySelector(".catalog-filter-button");
-toggle_sidebar_button.addEventListener("click", () => {
-  toggle_sidebar(sidebar_element, toggle_sidebar_button);
-});
+  if (toggle_sidebar_button != null) {
+  toggle_sidebar_button.addEventListener("click", () => {
+    toggle_sidebar(sidebar_element, toggle_sidebar_button);
+  });
 
-function toggle_sidebar (sidebar, button) {
-  sidebar.classList.toggle("active");
-  button.classList.toggle("active");
+  function toggle_sidebar (sidebar, button) {
+    sidebar.classList.toggle("active");
+    button.classList.toggle("active");
 
+  }
 }
