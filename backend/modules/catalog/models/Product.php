@@ -11,6 +11,7 @@ use yii\behaviors\BlameableBehavior;
 use yii\behaviors\SluggableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\web\UploadedFile;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "{{%product}}".
@@ -31,7 +32,7 @@ use yii\web\UploadedFile;
  * @property int|null $created_by
  * @property int|null $updated_by
  */
-class Product extends \yii\db\ActiveRecord
+class Product extends ActiveRecord
 {
     use fileTrait;
 
