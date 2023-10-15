@@ -77,6 +77,7 @@ return [
                 'page-not-found' => 'error/page-not-found',
                 'index' => 'site/index',
                 'policy' => 'site/policy',
+                'offline' => 'site/offline',
                 'catalog' => 'catalog/default/index',
                 'catalog/<slug>' => 'catalog/default/view',
                 'feedback' => 'site/feedback',

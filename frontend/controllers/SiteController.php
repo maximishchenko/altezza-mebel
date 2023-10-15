@@ -71,4 +71,10 @@ class SiteController extends BaseController
         }
         exit(1);
     }
+    
+    public function actionOffline($name, $message)
+    {
+        $this->layout = false;
+        return $this->render('error', ['name' => $name, 'message' => $message]);
+    }
 }
