@@ -54,25 +54,37 @@ class Product extends backendProduct
 
     public function getFormFilter()
     {
-        $formIds = self::find()->active()->asArray()->all();
+        $formIds = self::getDb()->cache(function() {
+            return self::find()->active()->asArray()->all();
+        });
         $formIdsArray = ArrayHelper::getColumn($formIds, 'form_id');
-        $forms = Property::find()->where(['id' => array_unique($formIdsArray)])->active()->all();
+        $forms = Property::getDb()->cache(function() use ($formIdsArray) {
+            return Property::find()->where(['id' => array_unique($formIdsArray)])->active()->all();
+        });
         return $forms;
     }
 
     public function getStyleFilter()
     {
-        $styleIds = self::find()->active()->asArray()->all();
+        $styleIds = self::getDb()->cache(function() {
+            return self::find()->active()->asArray()->all();
+        });
         $styleIdsArray = ArrayHelper::getColumn($styleIds, 'style_id');
-        $styles = Property::find()->where(['id' => array_unique($styleIdsArray)])->active()->all();
+        $styles = Property::getDb()->cache(function() use ($styleIdsArray) {
+            Property::find()->where(['id' => array_unique($styleIdsArray)])->active()->all();
+        });
         return $styles; 
     }
 
     public function getCoatingFilter()
     {
-        $fasadCoatingsIds = ProductProperty::find()->onlyFasadCoating()->asArray()->all();
+        $fasadCoatingsIds = ProductProperty::getDb()->cache(function() {
+            return ProductProperty::find()->onlyFasadCoating()->asArray()->all();
+        });
         $fasadCoatingsArray = ArrayHelper::getColumn($fasadCoatingsIds, 'property_id');
-        $coatings = Property::find()->where(['id' => array_unique($fasadCoatingsArray)])->active()->all();
+        $coatings = Property::getDb()->cache(function() use ($fasadCoatingsArray) {
+            return Property::find()->where(['id' => array_unique($fasadCoatingsArray)])->active()->all();
+        });
         return $coatings;
     }
 
@@ -84,7 +96,7 @@ class Product extends backendProduct
     public function getFasadMaterialsStringWithCount(): ?string
     {
         $fasadMaterialsString = $this->getFasadMaterialsString();
-        return $this->getSringWithCountElements($fasadMaterialsString);
+        return $this->getStringWithCountElements($fasadMaterialsString);
     }
 
     public function getFasadCoatingString(): ?string
@@ -95,7 +107,7 @@ class Product extends backendProduct
     public function getFasadCoatingStringWithCount(): ?string
     {
         $fasadCoatingsString = $this->getFasadCoatingString();
-        return $this->getSringWithCountElements($fasadCoatingsString);
+        return $this->getStringWithCountElements($fasadCoatingsString);
     }
 
     public function getDecorativeElementsString(): ?string
@@ -106,7 +118,7 @@ class Product extends backendProduct
     public function getDecorativeElementsStringWithCount(): ?string
     {
         $decorativeElementsString = $this->getDecorativeElementsString();
-        return $this->getSringWithCountElements($decorativeElementsString);
+        return $this->getStringWithCountElements($decorativeElementsString);
     }
 
     public function getBodyMaterialsString(): ?string
@@ -146,7 +158,42 @@ class Product extends backendProduct
                 ->onCondition([ProductElement::tableName().'.status' => Status::STATUS_ACTIVE]);
     }
 
-    private function getSringWithCountElements(string $elementsString): ?string
+    public function getType()
+    {
+        return self::getDb()->cache(function() {
+            return parent::getType();
+        });
+    }
+    
+    public function getForm()
+    {
+        return self::getDb()->cache(function() {
+            return parent::getForm();
+        });
+    }
+    
+    public function getStyle()
+    {
+        return self::getDb()->cache(function() {
+            return parent::getStyle();
+        });
+    }
+    
+    public function getAppliance()
+    {
+        return self::getDb()->cache(function() {
+            return parent::getAppliance();
+        });
+    }
+
+    public function getImages()
+    {
+        return self::getDb()->cache(function() {
+            return parent::getImages();
+        });
+    }
+
+    private function getStringWithCountElements(string $elementsString): ?string
     {
         $elementsArray = explode(", ", $elementsString);
         if (count($elementsArray) == 0) {

@@ -24,15 +24,21 @@ class Script extends backendScript
         if (in_array($position, array_keys(self::getScriptPositionsArray()))) {
             switch($position) {
                 case self::BEFORE_END_HEAD:
-                    $scripts = self::find()->beforeEndHead()->active()->all();
+                    $scripts = self::getDb()->cache(function() {
+                        return self::find()->beforeEndHead()->active()->all();
+                    });
                     // $position = View::POS_HEAD;
                     break;
                 case self::AFTER_BEGIN_BODY:
-                    $scripts = self::find()->afterBeginBody()->active()->all();
+                    $scripts = self::getDb()->cache(function() {
+                        return self::find()->afterBeginBody()->active()->all();
+                    });
                     // $position = View::POS_BEGIN;
                     break;
                 case self::BEFORE_END_BODY:
-                    $scripts = self::find()->beforeEndBody()->active()->all();
+                    $scripts = self::getDb()->cache(function() {
+                        return self::find()->beforeEndBody()->active()->all();
+                    });
                     // $position = View::POS_END;
                     break;
             }

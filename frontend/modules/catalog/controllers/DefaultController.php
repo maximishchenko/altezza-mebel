@@ -31,7 +31,9 @@ class DefaultController extends Controller
         if ($visisted->isNewVisit($product->id)) {
             $product->updateCounters(['view_count' => 1]);
         }
-        $popularProducts = Product::find()->active()->orderPopular()->limit(10)->all();
+        $popularProducts = Product::getDb()->cache(function() {
+            return Product::find()->active()->orderPopular()->limit(10)->all();
+        });
 
         return $this->render('view', [
             'product' => $product,
@@ -42,7 +44,10 @@ class DefaultController extends Controller
 
     protected function findModelBySlug($slug)
     {
-        if (($model = Product::findOne(['slug' => $slug])) !== null) {
+        $model = Product::getDb()->cache(function() use ($slug) {
+            return Product::findOne(['slug' => $slug]);
+        });
+        if ($model !== null) {
             return $model;
         }
 

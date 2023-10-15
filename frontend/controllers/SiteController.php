@@ -23,10 +23,19 @@ class SiteController extends BaseController
     
     public function actionIndex()
     {
-        $advantages = Advantage::find()->active()->ordered()->all();
-        $sliders = Slider::find()->active()->ordered()->all();
-        $about = About::find()->active()->ordered()->one();
-        $newProducts = Product::find()->active()->onlyNew()->limit(Product::NEW_LIMIT)->all();
+        $advantages = Advantage::getDb()->cache(function() {
+            return Advantage::find()->active()->ordered()->all();
+        });
+        $sliders = Slider::getDb()->cache(function() {
+            return Slider::find()->active()->ordered()->all();
+        });
+        $about = About::getDb()->cache(function() {
+            return About::find()->active()->ordered()->one();
+        });
+        $newProducts = Product::getDb()->cache(function() {
+            return Product::find()->active()->onlyNew()->limit(Product::NEW_LIMIT)->all();
+        });
+        
         return $this->render('index', [
             'advantages' => $advantages,
             'sliders' => $sliders,
@@ -42,7 +51,9 @@ class SiteController extends BaseController
     
     public function actionAbout()
     {
-        $abouts = About::find()->active()->ordered()->all();
+        $abouts = About::getDb()->cache(function() {
+            return About::find()->active()->ordered()->all();
+        });
         return $this->render('about', [
             'abouts' => $abouts,
         ]);

@@ -12,6 +12,7 @@ return [
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8',
+            'enableSchemaCache' => false,
         ],
         'mailer' => [
             'class' => \yii\symfonymailer\Mailer::class,

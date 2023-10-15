@@ -15,7 +15,7 @@ use Yii;
 use yii\web\Response;
 use yii2tech\sitemap\File;
 
-
+// TODO crete sitemap rules
 class SitemapController extends BaseController
 {
     public function actionIndex()
@@ -46,55 +46,55 @@ class SitemapController extends BaseController
             $sitemap->writeUrl(['catalog/product-type'], ['priority' => '0.9']);
             // $sitemap->writeUrl(['catalog/decor'], ['priority' => '0.9']);
 
-            $offers = SpecialOffer::find()->where([
-                'status' => Core::STATUS_ACTIVE
-            ])->all();
-            foreach ($offers as $offer) {
-                $sitemap->writeUrl(['special-offers/' . $offer->slug], ['priority' => '0.9']);
-            }
+            // $offers = SpecialOffer::find()->where([
+            //     'status' => Core::STATUS_ACTIVE
+            // ])->all();
+            // foreach ($offers as $offer) {
+            //     $sitemap->writeUrl(['special-offers/' . $offer->slug], ['priority' => '0.9']);
+            // }
 
 
-            $solutions = Solution::find()->where([
-                        'status' => Core::STATUS_ACTIVE
-                    ])->all();
-            foreach ($solutions as $solution) {
-                $sitemap->writeUrl(['catalog/solution/' . $solution->slug], ['priority' => '0.9']);
-            }
+            // $solutions = Solution::find()->where([
+            //             'status' => Core::STATUS_ACTIVE
+            //         ])->all();
+            // foreach ($solutions as $solution) {
+            //     $sitemap->writeUrl(['catalog/solution/' . $solution->slug], ['priority' => '0.9']);
+            // }
 
-            $product_types = ProductType::find()->where([
-                    'status' => Core::STATUS_ACTIVE,
-                    'product_type' => Product::TYPE_PRODUCT_TYPE
-                ])->with('category')->all();
-            foreach ($product_types as $product_type) {
-                $sitemap->writeUrl(['catalog/product-type/' . $product_type->category->slug], ['priority' => '0.9']);
-                $sitemap->writeUrl(['catalog/product-type/' . $product_type->category->slug . "/" . $product_type->slug], ['priority' => '0.9']);
-            }
+            // $product_types = ProductType::find()->where([
+            //         'status' => Core::STATUS_ACTIVE,
+            //         'product_type' => Product::TYPE_PRODUCT_TYPE
+            //     ])->with('category')->all();
+            // foreach ($product_types as $product_type) {
+            //     $sitemap->writeUrl(['catalog/product-type/' . $product_type->category->slug], ['priority' => '0.9']);
+            //     $sitemap->writeUrl(['catalog/product-type/' . $product_type->category->slug . "/" . $product_type->slug], ['priority' => '0.9']);
+            // }
 
-            $millings = Milling::find()->where([
-                    'status' => Core::STATUS_ACTIVE,
-                    'product_type' => Product::TYPE_MILLING
-                ])->with('category')->all();
-            foreach ($millings as $milling) {
-                $sitemap->writeUrl(['catalog/milling/' . $milling->category->slug], ['priority' => '0.9']);
-                $sitemap->writeUrl(['catalog/milling/' . $milling->category->slug . "/" . $milling->slug], ['priority' => '0.9']);
-            }
-            $coatings = Coating::find()->where([
-                    'status' => Core::STATUS_ACTIVE,
-                    'product_type' => Product::TYPE_COATING
-                ])->with('category')->all();
-            foreach ($coatings as $coating) {
-                $sitemap->writeUrl(['catalog/coating/' . $coating->category->slug], ['priority' => '0.9']);
-                $sitemap->writeUrl(['catalog/coating/' . $coating->category->slug . "/" . $coating->slug], ['priority' => '0.9']);
-            }
+            // $millings = Milling::find()->where([
+            //         'status' => Core::STATUS_ACTIVE,
+            //         'product_type' => Product::TYPE_MILLING
+            //     ])->with('category')->all();
+            // foreach ($millings as $milling) {
+            //     $sitemap->writeUrl(['catalog/milling/' . $milling->category->slug], ['priority' => '0.9']);
+            //     $sitemap->writeUrl(['catalog/milling/' . $milling->category->slug . "/" . $milling->slug], ['priority' => '0.9']);
+            // }
+            // $coatings = Coating::find()->where([
+            //         'status' => Core::STATUS_ACTIVE,
+            //         'product_type' => Product::TYPE_COATING
+            //     ])->with('category')->all();
+            // foreach ($coatings as $coating) {
+            //     $sitemap->writeUrl(['catalog/coating/' . $coating->category->slug], ['priority' => '0.9']);
+            //     $sitemap->writeUrl(['catalog/coating/' . $coating->category->slug . "/" . $coating->slug], ['priority' => '0.9']);
+            // }
             
-            $colors = CoatingColor::find()->where([
-                    'status' => Core::STATUS_ACTIVE,
-                    'product_type' => Product::TYPE_COLOR
-                ])->with('category')->all();
-            foreach ($colors as $color) {
-                $sitemap->writeUrl(['catalog/color/' . $color->category->slug], ['priority' => '0.9']);
-                $sitemap->writeUrl(['catalog/color/' . $color->category->slug . "/" . $color->slug], ['priority' => '0.9']);
-            }
+            // $colors = CoatingColor::find()->where([
+            //         'status' => Core::STATUS_ACTIVE,
+            //         'product_type' => Product::TYPE_COLOR
+            //     ])->with('category')->all();
+            // foreach ($colors as $color) {
+            //     $sitemap->writeUrl(['catalog/color/' . $color->category->slug], ['priority' => '0.9']);
+            //     $sitemap->writeUrl(['catalog/color/' . $color->category->slug . "/" . $color->slug], ['priority' => '0.9']);
+            // }
             
             // get generated content:
             $content = $sitemap->getContent();

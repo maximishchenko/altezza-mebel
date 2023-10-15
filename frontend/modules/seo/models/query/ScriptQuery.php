@@ -4,13 +4,9 @@ namespace frontend\modules\seo\models\query;
 
 use common\models\Status;
 use frontend\modules\seo\models\Script;
+use backend\modules\seo\models\query\ScriptQuery as backendScriptQuery;
 
-/**
- * This is the ActiveQuery class for [[Script]].
- *
- * @see Script
- */
-class ScriptQuery extends \yii\db\ActiveQuery
+class ScriptQuery extends backendScriptQuery
 {
     public function active()
     {
@@ -30,23 +26,5 @@ class ScriptQuery extends \yii\db\ActiveQuery
     public function beforeEndBody()
     {
         return $this->andWhere([Script::tableName() . '.position' => Script::BEFORE_END_BODY]);
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return Product[]|array
-     */
-    public function all($db = null)
-    {
-        return parent::all($db);
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return Product|array|null
-     */
-    public function one($db = null)
-    {
-        return parent::one($db);
     }
 }

@@ -68,7 +68,7 @@ use yii\widgets\ActiveForm;
     <?php if($searchModel->coatingFilter): ?>
     <div class="catalog-filter__section">
         <div class="catalog-filter__section__title">
-          Покрытие фасада
+          <?= Yii::t('app', 'Fasad coating'); ?>
         </div>
         <?php foreach($searchModel->coatingFilter as $coating): ?>
         <div class="catalog-filter__section__item">

@@ -41,8 +41,9 @@ class ProductSearch extends Product
     
     public function search($params)
     {
-        $query = Product::find()->active();
-        $query->joinWith(['style', 'form', 'productProperty'])->distinct();
+        $query = Product::getDb()->cache(function() {
+            return Product::find()->active()->joinWith(['style', 'form', 'productProperty'])->distinct();
+        });
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

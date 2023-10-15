@@ -19,13 +19,15 @@ class Redirect extends backendRedirect
      */
     public static function getRedirect()
     {
-        $redirect = self::find()
-            ->select(['source_url', 'destination_url', 'redirect_code', 'status'])
-            ->where([
-                'status' => Status::STATUS_ACTIVE,
-                'source_url' => parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)
-            ])
-            ->one();
+        $redirect = self::getDb()->cache(function() {
+            return self::find()
+                ->select(['source_url', 'destination_url', 'redirect_code', 'status'])
+                ->where([
+                    'status' => Status::STATUS_ACTIVE,
+                    'source_url' => parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)
+                ])
+                ->one();
+        });
             
         if (isset($redirect) && !empty($redirect)) {
             $headers = Yii::$app->getResponse()->getHeaders();

@@ -36,14 +36,16 @@ class BaseController extends Controller
      */
     protected function setUrlRedirect()
     {
-        $redirect = Redirect::find()
-            ->select(['source_url', 'destination_url', 'redirect_code', 'status'])
-            ->where([
-                'status' => Status::STATUS_ACTIVE,
-                'source_url' => parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)
-            ])
-            ->one();
-            
+        $redirect = Redirect::getDb()->cache(function() {
+            return Redirect::find()
+                ->select(['source_url', 'destination_url', 'redirect_code', 'status'])
+                ->where([
+                    'status' => Status::STATUS_ACTIVE,
+                    'source_url' => parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)
+                ])
+                ->one();
+        });
+        
         if (isset($redirect) && !empty($redirect)) {
             $headers = Yii::$app->getResponse()->getHeaders();
             $headers->set('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0');

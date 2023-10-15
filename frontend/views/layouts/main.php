@@ -65,7 +65,10 @@ AppAsset::register($this);
 
         <?= $content ?>
 
-        <?php $questions = Question::find()->active()->ordered()->all(); ?>
+        <?php $questions = Question::getDb()->cache(function() {
+                return Question::find()->active()->ordered()->all();
+            }); ?>
+            
         <?= $this->render('//layouts/include/_faq', ['questions' => $questions]); ?>
 
         <?php $lead = new Lead(); ?>

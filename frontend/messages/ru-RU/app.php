@@ -65,4 +65,8 @@ return [
     'Close modal' => 'Закрыть модальное окно',
     'Please submit form for callback' => 'Заполните форму и мы с вами свяжемся',
     'Send Callback' => 'Оставить заявку',
+    'Fasad coating' => 'Покрытие фасада',
+    'By popularity' => 'по популярности',
+    'By form' => 'по форме изделия',
+    'By style' => 'по стилю',
 ];
