@@ -2,14 +2,22 @@
 ```
 git clone https://github.com/maximishchenko/altezza-mebel altezza-mebel
 ```
+
+#### Установка пакетов
+```
+composer install
+```
+
 #### Инициализация окружения
 ```
 php init
 ```
 
-#### Установка пакетов
+#### Указать параметры подключения к БД и отправки сообщений (Email и Telegram) в файлах:
+
 ```
-composer install
+common/config/common-local.php
+common/config/params-local.php
 ```
 
 #### Применение миграций базы данных
