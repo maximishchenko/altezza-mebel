@@ -55,20 +55,20 @@ const slider_product_card_main = new Swiper(".js-slider-product-card-main", {
   }
 });
 
-const slider_product_card_main__items = document.querySelectorAll(".product-card__slider__main__item")
-slider_product_card_main__items.forEach(item => {
-  item.setAttribute("data-fancybox", "product-card")
-  item.setAttribute("data-src", "/static/ourStoryImg.webp")
-});
+// const slider_product_card_main__items = document.querySelectorAll(".product-card__slider__main__item")
+// slider_product_card_main__items.forEach(item => {
+  // item.setAttribute("data-fancybox", "product-card")
+  // item.setAttribute("data-src", "/static/ourStoryImg.webp")
+// });
 
-if (document.querySelector('[data-fancybox="product-card"]')) {
+if (document.querySelector('[data-fancybox="product-card"]') != null) {
   Fancybox.bind('[data-fancybox="product-card"]', {
     Thumbs: {
       type: "classic",
     },
     on: {
       "Carousel.change": (fancybox) => {
-        console.log(fancybox.getSlide().index)
+        // console.log(fancybox.getSlide().index)
         slider_product_card_main.slideTo(fancybox.getSlide().index)
       }
     }

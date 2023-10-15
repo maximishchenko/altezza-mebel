@@ -15,13 +15,13 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="swiper-wrapper">
                 <?php if($product->thumb): ?>
                     <div class="swiper-slide product-card__slider__main__item">
-                        <?= Html::img($product->thumb, ['alt' => $product->name])?>
+                        <?= Html::img($product->thumb, ['alt' => $product->name, 'data-fancybox' => 'product-card', 'data-src' => $product->thumb])?>
                     </div>
                 <?php endif; ?>
                 <?php if ($product->images): ?>
                     <?php foreach($product->images as $image): ?>
                         <div class="swiper-slide product-card__slider__main__item">
-                            <?= Html::img($image->thumb, ['alt' => $product->name]); ?>
+                            <?= Html::img($image->thumb, ['alt' => $product->name, 'data-fancybox' => 'product-card', 'data-src' => $image->thumb]); ?>
                         </div>
                     <?php endforeach; ?>
                 <?php endif; ?>

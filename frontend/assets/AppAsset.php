@@ -27,6 +27,7 @@ class AppAsset extends AssetBundle
     ];
     public $depends = [
         'frontend\assets\NpmAsset',
+        'frontend\assets\FancyboxAsset',
     ];
     public $jsOptions = [
         'position' => \yii\web\View::POS_HEAD,
