@@ -31,8 +31,9 @@ use yii\helpers\Html;
 
     <?php if(Yii::$app->configManager->getItemValue('contactPhone')): ?>
     <div class="contacts__phone">
-      <!-- TODO ссылка скрывает текст -->
-      <?= Yii::$app->configManager->getItemValue('contactPhone'); ?>
+      <a href="tel:/<?= Yii::$app->configManager->getItemValue('contactPhone'); ?>">
+        <?= Yii::$app->configManager->getItemValue('contactPhone'); ?>
+      </a>
     </div>
     <?php endif; ?>
 

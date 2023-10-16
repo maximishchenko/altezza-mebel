@@ -12,7 +12,6 @@
     </div>
     <?php endforeach; ?>
   </div>
-  <!-- TODO офопмление стрелок слайдера, пагинатора, автозапуск -->
   <!-- If we need pagination -->
   <div class="swiper-pagination"></div>
 

@@ -151,7 +151,10 @@
 }
 .swiper-button-next,
 .swiper-button-prev {
-  color: black;
+  color: var(--main-bg-color-dark);
+}
+.swiper-pagination-bullet-active {
+  background: var(--main-bg-color-dark);
 }
 .contacts {
   display: flex;

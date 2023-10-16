@@ -3,14 +3,6 @@ const relative_selector = ".catalog";
 const sidebar_element  = document.querySelector(sidebar_selector);
 const relative_element = document.querySelector(relative_selector);
 
-// let floatSidebarOptions = {
-//   sidebar,
-//   relative,
-//   topSpacing: 100,
-//   bottomSpacing: 20,
-// };
-
-// TODO исправить баг отображения при высоте окна в диапозоне от высоты sidebar до высоты sidebar + top
 let hcStickyOptions = {
   stickTo: relative_selector,
   followScroll: true,

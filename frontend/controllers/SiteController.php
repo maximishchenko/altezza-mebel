@@ -26,9 +26,10 @@ class SiteController extends BaseController
         $advantages = Advantage::getDb()->cache(function() {
             return Advantage::find()->active()->ordered()->all();
         });
-        $sliders = Slider::getDb()->cache(function() {
-            return Slider::find()->active()->ordered()->all();
-        });
+        // $sliders = Slider::getDb()->cache(function() {
+        //     return Slider::find()->active()->ordered()->all();
+        // });
+        $sliders = Slider::find()->active()->ordered()->all();
         $about = About::getDb()->cache(function() {
             return About::find()->active()->ordered()->one();
         });

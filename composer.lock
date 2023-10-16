@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "91d64ca0fac21d6214e9d0a2de673612",
+    "content-hash": "1a7aa1642b13aff2e60014be5fba3d09",
     "packages": [
         {
             "name": "aki/yii2-bot-telegram",
@@ -975,18 +975,6 @@
             "type": "npm-asset",
             "license": [
                 "MIT"
-            ]
-        },
-        {
-            "name": "npm-asset/fancybox",
-            "version": "3.0.1",
-            "dist": {
-                "type": "tar",
-                "url": "https://registry.npmjs.org/fancybox/-/fancybox-3.0.1.tgz"
-            },
-            "type": "npm-asset",
-            "license": [
-                "CC BY-NC 3.0 (http://creativecommons.org/licenses/by-nc/3.0/)"
             ]
         },
         {
@@ -2504,6 +2492,62 @@
             },
             "abandoned": true,
             "time": "2019-01-24T15:18:50+00:00"
+        },
+        {
+            "name": "yii2tech/sitemap",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yii2tech/sitemap.git",
+                "reference": "d81e719eccaf06892ee813c6cf242c35ec2c1907"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yii2tech/sitemap/zipball/d81e719eccaf06892ee813c6cf242c35ec2c1907",
+                "reference": "d81e719eccaf06892ee813c6cf242c35ec2c1907",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.0",
+                "yiisoft/yii2": "~2.0.13"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.0|^6.0"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "yii2tech\\sitemap\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Paul Klimov",
+                    "email": "klimov.paul@gmail.com"
+                }
+            ],
+            "description": "Provides support for site map creation",
+            "keywords": [
+                "Sitemap",
+                "yii2"
+            ],
+            "support": {
+                "forum": "http://www.yiiframework.com/forum/",
+                "issues": "https://github.com/yii2tech/sitemap/issues",
+                "source": "https://github.com/yii2tech/sitemap",
+                "wiki": "https://github.com/yii2tech/sitemap/wiki"
+            },
+            "abandoned": true,
+            "time": "2019-10-17T11:03:50+00:00"
         },
         {
             "name": "yiisoft/yii2",

@@ -8,11 +8,11 @@ class NpmAsset extends AssetBundle
 {
     public $sourcePath = '@npm';
     public $css = [
-        'swiper/swiper.min.css',
+        'swiper/swiper-bundle.min.css',
         'choices.js/public/assets/styles/choices.min.css',
     ];
     public $js = [
-        'swiper/swiper.min.js',
+        'swiper/swiper-bundle.min.js',
         'choices.js/public/assets/scripts/choices.min.js',
         'hc-sticky/dist/hc-sticky.js',
 

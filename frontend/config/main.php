@@ -76,7 +76,13 @@ return [
                     'pattern' => 'sitemap', 
                     'route' => 'seo/sitemap/index', 
                     'suffix' => '.xml'
-                ],                
+                ], 
+                [
+                    'pattern' => 'sitemap', 
+                    'route' => 'seo/sitemap/index', 
+                    'suffix' => '.xml'
+                ],
+               
                 'page-not-found' => 'error/page-not-found',
                 'index' => 'site/index',
                 'policy' => 'site/policy',

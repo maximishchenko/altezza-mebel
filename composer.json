@@ -26,7 +26,8 @@
         "aki/yii2-bot-telegram": "^3.1",
         "npm-asset/swiper": "*",
         "npm-asset/hc-sticky": "*",
-        "npm-asset/choices.js": "*"
+        "npm-asset/choices.js": "*",
+        "yii2tech/sitemap": "^1.1"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
