@@ -25,17 +25,19 @@ class SiteController extends BaseController
     {
         $advantages = Advantage::getDb()->cache(function() {
             return Advantage::find()->active()->ordered()->all();
-        });
-        // $sliders = Slider::getDb()->cache(function() {
-        //     return Slider::find()->active()->ordered()->all();
-        // });
-        $sliders = Slider::find()->active()->ordered()->all();
+        }, Advantage::getCacheDuration(), Advantage::getCacheDependency());
+
+        $sliders = Slider::getDb()->cache(function() {
+            return Slider::find()->active()->ordered()->all();
+        }, Slider::getCacheDuration(), Slider::getCacheDependency());
+
         $about = About::getDb()->cache(function() {
             return About::find()->active()->ordered()->one();
-        });
+        }, About::getCacheDuration(), About::getCacheDependency());
+        
         $newProducts = Product::getDb()->cache(function() {
             return Product::find()->active()->onlyNew()->limit(Product::NEW_LIMIT)->all();
-        });
+        }, Product::getCacheDuration(), Product::getCacheDependency());
         
         return $this->render('index', [
             'advantages' => $advantages,
@@ -54,7 +56,7 @@ class SiteController extends BaseController
     {
         $abouts = About::getDb()->cache(function() {
             return About::find()->active()->ordered()->all();
-        });
+        }, About::getCacheDuration(), About::getCacheDependency());
         return $this->render('about', [
             'abouts' => $abouts,
         ]);

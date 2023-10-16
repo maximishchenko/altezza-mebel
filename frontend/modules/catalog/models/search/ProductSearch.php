@@ -43,7 +43,7 @@ class ProductSearch extends Product
     {
         $query = Product::getDb()->cache(function() {
             return Product::find()->active()->joinWith(['style', 'form', 'productProperty'])->distinct();
-        });
+        }, Product::getCacheDuration(), Product::getCacheDependency());
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

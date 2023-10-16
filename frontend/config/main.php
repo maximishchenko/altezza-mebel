@@ -32,10 +32,6 @@ return [
         }
     },
     'components' => [
-        'cache' => [
-            'class' => 'yii\caching\FileCache',
-            'keyPrefix' => 'fcache',
-        ],
         'assetManager' => [
             'bundles' => YII_ENV_PROD ? require(__DIR__.'/assets-prod.php') : [],
             'linkAssets' => true,

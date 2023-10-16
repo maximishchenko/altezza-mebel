@@ -6,8 +6,11 @@ use frontend\modules\catalog\models\query\ProductQuery;
 use backend\modules\catalog\models\Product as backendProduct;
 use backend\modules\catalog\models\ProductElement;
 use backend\modules\catalog\models\ProductProperty;
-use backend\modules\catalog\models\Property;
+use frontend\modules\catalog\models\Property;
 use common\models\Status;
+use frontend\interfaces\CacheInterface;
+use frontend\interfaces\ImageInterface;
+use Yii;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -28,7 +31,7 @@ use yii\helpers\ArrayHelper;
  * @property int|null $created_by
  * @property int|null $updated_by
  */
-class Product extends backendProduct
+class Product extends backendProduct implements ImageInterface, CacheInterface
 {
     const NEW_LIMIT = 10;
 
@@ -37,7 +40,7 @@ class Product extends backendProduct
         return new ProductQuery(get_called_class());
     }
 
-    public function getThumb()
+    public function getThumb(): ?string
     {
         return (isset($this->image)) ? '/' . self::UPLOAD_PATH . $this->image : '/static/sprite.svg#noimage';
     }
@@ -56,11 +59,11 @@ class Product extends backendProduct
     {
         $formIds = self::getDb()->cache(function() {
             return self::find()->active()->asArray()->all();
-        });
+        }, static::getCacheDuration(), static::getCacheDependency());
         $formIdsArray = ArrayHelper::getColumn($formIds, 'form_id');
         $forms = Property::getDb()->cache(function() use ($formIdsArray) {
             return Property::find()->where(['id' => array_unique($formIdsArray)])->active()->all();
-        });
+        }, Property::getCacheDuration(), Property::getCacheDependency());
         return $forms;
     }
 
@@ -72,7 +75,7 @@ class Product extends backendProduct
         $styleIdsArray = ArrayHelper::getColumn($styleIds, 'style_id');
         $styles = Property::getDb()->cache(function() use ($styleIdsArray) {
             Property::find()->where(['id' => array_unique($styleIdsArray)])->active()->all();
-        });
+        }, Property::getCacheDuration(), Property::getCacheDependency());
         return $styles; 
     }
 
@@ -84,7 +87,7 @@ class Product extends backendProduct
         $fasadCoatingsArray = ArrayHelper::getColumn($fasadCoatingsIds, 'property_id');
         $coatings = Property::getDb()->cache(function() use ($fasadCoatingsArray) {
             return Property::find()->where(['id' => array_unique($fasadCoatingsArray)])->active()->all();
-        });
+        }, Property::getCacheDuration(), Property::getCacheDependency());
         return $coatings;
     }
 
@@ -160,37 +163,49 @@ class Product extends backendProduct
 
     public function getType()
     {
-        return self::getDb()->cache(function() {
+        return static::getDb()->cache(function() {
             return parent::getType();
-        });
+        }, static::getCacheDuration(), static::getCacheDependency());
     }
     
     public function getForm()
     {
-        return self::getDb()->cache(function() {
+        return static::getDb()->cache(function() {
             return parent::getForm();
-        });
+        }, static::getCacheDuration(), static::getCacheDependency());
     }
     
     public function getStyle()
     {
-        return self::getDb()->cache(function() {
+        return static::getDb()->cache(function() {
             return parent::getStyle();
-        });
+        }, static::getCacheDuration(), static::getCacheDependency());
     }
     
     public function getAppliance()
     {
-        return self::getDb()->cache(function() {
+        return static::getDb()->cache(function() {
             return parent::getAppliance();
-        });
+        }, static::getCacheDuration(), static::getCacheDependency());
     }
 
     public function getImages()
     {
-        return self::getDb()->cache(function() {
+        return static::getDb()->cache(function() {
             return parent::getImages();
-        });
+        }, static::getCacheDuration(), static::getCacheDependency());
+    }
+
+    public static function getCacheDependency(): \yii\caching\Dependency
+    {
+        return new \yii\caching\DbDependency([
+            'sql' => "SELECT MAX(updated_at) FROM {{%product}}"
+        ]);
+    }
+
+    public static function getCacheDuration(): int
+    {
+        return Yii::$app->cache->defaultDuration;
     }
 
     private function getStringWithCountElements(string $elementsString): ?string

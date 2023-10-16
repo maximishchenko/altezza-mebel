@@ -33,7 +33,7 @@ class DefaultController extends Controller
         }
         $popularProducts = Product::getDb()->cache(function() {
             return Product::find()->active()->orderPopular()->limit(10)->all();
-        });
+        }, Product::getCacheDuration(), Product::getCacheDependency());
 
         return $this->render('view', [
             'product' => $product,
@@ -46,7 +46,7 @@ class DefaultController extends Controller
     {
         $model = Product::getDb()->cache(function() use ($slug) {
             return Product::findOne(['slug' => $slug]);
-        });
+        }, Product::getCacheDuration(), Product::getCacheDependency());
         if ($model !== null) {
             return $model;
         }
