@@ -21,8 +21,6 @@ return [
             'class' => \yii\console\controllers\FixtureController::class,
             'namespace' => 'common\fixtures',
             'globalFixtures' => [
-                'common\fixtures\SliderFixture',
-                'common\fixtures\QuestionFixture',
             ],
           ],
     ],
