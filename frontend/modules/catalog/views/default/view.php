@@ -46,6 +46,8 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
     </div>
+
+    <?php if(isset($product->description) && !empty($product->description)): ?>
     <div class="product-card__menu">
         <div class="product-card__menu__item selected" data-menu-item="characteristics">
             <?= Yii::t('app', 'Characteristics'); ?>
@@ -54,6 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Yii::t('app', 'Description'); ?>
         </div>
     </div>
+    <?php endif; ?>
 
     <div class="product-card__info">
         <div class="product-card__info__characteristics" data-menu-item-content="characteristics">
