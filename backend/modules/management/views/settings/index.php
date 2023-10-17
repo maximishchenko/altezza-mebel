@@ -11,14 +11,6 @@ $this->title = Yii::t('app', 'SETTINGS');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'MANAGEMENT_MODULE'), 'url' => ['/management']];
 $this->params['breadcrumbs'][] = $this->title;
 
-
-// $configManager = Yii::$app->get('configManager');
-// if($configManager->cache->delete($configManager->cacheId)) {
-//     echo "Yahoo";
-// } else {
-//     echo "Fail";
-// }
-// echo $configManager->cacheId;
 ?>
 <?php $form = ActiveForm::begin([
             'id' => 'settings-form'
