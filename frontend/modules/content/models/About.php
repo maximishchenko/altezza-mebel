@@ -3,13 +3,13 @@
 namespace frontend\modules\content\models;
 
 use backend\modules\content\models\About as backendAbout;
-use frontend\interfaces\CacheInterface;
 use frontend\interfaces\ImageInterface;
 use frontend\modules\content\models\query\AboutQuery;
-use Yii;
+use frontend\traits\cacheParamsTrait;
 
-class About extends backendAbout implements ImageInterface, CacheInterface
+class About extends backendAbout implements ImageInterface
 {
+    use cacheParamsTrait;
 
     public static function find()
     {
@@ -19,17 +19,5 @@ class About extends backendAbout implements ImageInterface, CacheInterface
     public function getThumb(): ?string
     {
         return '/' . self::UPLOAD_PATH . $this->image;
-    }
-
-    public static function getCacheDependency(): \yii\caching\Dependency
-    {
-        return new \yii\caching\DbDependency([
-            'sql' => "SELECT MAX(updated_at) FROM {{%about}}"
-        ]);
-    }
-
-    public static function getCacheDuration(): int
-    {
-        return Yii::$app->cache->defaultDuration;
     }
 }

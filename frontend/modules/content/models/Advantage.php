@@ -3,13 +3,13 @@
 namespace frontend\modules\content\models;
 
 use backend\modules\content\models\Advantage as backendAdvantage;
-use frontend\interfaces\CacheInterface;
 use frontend\interfaces\ImageInterface;
 use frontend\modules\content\models\query\QuestionQuery;
-use Yii;
+use frontend\traits\cacheParamsTrait;
 
-class Advantage extends backendAdvantage implements ImageInterface, CacheInterface
+class Advantage extends backendAdvantage implements ImageInterface
 {
+    use cacheParamsTrait;
     
     public static function find()
     {
@@ -19,17 +19,5 @@ class Advantage extends backendAdvantage implements ImageInterface, CacheInterfa
     public function getThumb(): ?string
     {
         return ($this->image) ? '/' . self::UPLOAD_PATH . $this->image : null;
-    }
-
-    public static function getCacheDependency(): \yii\caching\Dependency
-    {
-        return new \yii\caching\DbDependency([
-            'sql' => "SELECT MAX(updated_at) FROM {{%advantage}}"
-        ]);
-    }
-
-    public static function getCacheDuration(): int
-    {
-        return Yii::$app->cache->defaultDuration;
     }
 }
