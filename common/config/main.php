@@ -25,12 +25,11 @@ return [
             'as log' => \yii\queue\LogBehavior::class,
         ],
         'configManager' => [
-            'class' => 'yii2tech\config\Manager',
-            'autoRestoreValues' => false,
-            'cache' => 'dummyCache',
-            'cacheDuration' => -1,
+            'class' => yii2tech\config\Manager::class,
+            'autoRestoreValues' => true,
+            'cacheDuration' => 3600,
             'storage' => [
-                'class' => 'yii2tech\config\StoragePhp',
+                'class' => yii2tech\config\StoragePhp::class,
                 'fileName' => "@frontend/runtime/app_config.php",
             ],
             'items' => [
@@ -149,8 +148,8 @@ return [
         'cache' => [
             'class' => \yii\caching\FileCache::class,
         ],        
-        'dummyCache' => [
-            'class' => 'yii\caching\DummyCache',
-        ],
+        // 'dummyCache' => [
+        //     'class' => 'yii\caching\DummyCache',
+        // ],
     ],
 ];

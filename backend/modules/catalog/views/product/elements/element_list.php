@@ -38,6 +38,20 @@ $this->params['breadcrumbs'][] = $this->title;
                 return Html::a($data->name, ['update-element', 'elementId' => $data->id, []]);
             }
         ],
+        [
+            'attribute' => 'x_pos',
+            'format' => 'raw',
+            'value' => function ($data) {
+                return $data->x_pos . "%";
+            }
+        ],
+        [
+            'attribute' => 'y_pos',
+            'format' => 'raw',
+            'value' => function ($data) {
+                return $data->y_pos . "%";
+            }
+        ],
         'sort',
         [
             'class' => SetColumn::className(),

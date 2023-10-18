@@ -4,6 +4,7 @@ namespace frontend\modules\seo\models;
 
 use backend\modules\seo\models\MetaTag as backendMetaTag;
 use common\models\Status;
+use frontend\traits\cacheParamsTrait;
 use Yii;
 
 class MetaTag
@@ -71,6 +72,8 @@ class MetaTag
      * ```
      */
     const H1_DEFAULT = 'h1_default';
+
+    use cacheParamsTrait;
 
     /**
      * Содержит выборку свойств страницы по текущему url

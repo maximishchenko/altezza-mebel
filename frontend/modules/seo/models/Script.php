@@ -4,15 +4,15 @@ namespace frontend\modules\seo\models;
 
 use backend\modules\seo\models\Script as backendScript;
 use frontend\modules\seo\models\query\ScriptQuery;
+use frontend\traits\cacheParamsTrait;
 use yii\web\View;
 use Yii;
 
 class Script extends backendScript
 {
-    /**
-     * {@inheritdoc}
-     * @return ScriptQuery the active query used by this AR class.
-     */
+
+    use cacheParamsTrait;
+
     public static function find()
     {
         return new ScriptQuery(get_called_class());

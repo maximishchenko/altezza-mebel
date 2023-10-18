@@ -13,6 +13,12 @@ use yii\bootstrap5\ActiveForm;
 
     <?= $form->errorSummary($model, ['class' => 'alert alert-danger']); ?>
 
+    <?php
+    foreach($model->getErrors() as $error) {
+        print_r($error);
+    }
+    ?>
+
     <div class="accordion" id="backendAccordion">
         
         <div class="accordion-item">

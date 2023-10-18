@@ -5,6 +5,7 @@ namespace frontend\modules\seo\models;
 use Yii;
 use backend\modules\seo\models\Redirect as backendRedirect;
 use common\models\Status;
+use frontend\traits\cacheParamsTrait;
 
 /**
  * Устанавливает редирект, при наличии соответствующей записи в БД
@@ -14,6 +15,8 @@ use common\models\Status;
  */
 class Redirect extends backendRedirect
 {
+    use cacheParamsTrait;
+
     /**
      * Устанавливает значение редиректа в соотвтествии с полученным кодом http-состояния
      */
@@ -27,7 +30,7 @@ class Redirect extends backendRedirect
                     'source_url' => parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)
                 ])
                 ->one();
-        });
+        }, self::getCacheDuration(), self::getCacheDependency());
             
         if (isset($redirect) && !empty($redirect)) {
             $headers = Yii::$app->getResponse()->getHeaders();

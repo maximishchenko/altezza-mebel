@@ -39,12 +39,13 @@ class UsersController extends Controller
     public function actionCreate()
     {
         $model = new User();
+        $model->scenario = User::SCENARIO_ADMIN_CREATE;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', Yii::t('app', 'Record added'));
             return $this->redirect(['update', 'id' => $model->id]);
-        }
-
+        }  
+        
         return $this->render('create', [
             'model' => $model,
         ]);
@@ -53,6 +54,7 @@ class UsersController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->scenario = User::SCENARIO_ADMIN_UPDATE;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', Yii::t('app', 'Record changed'));

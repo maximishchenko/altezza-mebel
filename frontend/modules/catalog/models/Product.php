@@ -8,9 +8,8 @@ use backend\modules\catalog\models\ProductElement;
 use backend\modules\catalog\models\ProductProperty;
 use frontend\modules\catalog\models\Property;
 use common\models\Status;
-use frontend\interfaces\CacheInterface;
 use frontend\interfaces\ImageInterface;
-use Yii;
+use frontend\traits\cacheParamsTrait;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -31,9 +30,11 @@ use yii\helpers\ArrayHelper;
  * @property int|null $created_by
  * @property int|null $updated_by
  */
-class Product extends backendProduct implements ImageInterface, CacheInterface
+class Product extends backendProduct implements ImageInterface
 {
     const NEW_LIMIT = 10;
+
+    use cacheParamsTrait;
 
     public static function find()
     {
@@ -194,18 +195,6 @@ class Product extends backendProduct implements ImageInterface, CacheInterface
         return static::getDb()->cache(function() {
             return parent::getImages();
         }, static::getCacheDuration(), static::getCacheDependency());
-    }
-
-    public static function getCacheDependency(): \yii\caching\Dependency
-    {
-        return new \yii\caching\DbDependency([
-            'sql' => "SELECT MAX(updated_at) FROM {{%product}}"
-        ]);
-    }
-
-    public static function getCacheDuration(): int
-    {
-        return Yii::$app->cache->defaultDuration;
     }
 
     private function getStringWithCountElements(string $elementsString): ?string

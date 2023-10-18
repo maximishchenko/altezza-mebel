@@ -51,19 +51,11 @@ class User extends commonUser
         ];
     }  
 
-    /**
-     * {@inheritdoc}
-     */
     public static function tableName()
     {
         return '{{%user}}';
     }
-
-    /**
-     * Возвращает массив статусов пользователей
-     *
-     * @return array
-     */
+    
     public static function getStatusesArray(): array
     {
         return [
@@ -72,11 +64,6 @@ class User extends commonUser
         ];
     }
 
-    /**
-     * Возвращает массив статусов сотрудников, имеющих доступ в панель управления
-     *
-     * @return array
-     */
     public static function getEmployeesStatusesArray(): array
     {
         return [
@@ -85,10 +72,6 @@ class User extends commonUser
         ];
     } 
 
-    /**
-     * {@inheritdoc}
-     * @return UserQuery the active query used by this AR class.
-     */
     public static function find()
     {
         return new UserQuery(get_called_class());
@@ -99,9 +82,6 @@ class User extends commonUser
         return (!empty($this->name) && !empty($this->surname)) ? $this->name . " " . $this->surname : $this->username; 
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
@@ -115,6 +95,7 @@ class User extends commonUser
             [['newPassword', 'repeatPassword'], 'required', 'on' => self::SCENARIO_ADMIN_CREATE],
             ['newPassword', 'string', 'min' => 6],
             ['repeatPassword', 'compare', 'compareAttribute' => 'newPassword'],
+            [['newPassword', 'repeatPassword'], 'safe'],
         ];
     }
     
@@ -122,7 +103,7 @@ class User extends commonUser
     {
         $scenarios = parent::scenarios();
 
-        $scenarios[self::SCENARIO_ADMIN_CREATE] = ['username', 'email', 'status', 'newPassword', 'newPasswordRepeat', 'name', 'surname'];
+        $scenarios[self::SCENARIO_ADMIN_CREATE] = ['username', 'email', 'status', 'newPassword', 'repeatPassword', 'name', 'surname'];
 
         $scenarios[self::SCENARIO_ADMIN_UPDATE] = ['username', 'email', 'status', 'newPassword', 'repeatPassword', 'name', 'surname'];
         
@@ -157,5 +138,12 @@ class User extends commonUser
             'is_personal_data_agreement' => Yii::t('app', 'Client Personal Data Agreement'),
             'is_adv_agreement' => Yii::t('app', 'Client Adv Agreement'),
         ];
+    }
+
+    public function beforeSave($insert)
+    {
+        $this->generateAuthKey();
+        $this->setPassword($this->newPassword);
+        return parent::beforeSave($insert);
     }
 }

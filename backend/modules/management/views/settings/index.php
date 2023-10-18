@@ -10,6 +10,7 @@ use yii\bootstrap4\ActiveForm;
 $this->title = Yii::t('app', 'SETTINGS');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'MANAGEMENT_MODULE'), 'url' => ['/management']];
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <?php $form = ActiveForm::begin([
             'id' => 'settings-form'
