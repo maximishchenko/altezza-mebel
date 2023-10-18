@@ -1055,6 +1055,18 @@
 .policy {
   padding: var(--padding-x-defult) var(--padding-y-defult);
 }
+.policy__item {
+  margin: 1.5em 0;
+}
+.policy__item__title {
+  font-size: 1.2em;
+}
+.policy__item__list {
+  margin: 1em 0 0 1em;
+}
+.policy__item__list__element {
+  margin: 0.5em 0;
+}
 * {
   margin: 0;
   padding: 0;
