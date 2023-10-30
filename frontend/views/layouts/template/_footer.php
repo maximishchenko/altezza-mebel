@@ -25,9 +25,9 @@
   <address class="footer__content__item contacts contacts--footer">
 
     <?php if(Yii::$app->configManager->getItemValue('contactPhone')): ?>
-      <div class="contacts__phone">
+      <a class="contacts__phone" href="tel:<?= Yii::$app->configManager->getItemValue('contactPhone'); ?>">
         <?= Yii::$app->configManager->getItemValue('contactPhone'); ?>
-      </div>
+      </a>
     <?php endif; ?>
 
     <?php if(Yii::$app->configManager->getItemValue('contactWhatsapp')): ?>

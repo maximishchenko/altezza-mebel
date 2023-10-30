@@ -1,6 +1,5 @@
 <?php
 
 use frontend\widgets\SearchParamWidget;
-
-echo SearchParamWidget::widget(['model' => $searchModel])
 ?>
+<?php // SearchParamWidget::widget(['model' => $searchModel]); ?>

@@ -70,13 +70,15 @@ class Product extends backendProduct implements ImageInterface
 
     public function getStyleFilter()
     {
-        $styleIds = self::getDb()->cache(function() {
-            return self::find()->active()->asArray()->all();
-        });
+        // $styleIds = self::getDb()->cache(function() {
+        //     return self::find()->active()->asArray()->all();
+        // });
+        $styleIds = self::find()->active()->asArray()->all();
         $styleIdsArray = ArrayHelper::getColumn($styleIds, 'style_id');
-        $styles = Property::getDb()->cache(function() use ($styleIdsArray) {
-            Property::find()->where(['id' => array_unique($styleIdsArray)])->active()->all();
-        }, Property::getCacheDuration(), Property::getCacheDependency());
+        // $styles = Property::getDb()->cache(function() use ($styleIdsArray) {
+        //     Property::find()->where(['id' => array_unique($styleIdsArray)])->active()->all();
+        // }, Property::getCacheDuration(), Property::getCacheDependency());
+        $styles = Property::find()->where(['id' => array_unique($styleIdsArray)])->active()->all();
         return $styles; 
     }
 

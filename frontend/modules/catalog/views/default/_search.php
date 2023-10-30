@@ -42,7 +42,7 @@ use yii\widgets\ActiveForm;
     </div>
     <?php endif; ?>
 
-    <?php if($searchModel->styleFilter): ?>
+    <?php // if($searchModel->styleFilter): ?>
     <div class="catalog-filter__section">
         <div class="catalog-filter__section__title">
           <?= Yii::t('app', 'Filter Style Title'); ?>
@@ -63,7 +63,7 @@ use yii\widgets\ActiveForm;
         </div>
         <?php endforeach; ?>
     </div>
-    <?php endif; ?>
+    <?php // endif; ?>
 
     <?php if($searchModel->coatingFilter): ?>
     <div class="catalog-filter__section">
@@ -88,6 +88,6 @@ use yii\widgets\ActiveForm;
     </div>
     <?php endif; ?>
     <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'button button--dark catalog-filter__section__submit']); ?>
-    <?= Html::a(Yii::t('app', 'Reset Search Parameters'), ['/catalog'], ['class' => 'button button--light catalog-filter__section__reset']); ?>
+    <?= Html::button(Yii::t('app', 'Reset Search Parameters'), ['class' => 'button button--light catalog-filter__section__reset clear__search', 'id' => 'catalog__searh-btn']); ?>
   <?php ActiveForm::end(); ?>
 </aside>

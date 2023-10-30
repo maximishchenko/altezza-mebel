@@ -3,6 +3,7 @@
 namespace frontend\modules\catalog\models\search;
 
 use backend\modules\catalog\models\ProductProperty;
+use backend\modules\catalog\models\PropertyStyle;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use frontend\modules\catalog\models\Product;
@@ -58,13 +59,13 @@ class ProductSearch extends Product
                 'sort',
                 'view_count',
                 'styleName' => [
-                    'asc' => ['{{%property}}.name' => SORT_ASC],
-                    'desc' => ['{{%property}}.name' => SORT_DESC],
+                    'asc' => [PropertyStyle::tableName() . '.name' => SORT_ASC],
+                    'desc' => [PropertyStyle::tableName() . '.name' => SORT_DESC],
                     'default' => SORT_ASC
                 ],
                 'formName' => [
-                    'asc' => ['{{%property}}.name' => SORT_ASC],
-                    'desc' => ['{{%property}}.name' => SORT_DESC],
+                    'asc' => [PropertyStyle::tableName() . '.name' => SORT_ASC],
+                    'desc' => [PropertyStyle::tableName() . '.name' => SORT_DESC],
                     'default' => SORT_ASC
                 ],
             ],

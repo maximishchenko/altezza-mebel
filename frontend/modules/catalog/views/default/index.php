@@ -3,9 +3,6 @@
 $this->title = Yii::t('app', 'Catalog');
 $this->params['breadcrumbs'][] = $this->title;
 
-use yii\widgets\LinkPager;
-use yii\widgets\ListView;
-
 ?>
 
 <div class="catalog-wrapper">
@@ -19,39 +16,25 @@ use yii\widgets\ListView;
     </button>
     <section class="catalog">
     
-    <div class="catalog__sort-wraper">
+    <div class="catalog__sort-wraper" id="filter__labels">
       <?= $this->render('_sort', []); ?>
       <?= $this->render('_filter', ['searchModel' => $searchModel]); ?>
     </div>
 
-    <?= ListView::widget([
-      'dataProvider' => $dataProvider,
-      'itemView' => '_list',
-      'layout' => "{items}",
+    <ul class="catalog__list">
+    <?= Yii::$app->controller->renderPartial('//layouts/include/product/_productLoop', ['dataProvider' => $dataProvider]); ?>
+    </ul>
 
-      'options' => [
-          'tag' => 'ul',
-          'class' => 'catalog__list',
-      ],
-    ]);
-
-    ?>
-
-    <?= LinkPager::widget([
-      'pagination' => $dataProvider->pagination,
-      'activePageCssClass' => 'pagination-nav__active',
-      'disabledPageCssClass' => 'disabled',
-      'pageCssClass' => 'pagination-nav__item button--light',
-      'prevPageCssClass' => 'pagination-nav__item pagination-nav__prev button--light',
-      'nextPageCssClass' => 'pagination-nav__item pagination-nav__next button--light',
-      'nextPageLabel' => '',
-      'prevPageLabel' => '',
-      'options' => [
-          'tag' => 'ul',
-          'class' => 'pagination-nav',
-      ],
-      'registerLinkTags' => true
-    ]); ?>
+    <div 
+      id="showMore" 
+      class="hidden__service" 
+      data-page="<?= (int)Yii::$app->request->get('page', 1); ?>" 
+      data-page-count="<?= (int)$dataProvider->pagination->pageCount; ?>" 
+      data-csrf-token="<?= Yii::$app->request->csrfToken; ?>" 
+      data-csrf-param="<?= Yii::$app->request->csrfParam; ?>"
+    >
+      <?= Yii::t('app', 'Show more'); ?>
+    </div>
 
   </section>
 </div>

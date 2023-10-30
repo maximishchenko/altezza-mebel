@@ -290,6 +290,7 @@
   color: white;
   margin-bottom: 30px;
   text-transform: uppercase;
+  text-align: center;
 }
 .faq__lists-wraper {
   display: flex;
@@ -431,6 +432,16 @@
     --catalog_item_width: 300px;
   }
 }
+.hidden__service {
+  position: absolute;
+  overflow: hidden;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  width: 1px;
+  height: 1px;
+  clip: rect(0 0 0 0);
+}
 .catalog {
   background-color: white;
   width: calc(100% - (250px + 25px));
@@ -464,7 +475,7 @@
   cursor: pointer;
 }
 .catalog__picked-filters__item::after {
-  content: '\2613';
+  content: '\2715';
   margin-left: 0.5em;
 }
 .catalog__picked-filters__item.filter-reset {

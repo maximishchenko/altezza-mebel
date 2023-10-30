@@ -74,9 +74,9 @@ return [
                     'suffix' => '.xml'
                 ], 
                 [
-                    'pattern' => 'sitemap', 
-                    'route' => 'seo/sitemap/index', 
-                    'suffix' => '.xml'
+                    'pattern' => 'catalog/search-params', 
+                    'route' => 'catalog/default/search-params', 
+                    'suffix' => '.json'
                 ],
                
                 'page-not-found' => 'error/page-not-found',
