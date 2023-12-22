@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace backend\modules\seo\models;
 
 use backend\modules\seo\models\query\MetaTagQuery;
@@ -10,12 +12,12 @@ use Yii;
 
 class MetaTag extends \yii\db\ActiveRecord
 {
-    public static function tableName()
+    public static function tableName(): string
     {
         return '{{%meta_tag}}';
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['meta_description', 'og_description', 'og_image', 'description_text'], 'string'],
@@ -29,10 +31,7 @@ class MetaTag extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => Yii::t('app', 'ID'),
@@ -57,7 +56,7 @@ class MetaTag extends \yii\db\ActiveRecord
         ];
     }
 
-    public static function find()
+    public static function find(): MetaTagQuery
     {
         return new MetaTagQuery(get_called_class());
     } 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace frontend\modules\catalog\models\search;
 
 use backend\modules\catalog\models\ProductProperty;
@@ -8,24 +10,25 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use frontend\modules\catalog\models\Product;
 use frontend\traits\attributeTrait;
+use yii\data\DataProviderInterface;
 
 class ProductSearch extends Product
 {
 
     use attributeTrait;
 
-    public $styleName;
-    public $formName;
-    public $coatingId;
+    public ?string $styleName = null;
+    public ?string $formName = null;
+    public ?int $coatingId = null;
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['name', 'image', 'description', 'comment', 'type_id', 'form_id', 'appliance_id', 'style_id', 'styleName', 'formName', 'sort', 'coatingId'], 'safe'],
         ];
     }
 
-    public function scenarios()
+    public function scenarios(): array
     {
         return Model::scenarios();
     }
@@ -40,7 +43,7 @@ class ProductSearch extends Product
         ];
     }
     
-    public function search($params)
+    public function search(array $params): DataProviderInterface
     {
         $query = Product::getDb()->cache(function() {
             return Product::find()->active()->joinWith(['style', 'form', 'productProperty'])->distinct();
@@ -49,7 +52,7 @@ class ProductSearch extends Product
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'pageSize' => 20,
+                'pageSize' => 8,
             ],
         ]);
         
@@ -89,7 +92,7 @@ class ProductSearch extends Product
         return $dataProvider;
     }
 
-    public function formName()
+    public function formName(): string
     {
         return '';
     }

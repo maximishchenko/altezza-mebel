@@ -1,14 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace backend\modules\content\models;
 
+use backend\models\BaseModel;
 use Yii;
-use yii\behaviors\BlameableBehavior;
-use yii\behaviors\TimestampBehavior;
 use backend\modules\content\models\query\QuestionQuery;
 use common\models\Sort;
 use common\models\Status;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "question".
@@ -24,34 +24,15 @@ use yii\db\ActiveRecord;
  * @property int|null $created_by
  * @property int|null $updated_by
  */
-class Question extends ActiveRecord
+class Question extends BaseModel
 {
 
-    public static function tableName()
+    public static function tableName(): string
     {
         return '{{%question}}';
     }
 
-    public function behaviors()
-    {
-        return[
-            [
-                'class' => TimestampBehavior::className(),
-                'createdAtAttribute' => 'created_at',
-                'updatedAtAttribute' => 'updated_at',
-                'value' => function () {
-                    return date('U');
-                },
-            ],
-            [
-                'class' => BlameableBehavior::className(),
-                'createdByAttribute' => 'created_by',
-                'updatedByAttribute' => 'updated_by',
-            ],
-        ];
-    }  
-
-    public function rules()
+    public function rules(): array
     {
         return [
             [['question', 'answer'], 'required'],
@@ -63,7 +44,7 @@ class Question extends ActiveRecord
         ];
     }
 
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => Yii::t('app', 'ID'),
@@ -79,7 +60,7 @@ class Question extends ActiveRecord
         ];
     }
 
-    public static function find()
+    public static function find(): QuestionQuery
     {
         return new QuestionQuery(get_called_class());
     }

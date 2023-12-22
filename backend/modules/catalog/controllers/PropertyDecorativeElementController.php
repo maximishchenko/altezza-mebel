@@ -1,33 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace backend\modules\catalog\controllers;
 
+use backend\controllers\BaseController;
 use backend\modules\catalog\models\PropertyDecorativeElement;
 use backend\modules\catalog\models\search\PropertyDecorativeElementSearch;
 use Yii;
-use yii\web\Controller;
+use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use yii\web\Response;
 
-class PropertyDecorativeElementController extends Controller
+class PropertyDecorativeElementController extends BaseController
 {
-    
-    public function behaviors()
-    {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
-                    ],
-                ],
-            ]
-        );
-    }
 
-    public function actionIndex()
+    /**
+     * @return string
+     */
+    public function actionIndex(): string
     {
         $searchModel = new PropertyDecorativeElementSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
@@ -37,8 +28,11 @@ class PropertyDecorativeElementController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-    
-    public function actionCreate()
+
+    /**
+     * @return Response|string
+     */
+    public function actionCreate(): Response | string
     {
         $model = new PropertyDecorativeElement();
 
@@ -56,7 +50,12 @@ class PropertyDecorativeElementController extends Controller
         ]);
     }
 
-    public function actionUpdate($id)
+    /**
+     * @param int $id
+     * @return Response|string
+     * @throws NotFoundHttpException
+     */
+    public function actionUpdate(int $id): Response | string
     {
         $model = $this->findModel($id);
 
@@ -70,7 +69,14 @@ class PropertyDecorativeElementController extends Controller
         ]);
     }
 
-    public function actionDelete($id)
+    /**
+     * @param int $id
+     * @return Response
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws StaleObjectException
+     */
+    public function actionDelete(int $id): Response
     {
         $this->findModel($id)->delete();
         Yii::$app->session->setFlash('warning', Yii::t('app', 'Record deleted'));
@@ -78,7 +84,12 @@ class PropertyDecorativeElementController extends Controller
         return $this->redirect(['index']);
     }
 
-    protected function findModel($id)
+    /**
+     * @param int $id
+     * @return PropertyDecorativeElement
+     * @throws NotFoundHttpException
+     */
+    protected function findModel(int $id): PropertyDecorativeElement
     {
         if (($model = PropertyDecorativeElement::findOne(['id' => $id])) !== null) {
             return $model;

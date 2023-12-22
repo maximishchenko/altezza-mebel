@@ -2,15 +2,8 @@
 
 namespace backend\modules\seo\models\query;
 
-class ScriptQuery extends \yii\db\ActiveQuery
-{
-    public function all($db = null)
-    {
-        return parent::all($db);
-    }
+use backend\models\BaseActiveQuery;
 
-    public function one($db = null)
-    {
-        return parent::one($db);
-    }
+class ScriptQuery extends BaseActiveQuery
+{
 }

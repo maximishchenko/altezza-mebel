@@ -1,32 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace backend\modules\content\controllers;
 
+use backend\controllers\BaseController;
 use backend\modules\content\models\Slider;
 use backend\modules\content\models\search\SliderSearch;
 use Yii;
-use yii\web\Controller;
+use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use yii\web\Response;
 
-class SliderController extends Controller
+class SliderController extends BaseController
 {
-    public function behaviors()
-    {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
-                    ],
-                ],
-            ]
-        );
-    }
 
-    public function actionIndex()
+    /**
+     * @return string
+     */
+    public function actionIndex(): string
     {
         $searchModel = new SliderSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
@@ -36,8 +28,11 @@ class SliderController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-    
-    public function actionCreate()
+
+    /**
+     * @return Response|string
+     */
+    public function actionCreate(): Response | string
     {
         $model = new Slider();
 
@@ -54,8 +49,13 @@ class SliderController extends Controller
             'model' => $model,
         ]);
     }
-    
-    public function actionUpdate($id)
+
+    /**
+     * @param int $id
+     * @return Response|string
+     * @throws NotFoundHttpException
+     */
+    public function actionUpdate(int $id): Response | string
     {
         $model = $this->findModel($id);
 
@@ -68,8 +68,15 @@ class SliderController extends Controller
             'model' => $model,
         ]);
     }
-    
-    public function actionDelete($id)
+
+    /**
+     * @param int $id
+     * @return Response
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws StaleObjectException
+     */
+    public function actionDelete(int $id): Response
     {
         $this->findModel($id)->delete();
         Yii::$app->session->setFlash('warning', Yii::t('app', 'Record deleted'));
@@ -77,7 +84,12 @@ class SliderController extends Controller
         return $this->redirect(['index']);
     }
 
-    public function actionDeleteImage(int $id)
+    /**
+     * @param int $id
+     * @return Response
+     * @throws NotFoundHttpException
+     */
+    public function actionDeleteImage(int $id): Response
     {
         $model = $this->findModel($id);
         $file = $model->getPath(Slider::UPLOAD_PATH, $model->image);
@@ -87,8 +99,13 @@ class SliderController extends Controller
         Yii::$app->session->setFlash('danger', Yii::t('app', 'Record deleted!'));
         return $this->redirect(Yii::$app->request->referrer);
     }
-    
-    protected function findModel($id)
+
+    /**
+     * @param int $id
+     * @return Slider
+     * @throws NotFoundHttpException
+     */
+    protected function findModel(int $id): Slider
     {
         if (($model = Slider::findOne(['id' => $id])) !== null) {
             return $model;

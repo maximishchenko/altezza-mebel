@@ -205,4 +205,8 @@ return [
     'Y Pos' => 'Позиция по оси Y',
     'Element Name: {name}' => 'Элемент: {name}',
     'Do delete answer' => 'Удалить элемент?',
+    'Collaborations' => 'Сотрудничество',
+    'Collaborations Edit' => 'Управление разделом "Сотрудничество"',
+    'Image File' => 'Изображение',
+    'Update Collaboration: {name}' => '{name}',
 ];

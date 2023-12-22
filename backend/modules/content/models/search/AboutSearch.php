@@ -1,14 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace backend\modules\content\models\search;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use backend\modules\content\models\About;
+use yii\data\DataProviderInterface;
 
 class AboutSearch extends About
 {
-    public function rules()
+    public function rules(): array
     {
         return [
             [['id', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
@@ -16,12 +19,12 @@ class AboutSearch extends About
         ];
     }
 
-    public function scenarios()
+    public function scenarios(): array
     {
         return Model::scenarios();
     }
 
-    public function search($params)
+    public function search(array $params): DataProviderInterface
     {
         $query = About::find();
 
@@ -33,8 +36,6 @@ class AboutSearch extends About
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 

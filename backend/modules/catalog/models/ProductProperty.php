@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace backend\modules\catalog\models;
 
 use Yii;
 use backend\modules\catalog\models\query\ProductPropertyQuery;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "{{%product_property}}".
@@ -17,12 +20,12 @@ use backend\modules\catalog\models\query\ProductPropertyQuery;
  */
 class ProductProperty extends \yii\db\ActiveRecord
 {
-    public static function tableName()
+    public static function tableName(): string
     {
         return '{{%product_property}}';
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['product_id', 'property_id'], 'required'],
@@ -34,7 +37,7 @@ class ProductProperty extends \yii\db\ActiveRecord
         ];
     }
 
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'product_id' => Yii::t('app', 'Product ID'),
@@ -43,17 +46,17 @@ class ProductProperty extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getProduct()
+    public function getProduct(): ActiveQuery
     {
         return $this->hasOne(Product::class, ['id' => 'product_id']);
     }
 
-    public function getProperty()
+    public function getProperty(): ActiveQuery
     {
         return $this->hasOne(Property::class, ['id' => 'property_id']);
     }
 
-    public static function find()
+    public static function find(): ProductPropertyQuery
     {
         return new ProductPropertyQuery(get_called_class());
     }

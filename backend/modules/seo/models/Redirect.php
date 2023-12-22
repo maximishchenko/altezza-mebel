@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace backend\modules\seo\models;
 
+use backend\models\BaseModel;
 use backend\modules\seo\models\query\RedirectQuery;
 use common\models\Sort;
 use Yii;
@@ -23,7 +26,7 @@ use yii\behaviors\TimestampBehavior;
  * @property int|null $created_by
  * @property int|null $updated_by
  */
-class Redirect extends \yii\db\ActiveRecord
+class Redirect extends BaseModel
 {
 
     const CODE_301 = 301;
@@ -32,7 +35,7 @@ class Redirect extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return '{{%redirect}}';
     }
@@ -49,32 +52,8 @@ class Redirect extends \yii\db\ActiveRecord
             static::CODE_302 => 302,
         ];
     }
-    
 
-    public function behaviors()
-    {
-        return[
-            [
-                'class' => TimestampBehavior::className(),
-                'createdAtAttribute' => 'created_at',
-                'updatedAtAttribute' => 'updated_at',
-                'value' => function () {
-                    return date('U');
-                },
-            ],
-            [
-                'class' => BlameableBehavior::className(),
-                'createdByAttribute' => 'created_by',
-                'updatedByAttribute' => 'updated_by',
-            ],
-        ];
-    }  
-
-
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['redirect_code', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
@@ -90,10 +69,7 @@ class Redirect extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => Yii::t('app', 'ID'),
@@ -110,12 +86,7 @@ class Redirect extends \yii\db\ActiveRecord
         ];
     }
 
-
-    /**
-     * {@inheritdoc}
-     * @return RedirectQuery the active query used by this AR class.
-     */
-    public static function find()
+    public static function find(): RedirectQuery
     {
         return new RedirectQuery(get_called_class());
     } 

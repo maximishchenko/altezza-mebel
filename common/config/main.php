@@ -147,6 +147,8 @@ return [
 
         'cache' => [
             'class' => \yii\caching\FileCache::class,
+            'keyPrefix' => 'common_cache',
+            'defaultDuration' => 3600,
         ],        
         // 'dummyCache' => [
         //     'class' => 'yii\caching\DummyCache',

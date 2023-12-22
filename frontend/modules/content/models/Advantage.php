@@ -1,19 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace frontend\modules\content\models;
 
 use backend\modules\content\models\Advantage as backendAdvantage;
+use frontend\modules\content\models\query\AdvantageQuery;
 use frontend\interfaces\ImageInterface;
-use frontend\modules\content\models\query\QuestionQuery;
 use frontend\traits\cacheParamsTrait;
 
 class Advantage extends backendAdvantage implements ImageInterface
 {
     use cacheParamsTrait;
     
-    public static function find()
+    public static function find(): AdvantageQuery
     {
-        return new QuestionQuery(get_called_class());
+        return new AdvantageQuery(get_called_class());
     }
 
     public function getThumb(): ?string

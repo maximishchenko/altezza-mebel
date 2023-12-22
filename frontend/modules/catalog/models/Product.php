@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace frontend\modules\catalog\models;
 
 use frontend\modules\catalog\models\query\ProductQuery;
 use backend\modules\catalog\models\Product as backendProduct;
 use backend\modules\catalog\models\ProductElement;
 use backend\modules\catalog\models\ProductProperty;
-use frontend\modules\catalog\models\Property;
 use common\models\Status;
 use frontend\interfaces\ImageInterface;
 use frontend\traits\cacheParamsTrait;
+use yii\db\ActiveQuery;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -36,7 +38,7 @@ class Product extends backendProduct implements ImageInterface
 
     use cacheParamsTrait;
 
-    public static function find()
+    public static function find(): ProductQuery
     {
         return new ProductQuery(get_called_class());
     }
@@ -46,17 +48,17 @@ class Product extends backendProduct implements ImageInterface
         return (isset($this->image)) ? '/' . self::UPLOAD_PATH . $this->image : '/static/sprite.svg#noimage';
     }
 
-    public function getStyleName()
+    public function getStyleName(): string
     {
         return $this->style->name;
     }
 
-    public function getFormName()
+    public function getFormName(): string
     {
         return $this->form->name;
     }
 
-    public function getFormFilter()
+    public function getFormFilter(): array
     {
         $formIds = self::getDb()->cache(function() {
             return self::find()->active()->asArray()->all();
@@ -68,21 +70,15 @@ class Product extends backendProduct implements ImageInterface
         return $forms;
     }
 
-    public function getStyleFilter()
+    public function getStyleFilter(): array
     {
-        // $styleIds = self::getDb()->cache(function() {
-        //     return self::find()->active()->asArray()->all();
-        // });
         $styleIds = self::find()->active()->asArray()->all();
         $styleIdsArray = ArrayHelper::getColumn($styleIds, 'style_id');
-        // $styles = Property::getDb()->cache(function() use ($styleIdsArray) {
-        //     Property::find()->where(['id' => array_unique($styleIdsArray)])->active()->all();
-        // }, Property::getCacheDuration(), Property::getCacheDependency());
         $styles = Property::find()->where(['id' => array_unique($styleIdsArray)])->active()->all();
         return $styles; 
     }
 
-    public function getCoatingFilter()
+    public function getCoatingFilter(): array
     {
         $fasadCoatingsIds = ProductProperty::getDb()->cache(function() {
             return ProductProperty::find()->onlyFasadCoating()->asArray()->all();
@@ -152,47 +148,47 @@ class Product extends backendProduct implements ImageInterface
         return implode(', ', ArrayHelper::map($this->appliance, 'id', 'name'));
     }
 
-    public function getProductProperty()
+    public function getProductProperty(): ActiveQuery
     {
         return $this->hasMany(ProductProperty::className(), ['product_id' => 'id']);
     }
 
-    public function getElements()
+    public function getElements(): ActiveQuery
     {
         return $this->hasMany(ProductElement::className(), ['product_id' => 'id'])
                 ->orderBy([ProductElement::tableName().'.sort' => SORT_ASC])
                 ->onCondition([ProductElement::tableName().'.status' => Status::STATUS_ACTIVE]);
     }
 
-    public function getType()
+    public function getType(): ActiveQuery
     {
         return static::getDb()->cache(function() {
             return parent::getType();
         }, static::getCacheDuration(), static::getCacheDependency());
     }
     
-    public function getForm()
+    public function getForm(): ActiveQuery
     {
         return static::getDb()->cache(function() {
             return parent::getForm();
         }, static::getCacheDuration(), static::getCacheDependency());
     }
     
-    public function getStyle()
+    public function getStyle(): ActiveQuery
     {
         return static::getDb()->cache(function() {
             return parent::getStyle();
         }, static::getCacheDuration(), static::getCacheDependency());
     }
     
-    public function getAppliance()
+    public function getAppliance(): ActiveQuery
     {
         return static::getDb()->cache(function() {
             return parent::getAppliance();
         }, static::getCacheDuration(), static::getCacheDependency());
     }
 
-    public function getImages()
+    public function getImages(): ActiveQuery
     {
         return static::getDb()->cache(function() {
             return parent::getImages();

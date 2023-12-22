@@ -1,20 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace backend\modules\catalog\models\search;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use backend\modules\catalog\models\PropertyBodyMaterial;
+use yii\data\DataProviderInterface;
 
 /**
  * PropertyBodyMaterialSearch represents the model behind the search form of `backend\modules\catalog\models\PropertyBodyMaterial`.
  */
 class PropertyBodyMaterialSearch extends PropertyBodyMaterial
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['id', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
@@ -22,27 +22,14 @@ class PropertyBodyMaterialSearch extends PropertyBodyMaterial
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function scenarios()
+    public function scenarios(): array
     {
-        // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
-    /**
-     * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
-     */
-    public function search($params)
+    public function search(array $params): DataProviderInterface
     {
         $query = PropertyBodyMaterial::find();
-
-        // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -52,8 +39,6 @@ class PropertyBodyMaterialSearch extends PropertyBodyMaterial
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 

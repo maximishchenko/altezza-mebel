@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace backend\modules\seo\models;
 
 use backend\modules\seo\models\query\ScriptQuery;
@@ -31,7 +33,7 @@ class Script extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return '{{%script}}';
     }
@@ -48,7 +50,7 @@ class Script extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['code'], 'string'],
@@ -69,7 +71,7 @@ class Script extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => Yii::t('app', 'ID'),
@@ -90,7 +92,7 @@ class Script extends \yii\db\ActiveRecord
      * {@inheritdoc}
      * @return ScriptQuery the active query used by this AR class.
      */
-    public static function find()
+    public static function find(): ScriptQuery
     {
         return new ScriptQuery(get_called_class());
     } 

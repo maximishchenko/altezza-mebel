@@ -1,24 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace backend\modules\catalog\models\query;
 
-use backend\modules\catalog\models\Property;
-use common\models\Status;
+use backend\models\BaseActiveQuery;
+use yii\db\ActiveQuery;
+use yii\db\Query;
 
-class PropertyQuery extends \yii\db\ActiveQuery
+class PropertyQuery extends BaseActiveQuery
 {
-    public $property_type;
+    /**
+     * @var ?string
+     */
+    public ?string $property_type = null;
 
-    public function prepare($builder)
+    /**
+     * @param $builder
+     * @return ActiveQuery|Query
+     */
+    public function prepare($builder): ActiveQuery | Query
     {
         if ($this->property_type !== null) {
             $this->andWhere(['property_type' => $this->property_type]);
         }
         return parent::prepare($builder);
-    }
-
-    public function active()
-    {
-        return $this->andWhere([Property::tableName() . '.status' => Status::STATUS_ACTIVE]);
     }
 }

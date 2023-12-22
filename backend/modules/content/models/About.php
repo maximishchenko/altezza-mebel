@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace backend\modules\content\models;
 
+use backend\models\BaseModel;
 use backend\modules\content\models\query\AboutQuery;
 use backend\traits\fileTrait;
 use common\models\Sort;
 use common\models\Status;
 use Yii;
-use yii\behaviors\BlameableBehavior;
-use yii\behaviors\TimestampBehavior;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "{{%about}}".
@@ -25,40 +27,20 @@ use yii\behaviors\TimestampBehavior;
  * @property int|null $created_by
  * @property int|null $updated_by
  */
-class About extends \yii\db\ActiveRecord
+class About extends BaseModel
 {
     use fileTrait;
 
-
     const UPLOAD_PATH = 'upload/about/';
 
-    public $imageFile;
+    public UploadedFile | string | null $imageFile = null;
 
-    public static function tableName()
+    public static function tableName(): string
     {
         return '{{%about}}';
     }
 
-    public function behaviors()
-    {
-        return[
-            [
-                'class' => TimestampBehavior::className(),
-                'createdAtAttribute' => 'created_at',
-                'updatedAtAttribute' => 'updated_at',
-                'value' => function () {
-                    return date('U');
-                },
-            ],
-            [
-                'class' => BlameableBehavior::className(),
-                'createdByAttribute' => 'created_by',
-                'updatedByAttribute' => 'updated_by',
-            ],
-        ];
-    }  
-
-    public function rules()
+    public function rules(): array
     {
         return [
             [['description', 'comment'], 'string'],
@@ -74,7 +56,7 @@ class About extends \yii\db\ActiveRecord
         ];
     }
 
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => Yii::t('app', 'ID'),
@@ -93,7 +75,7 @@ class About extends \yii\db\ActiveRecord
         ];
     }
 
-    public function attributeHints()
+    public function attributeHints(): array
     {
         return [
             'description' => Yii::t('app', 'Text description'),
@@ -101,12 +83,12 @@ class About extends \yii\db\ActiveRecord
         ];
     }
 
-    public static function find()
+    public static function find(): AboutQuery
     {
         return new AboutQuery(get_called_class());
     }
 
-    public function beforeSave($insert)
+    public function beforeSave($insert): bool
     {
         if (parent::beforeSave($insert)) {
             $this->uploadFile('imageFile', 'image', self::UPLOAD_PATH);
@@ -115,7 +97,7 @@ class About extends \yii\db\ActiveRecord
         return false;
     }
 
-    public function beforeDelete()
+    public function beforeDelete(): bool
     {
         if (parent::beforeDelete()) {
             $this->deleteSingleFile('image', self::UPLOAD_PATH);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace backend\modules\content\models;
 
 use backend\modules\content\models\query\LeadQuery;
@@ -11,12 +13,12 @@ use Yii;
 class Lead extends ActiveRecord
 {
     
-    public static function tableName()
+    public static function tableName(): string
     {
         return '{{%lead}}';
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['name', 'phone'], 'required'],
@@ -26,7 +28,7 @@ class Lead extends ActiveRecord
         ];
     }
 
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => Yii::t('app', 'ID'),
@@ -39,19 +41,19 @@ class Lead extends ActiveRecord
         ];
     }
 
-    public static function find()
+    public static function find(): LeadQuery
     {
         return new LeadQuery(get_called_class());
     }
 
-    public function afterSave($insert, $changedAttributes)
+    public function afterSave($insert, $changedAttributes): bool
     {
         $this->callbackToEmail();
         $this->callbackToTelegram();
         parent::afterSave($insert, $changedAttributes);
     }
 
-    protected function callbackToTelegram()
+    protected function callbackToTelegram(): void
     {
         try {
             $chat_ids = explode(',', Yii::$app->configManager->getItemValue('reportTelegramChatID'));
@@ -63,15 +65,14 @@ class Lead extends ActiveRecord
                     'message' => $message
                 ]));
             } else {
-                return Yii::error(Yii::t('app', "Telegram Chat ID is not set"));
+                Yii::error(Yii::t('app', "Telegram Chat ID is not set"));
             }
-            return true;
         } catch (\Exception $e) {
             Yii::debug($e->getMessage());
         }
     }
 
-    protected function callbackToEmail()
+    protected function callbackToEmail(): void
     {
         try {
             $emails = explode(',', Yii::$app->configManager->getItemValue('reportEmail'));
@@ -85,15 +86,14 @@ class Lead extends ActiveRecord
                     'subject' => $this->subject,
                 ]));
             } else {
-                return Yii::error(Yii::t('app', "Incorrect report Emails"));
+                Yii::error(Yii::t('app', "Incorrect report Emails"));
             }
-            return true;
         } catch (\Exception $e) {
             Yii::debug($e->getMessage());
         }
     }
 
-    protected function generateMessageText()
+    protected function generateMessageText(): string
     {        
         $message = Yii::t('app', 'ContactName {name}', ['name' => $this->name]) . PHP_EOL;
         $message .= Yii::t('app', 'ContactPhone {phone}', ['phone' => $this->phone]) . PHP_EOL;

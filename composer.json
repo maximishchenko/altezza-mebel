@@ -27,7 +27,8 @@
         "npm-asset/swiper": "*",
         "npm-asset/hc-sticky": "*",
         "npm-asset/choices.js": "*",
-        "yii2tech/sitemap": "^1.1"
+        "yii2tech/sitemap": "^1.1",
+        "npm-asset/fancyapps--ui": "^5.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

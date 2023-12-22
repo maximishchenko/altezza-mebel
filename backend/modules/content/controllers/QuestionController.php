@@ -1,32 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace backend\modules\content\controllers;
 
+use backend\controllers\BaseController;
 use backend\modules\content\models\Question;
 use backend\modules\content\models\search\QuestionSearch;
-use yii\web\Controller;
+use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use Yii;
+use yii\web\Response;
 
-class QuestionController extends Controller
+class QuestionController extends BaseController
 {
-    public function behaviors()
-    {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
-                    ],
-                ],
-            ]
-        );
-    }
 
-    public function actionIndex()
+    public function actionIndex(): string
     {
         $searchModel = new QuestionSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
@@ -36,8 +25,11 @@ class QuestionController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-    
-    public function actionCreate()
+
+    /**
+     * @return Response|string
+     */
+    public function actionCreate(): Response | string
     {
         $model = new Question();
 
@@ -55,7 +47,12 @@ class QuestionController extends Controller
         ]);
     }
 
-    public function actionUpdate($id)
+    /**
+     * @param int $id
+     * @return Response|string
+     * @throws NotFoundHttpException
+     */
+    public function actionUpdate(int $id): Response| string
     {
         $model = $this->findModel($id);
 
@@ -69,15 +66,27 @@ class QuestionController extends Controller
         ]);
     }
 
-    public function actionDelete($id)
+    /**
+     * @param int $id
+     * @return Response
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws StaleObjectException
+     */
+    public function actionDelete(int $id): Response
     {
         $this->findModel($id)->delete();
         Yii::$app->session->setFlash('warning', Yii::t('app', 'Record deleted'));
 
         return $this->redirect(['index']);
     }
-    
-    protected function findModel($id)
+
+    /**
+     * @param int $id
+     * @return Question
+     * @throws NotFoundHttpException
+     */
+    protected function findModel(int $id): Question
     {
         if (($model = Question::findOne(['id' => $id])) !== null) {
             return $model;

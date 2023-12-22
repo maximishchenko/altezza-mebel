@@ -227,37 +227,130 @@
 .bread-crumse__list__item:not(:last-child):after {
   content: '/';
 }
-.advantages {
-  padding: 15px 0;
-  width: 100%;
-  display: flex;
-  background-color: var(--main-bg-color-light);
-  justify-content: space-evenly;
+.grid {
+  position: relative;
+  margin: 0 auto;
+  list-style: none;
+  text-align: center;
 }
-@media screen and (min-width: 1160px) {
-  .advantages .swiper-wrapper {
-    justify-content: inherit;
+.grid figure {
+  position: relative;
+  float: left;
+  overflow: hidden;
+  max-width: 25%;
+  max-height: 360px;
+  width: 48%;
+  text-align: center;
+  cursor: pointer;
+}
+.grid figure h2,
+.grid figure p {
+  margin: 0;
+}
+.grid figure p {
+  letter-spacing: 1px;
+  font-size: 68.5%;
+}
+.grid figure h2 {
+  word-spacing: -0.15em;
+  font-weight: 300;
+}
+.grid figure h2 span {
+  font-weight: 800;
+}
+.grid figure figcaption {
+  padding: 2em;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 1.25em;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.grid figure figcaption,
+.grid figure figcaption > a {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.grid figure figcaption::before,
+.grid figure figcaption ::after {
+  pointer-events: none;
+}
+.grid figure img {
+  position: relative;
+  display: block;
+  max-width: 100%;
+  min-height: 365px;
+  opacity: 0.8;
+}
+.grid figure.effect-oscar img {
+  opacity: 0.9;
+  -webkit-transition: opacity 0.35s;
+  transition: opacity 0.35s;
+}
+.grid figure.effect-oscar h2 {
+  margin: 20% 0 10px 0;
+  -webkit-transition: -webkit-transform 0.35s;
+  transition: transform 0.35s;
+}
+.grid figure.effect-oscar figcaption::before,
+.grid figure.effect-oscar p {
+  opacity: 0;
+  -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+  transition: opacity 0.35s, transform 0.35s;
+  -webkit-transform: scale(0);
+  transform: scale(0);
+}
+.grid figure.effect-oscar figcaption {
+  padding: 3em;
+  background-color: rgba(58, 52, 42, 0.7);
+  -webkit-transition: background-color 0.35s;
+  transition: background-color 0.35s;
+}
+.grid figure.effect-oscar figcaption::before {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  bottom: 30px;
+  left: 30px;
+  border: 1px solid #fff;
+  content: '';
+}
+.grid figure.effect-oscar:hover h2 {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+.grid figure.effect-oscar:hover figcaption::before,
+.grid figure.effect-oscar:hover p {
+  opacity: 1;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+@media screen and (max-width: 1280px) {
+  .grid figure {
+    width: 100%;
+    max-width: 100%;
   }
 }
-.advantages__item {
-  width: 270px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  margin: 10px;
+@media screen and (max-width: 1024px) {
+  .grid figure {
+    width: 100%;
+    max-width: 100%;
+  }
 }
-.advantages__item__img {
-  width: var(--circle-img-size);
-  height: var(--circle-img-size);
-  border-radius: var(--circle-img-radius);
-  background-color: var(--main-bg-color-dark);
+@media screen and (max-width: 768px) {
+  .grid figure {
+    width: 100%;
+    max-width: 100%;
+  }
 }
-.advantages__item__title {
-  margin: 10px 0 20px;
-}
-.advantages__item__description {
-  font-weight: 500;
+@media screen and (max-width: 425px) {
+  .grid figure {
+    width: 100%;
+    max-width: 100%;
+  }
 }
 .our-story {
   padding: var(--padding-y-defult) var(--padding-x-defult);
@@ -1065,6 +1158,26 @@
 }
 .policy {
   padding: var(--padding-x-defult) var(--padding-y-defult);
+}
+.policy__item {
+  margin: 1.5em 0;
+}
+.policy__item__title {
+  font-size: 1.2em;
+}
+.policy__item__list {
+  margin: 1em 0 0 1em;
+}
+.policy__item__list__element {
+  margin: 0.5em 0;
+}
+.collaboration__bottom__item {
+  padding: 10px 100px;
+}
+@media screen and (max-width: 1024px) {
+  .collaboration__bottom__item {
+    padding: 10px var(--padding-x-default);
+  }
 }
 * {
   margin: 0;

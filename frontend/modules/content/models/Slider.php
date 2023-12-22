@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace frontend\modules\content\models;
 
 use backend\modules\content\models\Slider as backendSlider;
@@ -11,7 +13,7 @@ class Slider extends backendSlider implements ImageInterface
 {
     use cacheParamsTrait;
 
-    public static function find()
+    public static function find(): SliderQuery
     {
         return new SliderQuery(get_called_class());
     }

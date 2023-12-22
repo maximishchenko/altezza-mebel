@@ -1,19 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace frontend\modules\seo\models;
 
 use backend\modules\seo\models\Script as backendScript;
 use frontend\modules\seo\models\query\ScriptQuery;
 use frontend\traits\cacheParamsTrait;
-use yii\web\View;
-use Yii;
 
 class Script extends backendScript
 {
 
     use cacheParamsTrait;
 
-    public static function find()
+    public static function find(): ScriptQuery
     {
         return new ScriptQuery(get_called_class());
     } 

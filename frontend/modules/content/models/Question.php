@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace frontend\modules\content\models;
 
 use backend\modules\content\models\Question as backendQuestion;
@@ -10,7 +13,7 @@ class Question extends backendQuestion
 
     use cacheParamsTrait;
 
-    public static function find()
+    public static function find(): QuestionQuery
     {
         return new QuestionQuery(get_called_class());
     }

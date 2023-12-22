@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace frontend\modules\seo\models;
 
 use backend\modules\seo\models\MetaTag as backendMetaTag;
@@ -105,9 +107,9 @@ class MetaTag
      *
      * 
      */
-    public function setH1Title()
+    public function setH1Title(): string
     {
-        if (!Yii::$app->view->params[self::IS_H1_HIDDEN]) {
+        if (!isset(Yii::$app->view->params[self::IS_H1_HIDDEN]) || empty(Yii::$app->view->params[self::IS_H1_HIDDEN])) {
             if ($this->seoTags !== null) {
                 if ($this->seoTags->h1_text) {
                     return '<h1 class="main__title">' . $this->seoTags->h1_text . '</h1>';
@@ -124,15 +126,17 @@ class MetaTag
      * Возвращает сниппет с текстовым описанием страницы при наличии в БД
      *
      */
-    public function setDescriptionSnippet()
+    public function setDescriptionSnippet(): ?string
     {
-        if (!Yii::$app->view->params[self::IS_DESCRIPTION_TEXT_HIDDEN]) {
+        $description = null;
+        if (!isset(Yii::$app->view->params[self::IS_DESCRIPTION_TEXT_HIDDEN]) || empty(Yii::$app->view->params[self::IS_DESCRIPTION_TEXT_HIDDEN])) {
             if ($this->seoTags !== null) {
                 if ($this->seoTags->description_text) {
-                    return $this->seoTags->description_text;
+                    $description = $this->seoTags->description_text;
                 }
             }
         }
+        return $description;
     }
 
     /**
@@ -140,7 +144,7 @@ class MetaTag
      *
      * @return void
      */
-    public function setMetaTags()
+    public function setMetaTags(): void
     {
         if ($this->seoTags !== null) {   
 
@@ -248,7 +252,7 @@ class MetaTag
      * Устанавливает значение заголовка страницы title из БД для текущего url
      *
      */
-    protected function setPageTitle()
+    protected function setPageTitle(): void
     {
         Yii::$app->view->title = $this->seoTags->meta_title;
     }
@@ -257,7 +261,7 @@ class MetaTag
      * Устанавливает значение заголовка страницы title по-умолчанию
      *
      */
-    protected function setDefaultPageTitle()
+    protected function setDefaultPageTitle(): void
     {
         if (!isset(Yii::$app->view->title) && empty(Yii::$app->view->title)) {
             Yii::$app->view->title = Yii::$app->request->hostInfo;
@@ -270,7 +274,7 @@ class MetaTag
      * @param [string] $tag название тэга
      * @return void
      */
-    protected function setMetaTag(string $tag)
+    protected function setMetaTag(string $tag): void
     {
         $metaTag = self::getPageMetaTagsArray()[$tag];
         if (isset($this->seoTags->$metaTag) && !empty($this->seoTags->$metaTag)) {
@@ -287,7 +291,7 @@ class MetaTag
      *
      * @return void
      */
-    protected function setDefaultMetaTag()
+    protected function setDefaultMetaTag(): void
     {
         foreach (self::setDefaultMetaTags() as $tagName => $tagValue) {
             Yii::$app->view->registerMetaTag([
@@ -305,7 +309,7 @@ class MetaTag
      * @param [string] $property название свойства
      * @return void
      */
-    protected function setMetaProperty(string $property)
+    protected function setMetaProperty(string $property): void
     {
         $metaProperty = self::getPageMetaPropertiesArray()[$property];
 
@@ -324,7 +328,7 @@ class MetaTag
      *
      * @return void
      */
-    protected function setDefaultH1Title()
+    protected function setDefaultH1Title(): ?string
     {
         if (isset(Yii::$app->view->params[self::H1_DEFAULT]) && !empty(Yii::$app->view->params[self::H1_DEFAULT])) {
             return Yii::$app->view->params[self::H1_DEFAULT];

@@ -2,11 +2,11 @@
 
 namespace backend\modules\catalog\models;
 
+use backend\models\BaseModel;
 use backend\modules\catalog\models\query\ProductImageQuery;
 use backend\traits\fileTrait;
 use Yii;
-use yii\behaviors\BlameableBehavior;
-use yii\behaviors\TimestampBehavior;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "{{%product_image}}".
@@ -20,39 +20,21 @@ use yii\behaviors\TimestampBehavior;
  * @property int|null $created_by
  * @property int|null $updated_by
  *
+ * @property-read void|string $thumb
  * @property Product $product
  */
-class ProductImage extends \yii\db\ActiveRecord
+class ProductImage extends BaseModel
 {
     use fileTrait;
 
     const UPLOAD_PATH = 'upload/product_image/';
 
-    public $imageFile;
+    public ?UploadedFile $imageFile = null;
     
     public static function tableName()
     {
         return '{{%product_image}}';
     }
-
-    public function behaviors()
-    {
-        return[
-            [
-                'class' => TimestampBehavior::className(),
-                'createdAtAttribute' => 'created_at',
-                'updatedAtAttribute' => 'updated_at',
-                'value' => function () {
-                    return date('U');
-                },
-            ],
-            [
-                'class' => BlameableBehavior::className(),
-                'createdByAttribute' => 'created_by',
-                'updatedByAttribute' => 'updated_by',
-            ],
-        ];
-    }  
 
     public function rules()
     {

@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace backend\modules\catalog\models;
 
 use Yii;
 use backend\modules\catalog\models\query\ProductElementQuery;
 use common\models\Sort;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "{{%product_element}}".
@@ -26,12 +29,15 @@ use common\models\Sort;
  */
 class ProductElement extends \yii\db\ActiveRecord
 {
-    public static function tableName()
+    public static function tableName(): string
     {
         return '{{%product_element}}';
     }
 
-    public function rules()
+    /**
+     * @return array
+     */
+    public function rules(): array
     {
         return [
             [['product_id', 'x_pos', 'y_pos', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
@@ -44,7 +50,10 @@ class ProductElement extends \yii\db\ActiveRecord
         ];
     }
 
-    public function attributeLabels()
+    /**
+     * @return array
+     */
+    public function attributeLabels(): array
     {
         return [
             'id' => Yii::t('app', 'ID'),
@@ -62,12 +71,18 @@ class ProductElement extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getProduct()
+    /**
+     * @return ActiveQuery
+     */
+    public function getProduct(): ActiveQuery
     {
         return $this->hasOne(Product::class, ['id' => 'product_id']);
     }
 
-    public static function find()
+    /**
+     * @return ProductElementQuery
+     */
+    public static function find(): ProductElementQuery
     {
         return new ProductElementQuery(get_called_class());
     }

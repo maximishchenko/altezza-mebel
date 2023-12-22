@@ -21,7 +21,7 @@ use yii\helpers\Html;
         </h3>
         <?= $about->description; ?>
       
-        <?php if($toAbout): ?>
+        <?php if(isset($toAbout) && !empty($toAbout)): ?>
             <?= Html::a(Yii::t('app', "More info"), ['/about'], ['class' => "button button--dark button--small"]); ?>
         <?php elseif($about->link): ?>
             <?= Html::a(Yii::t('app', "More info"), $about->link, ['class' => "button button--dark button--small"]); ?>

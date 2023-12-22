@@ -1,34 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace backend\modules\content\controllers;
 
+use backend\controllers\BaseController;
 use backend\modules\content\models\Lead;
 use backend\modules\content\models\search\LeadSearch;
 use Yii;
-use yii\web\Controller;
+use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use yii\web\Response;
 
-class LeadController extends Controller
+class LeadController extends BaseController
 {
-    /**
-     * @inheritDoc
-     */
-    public function behaviors()
-    {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
-                    ],
-                ],
-            ]
-        );
-    }
 
+    /**
+     * @return string
+     */
     public function actionIndex()
     {
         $searchModel = new LeadSearch();
@@ -39,22 +28,39 @@ class LeadController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-    
-    public function actionView($id)
+
+    /**
+     * @param int $id
+     * @return string
+     * @throws NotFoundHttpException
+     */
+    public function actionView(int $id): string
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
     }
 
-    public function actionDelete($id)
+    /**
+     * @param int $id
+     * @return Response
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws StaleObjectException
+     */
+    public function actionDelete(int $id): Response
     {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
-    
-    protected function findModel($id)
+
+    /**
+     * @param int $id
+     * @return Lead
+     * @throws NotFoundHttpException
+     */
+    protected function findModel(int $id): Lead
     {
         if (($model = Lead::findOne(['id' => $id])) !== null) {
             return $model;

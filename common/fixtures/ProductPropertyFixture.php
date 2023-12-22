@@ -10,5 +10,16 @@ class ProductPropertyFixture extends ActiveFixture
 
     public $depends = [
         'common\fixtures\ProductFixture',
+        'common\fixtures\PropertyApplianceFixture',
+        'common\fixtures\PropertyBacklightFixture',
+        'common\fixtures\PropertyBodyMaterialFixture',
+        'common\fixtures\PropertyDecorativeElementFixture',
+        'common\fixtures\PropertyFasadCoatingFixture',
+        'common\fixtures\PropertyFasadMaterialFixture',
+        'common\fixtures\PropertyFormFixture',
+        'common\fixtures\PropertyFurnitureFixture',
+        'common\fixtures\PropertyStyleFixture',
+        'common\fixtures\PropertyTableTopFixture',
+        'common\fixtures\PropertyTypeFixture',
     ];
 }

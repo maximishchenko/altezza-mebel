@@ -1,17 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace backend\modules\catalog\models;
 
+use backend\models\BaseModel;
 use Yii;
 use backend\modules\catalog\models\query\ProductQuery;
 use backend\traits\fileTrait;
 use common\models\Sort;
 use common\models\Status;
-use yii\behaviors\BlameableBehavior;
+use yii\base\InvalidConfigException;
 use yii\behaviors\SluggableBehavior;
-use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
+use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "{{%product}}".
@@ -22,6 +25,7 @@ use yii\db\ActiveRecord;
  * @property int|null $style_id
  * @property int|null $appliance_id
  * @property string $name
+ * @property string $slug
  * @property string|null $image
  * @property string|null $description
  * @property string|null $comment
@@ -30,64 +34,71 @@ use yii\db\ActiveRecord;
  * @property int|null $created_at
  * @property int|null $updated_at
  * @property int|null $created_by
+ * @property-read mixed $style
+ * @property-read mixed $form
+ * @property-read mixed $bodyMaterialsCheckboxListItems
+ * @property-read mixed $bodyMaterials
+ * @property-read mixed $backlightsCheckboxListItems
+ * @property-read mixed $fasadCoatings
+ * @property-read mixed $images
+ * @property-read mixed $decorativeElements
+ * @property-read mixed $fasadCoatingsCheckboxListItems
+ * @property-read mixed $tableTopsCheckboxListItems
+ * @property-read mixed $fasadMaterialsCheckboxListItems
+ * @property-read mixed $furnituresCheckboxListItems
+ * @property-read mixed $backlights
+ * @property-read mixed $tableTops
+ * @property-read mixed $type
+ * @property-read mixed $fasadMaterials
+ * @property-read mixed $decorativeElementsCheckboxListItems
+ * @property-read mixed $furnitures
+ * @property-read mixed $appliance
  * @property int|null $updated_by
  */
-class Product extends ActiveRecord
+class Product extends BaseModel
 {
     use fileTrait;
 
     const UPLOAD_PATH = 'upload/product/';
 
-    public $imageFile;
+    public ?UploadedFile $imageFile = null;
 
-    public $imagesFiles;
+    public ?UploadedFile $imagesFiles = null;
 
-    protected $fasadMaterialsArray;
+    protected array $fasadMaterialsArray = [];
 
-    protected $fasadCoatingsArray;
+    protected array $fasadCoatingsArray = [];
 
-    protected $decorativeElementsArray;
+    protected array $decorativeElementsArray = [];
 
-    protected $bodyMaterialsArray;
+    protected array $bodyMaterialsArray = [];
 
-    protected $furnituresArray;
+    protected array $furnituresArray = [];
 
-    protected $backlightsArray;
+    protected array $backlightsArray = [];
 
-    protected $tableTopsArray;
+    protected array $tableTopsArray = [];
     
-    public static function tableName()
+    public static function tableName(): string
     {
         return '{{%product}}';
     }
 
-    public function behaviors()
+    public function behaviors(): array
     {
-        return[
+        return ArrayHelper::merge(parent::behaviors(),
             [
-                'class' => TimestampBehavior::className(),
-                'createdAtAttribute' => 'created_at',
-                'updatedAtAttribute' => 'updated_at',
-                'value' => function () {
-                    return date('U');
-                },
-            ],
-            [
-                'class' => BlameableBehavior::className(),
-                'createdByAttribute' => 'created_by',
-                'updatedByAttribute' => 'updated_by',
-            ],
-            [
-                'class' => SluggableBehavior::className(),
-                'attribute' => ['name'],
-                'slugAttribute' => 'slug',
-                'immutable' => true,
-                'ensureUnique'=>true,
-            ],
-        ];
-    }  
+                [
+                    'class' => SluggableBehavior::className(),
+                    'attribute' => ['name'],
+                    'slugAttribute' => 'slug',
+                    'immutable' => true,
+                    'ensureUnique'=>true,
+                ]
+            ]);
+    }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['type_id', 'form_id', 'appliance_id', 'style_id', 'sort', 'status', 'is_new', 'created_at', 'updated_at', 'created_by', 'updated_by', 'view_count'], 'integer'],
@@ -107,7 +118,7 @@ class Product extends ActiveRecord
         ];
     }
 
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => Yii::t('app', 'ID'),
@@ -141,7 +152,7 @@ class Product extends ActiveRecord
         ];
     }
 
-    public function attributeHints()
+    public function attributeHints(): array
     {
         return [
             'slug' => Yii::t('app', 'Auto-generated field. Service. Editable'),
@@ -151,51 +162,51 @@ class Product extends ActiveRecord
         ];
     }
 
-    public static function find()
+    public static function find(): ProductQuery
     {
         return new ProductQuery(get_called_class());
     }
     
-    public function getType()
+    public function getType(): ActiveQuery
     {
         return $this->hasOne(Property::class, ['id' => 'type_id'])->onCondition([Property::tableName().'.property_type' => PropertyType::TYPE]);
     }
     
-    public function getForm()
+    public function getForm(): ActiveQuery
     {
         return $this->hasOne(Property::class, ['id' => 'form_id'])->onCondition([Property::tableName().'.property_type' => PropertyForm::TYPE]);
     }
     
-    public function getStyle()
+    public function getStyle(): ActiveQuery
     {
         return $this->hasOne(Property::class, ['id' => 'style_id'])->onCondition([Property::tableName().'.property_type' => PropertyStyle::TYPE]);
     }
     
-    public function getAppliance()
+    public function getAppliance(): ActiveQuery
     {
         return $this->hasOne(Property::class, ['id' => 'appliance_id'])->onCondition([Property::tableName().'.property_type' => PropertyAppliance::TYPE]);
     }
 
-    public function getImages()
+    public function getImages(): ActiveQuery
     {
         return $this->hasMany(ProductImage::className(), ['product_id' => 'id'])->orderBy([ProductImage::tableName().'.sort' => SORT_ASC]);
     }
     
     // Материалы фасадов
 
-    public function getFasadMaterialsCheckboxListItems()
+    public function getFasadMaterialsCheckboxListItems(): array
     {
         return PropertyFasadMaterial::find()->select(['name', 'id'])->indexBy('id')->column();
     }
     
-    public function getFasadMaterials()
+    public function getFasadMaterials(): ActiveQuery
     {
         return $this->hasMany(PropertyFasadMaterial::className(), ['id' => 'property_id'])->viaTable('{{%product_property}}', ['product_id' => 'id'], function ($query) {
             $query->andWhere(['property_type' => PropertyFasadMaterial::TYPE]);
         });
     }
 
-    public function getFasadMaterialsArray()
+    public function getFasadMaterialsArray(): array
     {
         if ($this->fasadMaterialsArray === null) {
             $this->fasadMaterialsArray = $this->getFasadMaterials()->select('id')->column();
@@ -203,53 +214,69 @@ class Product extends ActiveRecord
         return $this->fasadMaterialsArray;
     }
 
-    public function setFasadMaterialsArray($value)
+    /**
+     * @param array $value
+     * @return void
+     */
+    public function setFasadMaterialsArray(array $value): void
     {
         $this->fasadMaterialsArray = (array)$value;
     }
     
     // Покрытие фасадов
 
-    public function getFasadCoatingsCheckboxListItems()
+    /**
+     * @return array
+     */
+    public function getFasadCoatingsCheckboxListItems(): array
     {
         return PropertyFasadCoating::find()->select(['name', 'id'])->indexBy('id')->column();
     }
     
-    public function getFasadCoatings()
+    /**
+     * @return ActiveQuery
+     * @throws InvalidConfigException
+     */
+    public function getFasadCoatings(): ActiveQuery
     {
         return $this->hasMany(PropertyFasadCoating::className(), ['id' => 'property_id'])->viaTable('{{%product_property}}', ['product_id' => 'id'], function ($query) {
             $query->andWhere(['property_type' => PropertyFasadCoating::TYPE]);
         });
     }
 
-    public function getFasadCoatingsArray()
+    public function getFasadCoatingsArray(): array
     {
+        /** @var array $this */
         if ($this->fasadCoatingsArray === null) {
             $this->fasadCoatingsArray = $this->getFasadCoatings()->select('id')->column();
         }
         return $this->fasadCoatingsArray;
     }
 
-    public function setFasadCoatingsArray($value)
+    /**
+     * @param $value
+     * @return void
+     */
+    public function setFasadCoatingsArray($value): void
     {
         $this->fasadCoatingsArray = (array)$value;
     }
      
     // Декоративные элементы
 
-    public function getDecorativeElementsCheckboxListItems()
+    public function getDecorativeElementsCheckboxListItems(): array
     {
         return PropertyDecorativeElement::find()->select(['name', 'id'])->indexBy('id')->column();
     }
     
-    public function getDecorativeElements()
+    public function getDecorativeElements(): ActiveQuery
     {
         return $this->hasMany(PropertyDecorativeElement::className(), ['id' => 'property_id'])->viaTable('{{%product_property}}', ['product_id' => 'id'], function ($query) {
             $query->andWhere(['property_type' => PropertyDecorativeElement::TYPE]);
         });
     }
 
-    public function getDecorativeElementsArray()
+    public function getDecorativeElementsArray(): array
     {
         if ($this->decorativeElementsArray === null) {
             $this->decorativeElementsArray = $this->getDecorativeElements()->select('id')->column();

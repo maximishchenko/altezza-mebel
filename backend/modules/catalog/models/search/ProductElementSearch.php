@@ -1,14 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace backend\modules\catalog\models\search;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use backend\modules\catalog\models\ProductElement;
+use yii\data\DataProviderInterface;
 
 class ProductElementSearch extends ProductElement
 {
-    public function rules()
+    public function rules(): array
     {
         return [
             [['product_id', 'x_pos', 'y_pos', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
@@ -16,12 +19,12 @@ class ProductElementSearch extends ProductElement
         ];
     }
 
-    public function scenarios()
+    public function scenarios(): array
     {
         return Model::scenarios();
     }
     
-    public function search($id, $params)
+    public function search(int $id, array $params): DataProviderInterface
     {
         $query = ProductElement::find()->where(['product_id' => $id]);
 
@@ -33,8 +36,6 @@ class ProductElementSearch extends ProductElement
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 

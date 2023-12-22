@@ -1,5 +1,7 @@
 <?php
 use yii\helpers\Html;
+use yii\helpers\Url;
+
 ?>
 
 <a href="<?= Yii::$app->homeUrl; ?>">
@@ -22,7 +24,10 @@ use yii\helpers\Html;
       <?= Html::a(Yii::t('app', 'Collaboration'), ['/collaboration'], []); ?>
     </li>
     <li class="nav-menu__list__item">
-      <?= Html::a(Yii::t('app', 'FAQ'), ['#' => 'FAQ'], []); ?>
+      <?php // echo Html::a(Yii::t('app', 'FAQ'), [Url::to(['#' => 'FAQ'], true)], []); ?>
+      <a href="#FAQ">
+        <?= Yii::t('app', 'FAQ'); ?>
+      </a>
     </li>
   </menu>
 </nav>

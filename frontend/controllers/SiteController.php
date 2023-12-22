@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use frontend\modules\catalog\models\Product;
 use frontend\modules\content\models\About;
+use frontend\modules\content\models\Collaboration;
 use frontend\modules\content\models\Advantage;
 use frontend\modules\content\models\Lead;
 use frontend\modules\content\models\Slider;
@@ -47,12 +48,12 @@ class SiteController extends BaseController
         ]);
     }
     
-    public function actionPolicy()
+    public function actionPolicy(): string
     {
         return $this->render('policy');
     }
     
-    public function actionAbout()
+    public function actionAbout(): string
     {
         $abouts = About::getDb()->cache(function() {
             return About::find()->active()->ordered()->all();
@@ -62,12 +63,17 @@ class SiteController extends BaseController
         ]);
     }
     
-    public function actionCollaboration()
+    public function actionCollaboration(): string
     {
-        return $this->render('collaboration');
+        $collaborations = Collaboration::getDb()->cache(function() {
+            return Collaboration::find()->active()->ordered()->all();
+        }, Collaboration::getCacheDuration(), Collaboration::getCacheDependency());
+        return $this->render('collaboration', [
+            'collaborations' => $collaborations,
+        ]);
     }
     
-    public function actionFeedback()
+    public function actionFeedback(): string
     {
         $lead = new Lead();
         if (Yii::$app->request->isAjax) {
@@ -86,7 +92,7 @@ class SiteController extends BaseController
         exit(1);
     }
     
-    public function actionOffline($name, $message)
+    public function actionOffline($name, $message): string
     {
         $this->layout = false;
         return $this->render('error', ['name' => $name, 'message' => $message]);

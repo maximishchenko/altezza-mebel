@@ -1,16 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace backend\modules\content\models\query;
 
-class LeadQuery extends \yii\db\ActiveQuery
-{
-    public function all($db = null)
-    {
-        return parent::all($db);
-    }
+use backend\models\BaseActiveQuery;
 
-    public function one($db = null)
-    {
-        return parent::one($db);
-    }
+class LeadQuery extends BaseActiveQuery
+{
 }

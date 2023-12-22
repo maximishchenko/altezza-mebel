@@ -1,5 +1,9 @@
 <?php
 
+/** @var yii\web\View $this */
+/** @var backend\modules\content\models\About $model */
+/** @var yii\widgets\ActiveForm $form */
+
 use backend\modules\content\models\About;
 use backend\widgets\SingleImagePreviewWidget;
 use yii\bootstrap5\ActiveForm;

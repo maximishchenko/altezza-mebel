@@ -1,4 +1,6 @@
 <?php
+use yii\log\FileTarget;
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -27,14 +29,6 @@ return [
         ],
     ],
     'components' => [
-                
-        // 'view' => [
-        //     'theme' => [
-        //             'pathMap' => [
-        //             '@backend/views' => '@vendor/hail812/yii2-adminlte3/src/views',
-        //         ],
-        //     ],
-        // ],
         'request' => [
             'csrfParam' => '_csrf-backend',
             'baseUrl' => '/admin',
@@ -45,14 +39,13 @@ return [
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
         ],
         'session' => [
-            // this is the name of the session cookie used for login on the backend
             'name' => 'advanced-backend',
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
                 [
-                    'class' => \yii\log\FileTarget::class,
+                    'class' => FileTarget::class,
                     'levels' => ['error', 'warning'],
                 ],
             ],
@@ -74,7 +67,7 @@ return [
         ],
         'urlManagerFrontend' => [
             'class' => 'yii\web\UrlManager',
-            'hostInfo' => Yii::$app->request->hostInfo,
+            'hostInfo' => YII_ENV_DEV ? 'altezza.local' : Yii::$app->request->hostInfo,
             'baseUrl' => '',
             'enablePrettyUrl' => true,
             'enableStrictParsing' => false,

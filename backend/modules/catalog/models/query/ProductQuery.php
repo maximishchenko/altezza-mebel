@@ -2,17 +2,8 @@
 
 namespace backend\modules\catalog\models\query;
 
-use yii\db\ActiveQuery;
+use backend\models\BaseActiveQuery;
 
-class ProductQuery extends ActiveQuery
+class ProductQuery extends BaseActiveQuery
 {
-    public function all($db = null)
-    {
-        return parent::all($db);
-    }
-
-    public function one($db = null)
-    {
-        return parent::one($db);
-    }
 }

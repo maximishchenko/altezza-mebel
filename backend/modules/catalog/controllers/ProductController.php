@@ -1,39 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace backend\modules\catalog\controllers;
 
+use backend\controllers\BaseController;
 use backend\modules\catalog\models\Product;
 use backend\modules\catalog\models\ProductElement;
 use backend\modules\catalog\models\ProductImage;
 use backend\modules\catalog\models\search\ProductElementSearch;
 use backend\modules\catalog\models\search\ProductSearch;
 use Yii;
-use yii\web\Controller;
+use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use yii\web\Response;
 
-class ProductController extends Controller
+class ProductController extends BaseController
 {
-    public function behaviors()
-    {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
-                        'delete-element' => ['POST'],
-                        'delete-images' => ['POST'],
-                        'delete-image' => ['POST'],
-                        'save-image-sort' => ['POST'],
-                    ],
-                ],
-            ]
-        );
-    }
 
-    public function actionIndex()
+    /**
+     * @return string
+     */
+    public function actionIndex(): string
     {
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
@@ -44,7 +32,10 @@ class ProductController extends Controller
         ]);
     }
 
-    public function actionCreate()
+    /**
+     * @return Response|string
+     */
+    public function actionCreate(): Response | string
     {
         $model = new Product();
 
@@ -62,7 +53,12 @@ class ProductController extends Controller
         ]);
     }
 
-    public function actionUpdate($id)
+    /**
+     * @param int $id
+     * @return Response|string
+     * @throws NotFoundHttpException
+     */
+    public function actionUpdate(int $id): Response | string
     {
         $model = $this->findModel($id);
 
@@ -76,16 +72,28 @@ class ProductController extends Controller
         ]);
     }
 
-    public function actionDelete($id)
+    /**
+     * @param int $id
+     * @return Response
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws StaleObjectException
+     */
+    public function actionDelete(int $id): Response
     {
         $this->findModel($id)->delete();
         Yii::$app->session->setFlash('warning', Yii::t('app', 'Record deleted'));
 
         return $this->redirect(['index']);
     }
-    
 
-    public function actionDeleteImage(int $id)
+
+    /**
+     * @param int $id
+     * @return Response
+     * @throws NotFoundHttpException
+     */
+    public function actionDeleteImage(int $id): Response
     {
         $model = $this->findModel($id);
         $file = $model->getPath(Product::UPLOAD_PATH, $model->image);
@@ -95,8 +103,11 @@ class ProductController extends Controller
         Yii::$app->session->setFlash('danger', Yii::t('app', 'Record deleted!'));
         return $this->redirect(Yii::$app->request->referrer);
     }
-           
-    public function actionSaveImageSort()
+
+    /**
+     * @return void
+     */
+    public function actionSaveImageSort(): void
     {
         $order = Yii::$app->request->post('order');
         foreach($order as $sort => $imageId) {
@@ -109,8 +120,15 @@ class ProductController extends Controller
         print_r($order);
     }
 
-        
-    public function actionDeleteImages(int $id)
+
+    /**
+     * @param int $id
+     * @return Response
+     * @throws NotFoundHttpException
+     * @throws StaleObjectException
+     * @throws \Throwable
+     */
+    public function actionDeleteImages(int $id): Response
     {
         $model = $this->findImagesModel($id);
         $model->delete();
@@ -118,7 +136,12 @@ class ProductController extends Controller
         return $this->redirect(Yii::$app->request->referrer);
     }
 
-    public function actionElements($id)
+    /**
+     * @param int $id
+     * @return string
+     * @throws NotFoundHttpException
+     */
+    public function actionElements(int $id): string
     {
         $model = $this->findModel($id);
         $searchModel = new ProductElementSearch();
@@ -131,7 +154,12 @@ class ProductController extends Controller
         ]);
     }
 
-    public function actionCreateElement($id)
+    /**
+     * @param int $id
+     * @return Response|string
+     * @throws NotFoundHttpException
+     */
+    public function actionCreateElement(int $id): Response | string
     {
         $model = $this->findModel($id);
         $elementModel = new ProductElement();
@@ -152,7 +180,12 @@ class ProductController extends Controller
         ]);
     }
 
-    public function actionUpdateElement($elementId)
+    /**
+     * @param int $elementId
+     * @return Response|string
+     * @throws NotFoundHttpException
+     */
+    public function actionUpdateElement(int $elementId): Response | string
     {
         
         $elementModel = $this->findElementModel($elementId);
@@ -167,7 +200,14 @@ class ProductController extends Controller
         ]);
     }
 
-    public function actionDeleteElement($elementId)
+    /**
+     * @param int $elementId
+     * @return Response
+     * @throws NotFoundHttpException
+     * @throws StaleObjectException
+     * @throws \Throwable
+     */
+    public function actionDeleteElement(int $elementId): Response
     {
         $model = $this->findElementModel($elementId);
         $model->delete();
@@ -176,7 +216,12 @@ class ProductController extends Controller
         return $this->redirect(['elements', 'id' => $model->product_id]);
     }
 
-    protected function findModel($id)
+    /**
+     * @param int $id
+     * @return Product
+     * @throws NotFoundHttpException
+     */
+    protected function findModel(int $id): Product
     {
         if (($model = Product::findOne(['id' => $id])) !== null) {
             return $model;
@@ -185,7 +230,12 @@ class ProductController extends Controller
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
 
-    protected function findElementModel($elementId)
+    /**
+     * @param int $elementId
+     * @return ProductElement
+     * @throws NotFoundHttpException
+     */
+    protected function findElementModel(int $elementId): ProductElement
     {
         if (($model = ProductElement::findOne(['id' => $elementId])) !== null) {
             return $model;
@@ -194,7 +244,12 @@ class ProductController extends Controller
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
 
-    protected function findImagesModel(int $id)
+    /**
+     * @param int $id
+     * @return ProductImage
+     * @throws NotFoundHttpException
+     */
+    protected function findImagesModel(int $id): ProductImage
     {
         if (($model = ProductImage::findOne($id)) !== null) {
             return $model;

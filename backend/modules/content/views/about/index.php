@@ -8,6 +8,10 @@ use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 
+/** @var yii\web\View $this */
+/** @var backend\modules\content\models\search\AboutSearch $searchModel */
+/** @var yii\data\ActiveDataProvider $dataProvider */
+
 $this->title = Yii::t('app', 'Abouts');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'CONTENT_MODULE'), 'url' => ['/content']];
 $this->params['breadcrumbs'][] = $this->title;

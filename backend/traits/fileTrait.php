@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace backend\traits;
 
 use yii\web\UploadedFile;
@@ -10,9 +12,15 @@ use Yii;
  */
 trait fileTrait
 {
-    private static $frontendPath = '../../frontend/web/';
-    
-    private static $frontendAlias =  '@frontend/web';
+    /**
+     * @var string
+     */
+    private static string $frontendPath = '../../frontend/web/';
+
+    /**
+     * @var string
+     */
+    private static string $frontendAlias =  '@frontend/web';
 
     /**
      * Загружает один файл, записывает имя файла в значение аттрибута в БД
@@ -20,10 +28,10 @@ trait fileTrait
      * @param string $fileAttribute название виртуального аттрибута загруженного файла, полученного от \yii\web\UploadedFile
      * @param string $fileField название аттрибута, соответствующего полю в БД для хранения имени файла
      * @param string $uploadPath строка пути к каталогу загружаемого файла
-     * 
+     * @param bool $multiple
      * @return void
      */
-    public function uploadFile(string $fileAttribute, string $fileField, string $uploadPath, bool $multiple = false)
+    public function uploadFile(string $fileAttribute, string $fileField, string $uploadPath, bool $multiple = false): void
     {
         if (!$multiple) {
            $this->$fileAttribute = UploadedFile::getInstance($this, $fileAttribute);
@@ -43,14 +51,14 @@ trait fileTrait
     }
 
     /**
-     * Undocumented function
+     * Удаляет файлы из файловой системы
      *
      * @param string $filesAttribute
      * @param string $fileField
      * @param string $uploadPath
      * @return void
      */
-    public function deleteMultipleFiles(string $filesAttribute, string $fileField, string $uploadPath)
+    public function deleteMultipleFiles(string $filesAttribute, string $fileField, string $uploadPath): void
     {
         if ($this->$filesAttribute) {
             foreach ($this->$filesAttribute as $file) {
@@ -61,13 +69,13 @@ trait fileTrait
     }
 
     /**
-     * Undocumented function
+     * Удаляет один файл из файловой системы
      *
      * @param string $fileField
      * @param string $uploadPath
      * @return void
      */
-    public function deleteSingleFile(string $fileField, string $uploadPath)
+    public function deleteSingleFile(string $fileField, string $uploadPath): void
     {
         if($this->$fileField) {
             $filePath = $this->getPath($uploadPath, $this->$fileField);
@@ -79,19 +87,23 @@ trait fileTrait
     /**
      * Возвращает полный путь к загруженному файлу или null если файл отсутствует
      *
+     * @param string $path
+     * @param string $file
      * @return string|null
      */
     public function getPath(string $path, string $file): ?string
     {
-        return (isset($file)) ? self::$frontendPath . $path . $file : null;
+        return $file ? self::$frontendPath . $path . $file : null;
     }
 
     /**
      * Возвращает относительный путь к файлу изображения
      *
+     * @param string $path
+     * @param string $file
      * @return string
      */
-    public function getUrl(string $path, string $file)
+    public function getUrl(string $path, string $file): string
     {
         return "/" . $path . $file;
     }
@@ -99,11 +111,12 @@ trait fileTrait
     /**
      * Проверяет наличие загруженного файла
      *
+     * @param $attribute
      * @return bool
      */
     public function isFile($attribute): bool
     {
-        return isset($attribute) && !empty($attribute) ? true : false;
+        return !empty($attribute);
     }
 
     /**
@@ -112,9 +125,11 @@ trait fileTrait
      * @param string $file абсолютный или относительный путь к файлу в файловой системе
      * @return void
      */
-    public function removeSingleFileIfExist(string $file)
+    public function removeSingleFileIfExist(string $file): void
     {
-        file_exists($file) ? unlink($file) : false;
+        if (file_exists($file)) {
+            unlink($file);
+        }
     }
 
     /**
@@ -127,8 +142,7 @@ trait fileTrait
     public static function setPath(UploadedFile $file, string $path): string
     {
         $img = uniqid() . '.' . $file->extension;
-        $filePath = self::$frontendPath . $path . $img;
-        return $filePath;
+        return self::$frontendPath . $path . $img;
     }
 
     public function removeOldFileOnUpdate()

@@ -2,13 +2,12 @@
 
 namespace backend\modules\catalog\models;
 
+use backend\models\BaseModel;
 use backend\modules\catalog\models\query\PropertyQuery;
 use common\models\Sort;
 use common\models\Status;
 use Yii;
-use yii\behaviors\BlameableBehavior;
 use yii\behaviors\SluggableBehavior;
-use yii\behaviors\TimestampBehavior;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -25,41 +24,28 @@ use yii\helpers\ArrayHelper;
  * @property int|null $created_by
  * @property int|null $updated_by
  */
-class Property extends \yii\db\ActiveRecord
+class Property extends BaseModel
 {
-    public static function tableName()
+    public static function tableName(): string
     {
         return '{{%property}}';
     }
 
-    public function behaviors()
+    public function behaviors(): array
     {
-        return[
+        return ArrayHelper::merge(parent::behaviors(),
             [
-                'class' => TimestampBehavior::className(),
-                'createdAtAttribute' => 'created_at',
-                'updatedAtAttribute' => 'updated_at',
-                'value' => function () {
-                    return date('U');
-                },
-            ],
-            [
-                'class' => BlameableBehavior::className(),
-                'createdByAttribute' => 'created_by',
-                'updatedByAttribute' => 'updated_by',
-            ],
-            [
-                'class' => SluggableBehavior::className(),
-                'attribute' => ['name'],
-                'slugAttribute' => 'slug',
-                'immutable' => true,
-                'ensureUnique'=>true,
-            ],
-
-        ];
-    }  
+                [
+                    'class' => SluggableBehavior::className(),
+                    'attribute' => ['name'],
+                    'slugAttribute' => 'slug',
+                    'immutable' => true,
+                    'ensureUnique'=>true,
+                ]
+            ]);
+    }
     
-    public function rules()
+    public function rules(): array
     {
         return [
             [['property_type', 'name'], 'required'],
@@ -71,7 +57,7 @@ class Property extends \yii\db\ActiveRecord
         ];
     }
 
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => Yii::t('app', 'ID'),
@@ -88,7 +74,7 @@ class Property extends \yii\db\ActiveRecord
         ];
     }
 
-    public function attributeHints()
+    public function attributeHints(): array
     {
         return [
             'slug' => Yii::t('app', 'Auto-generated field. Service. Editable'),
@@ -96,7 +82,7 @@ class Property extends \yii\db\ActiveRecord
         ];
     }
 
-    public static function find()
+    public static function find(): PropertyQuery
     {
         return new PropertyQuery(get_called_class());
     }

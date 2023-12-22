@@ -1,0 +1,156 @@
+
+.grid {
+  position: relative;
+  margin: 0 auto;
+  list-style: none;
+  text-align: center;
+
+  & figure {
+    position: relative;
+    float: left;
+    overflow: hidden;
+    max-width: 25%;
+    max-height: 360px;
+    width: 48%;
+    text-align: center;
+    cursor: pointer;
+
+    & h2, p {
+      margin: 0;
+    }
+
+    & p {
+      letter-spacing: 1px;
+      font-size: 68.5%;
+    }
+
+    & h2 {
+      word-spacing: -0.15em;
+      font-weight: 300;
+
+      & span {
+        font-weight: 800;
+      }
+    }
+
+    & figcaption {
+
+      & , > a {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      &::before, ::after {
+        pointer-events: none;
+      }
+
+      padding: 2em;
+      color: #fff;
+      text-transform: uppercase;
+      font-size: 1.25em;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+    }
+
+    & img {
+      position: relative;
+      display: block;
+      max-width: 100%;
+      min-height: 365px;
+      opacity: 0.8;
+    }
+
+    &.effect-oscar {
+      & img {
+        opacity: 0.9;
+        -webkit-transition: opacity 0.35s;
+        transition: opacity 0.35s;
+      }
+
+      & h2 {
+        margin: 20% 0 10px 0;
+        -webkit-transition: -webkit-transform 0.35s;
+        transition: transform 0.35s;
+      }
+
+      & figcaption::before, p {
+        opacity: 0;
+        -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+        transition: opacity 0.35s, transform 0.35s;
+        -webkit-transform: scale(0);
+        transform: scale(0);
+      }
+
+      & figcaption {
+        padding: 3em;
+        background-color: rgba(58,52,42,0.7);
+        -webkit-transition: background-color 0.35s;
+        transition: background-color 0.35s;
+
+        &::before {
+          position: absolute;
+          top: 30px;
+          right: 30px;
+          bottom: 30px;
+          left: 30px;
+          border: 1px solid #fff;
+          content: '';
+        }
+
+      }
+
+      &:hover {
+        & h2 {
+          -webkit-transform: translate3d(0,0,0);
+          transform: translate3d(0,0,0);
+        }
+
+        & figcaption::before, p {
+            opacity: 1;
+            -webkit-transform: scale(1);
+            transform: scale(1);
+        }
+
+      }
+    }
+  }
+}
+
+
+@media screen and (max-width: @breakpoint-large) {
+  .grid {
+    & figure {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+
+}
+@media screen and (max-width: @breakpoint-medium) {
+
+  .grid {
+    & figure {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+}
+@media screen and (max-width: @breakpoint-small) {
+  .grid {
+    & figure {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+}
+@media screen and (max-width: @breakpoint-mobile) {
+  .grid {
+    & figure {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+}

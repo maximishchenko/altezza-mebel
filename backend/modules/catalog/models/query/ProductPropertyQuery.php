@@ -1,24 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace backend\modules\catalog\models\query;
 
+use backend\models\BaseActiveQuery;
 use backend\modules\catalog\models\PropertyFasadCoating;
 
-class ProductPropertyQuery extends \yii\db\ActiveQuery
+class ProductPropertyQuery extends BaseActiveQuery
 {
-
-    public function onlyFasadCoating()
+    /**
+     * @return ProductPropertyQuery
+     */
+    public function onlyFasadCoating(): ProductPropertyQuery
     {
         return $this->andWhere(['property_type' => PropertyFasadCoating::TYPE]);
-    }
-
-    public function all($db = null)
-    {
-        return parent::all($db);
-    }
-
-    public function one($db = null)
-    {
-        return parent::one($db);
     }
 }

@@ -10,12 +10,13 @@ class NpmAsset extends AssetBundle
     public $css = [
         'swiper/swiper-bundle.min.css',
         'choices.js/public/assets/styles/choices.min.css',
+        'fancyapps--ui/dist/fancybox/fancybox.css',
     ];
     public $js = [
         'swiper/swiper-bundle.min.js',
         'choices.js/public/assets/scripts/choices.min.js',
         'hc-sticky/dist/hc-sticky.js',
-
+        'fancyapps--ui/dist/fancybox/fancybox.umd.js',
     ];
     public $depends = [
     ];

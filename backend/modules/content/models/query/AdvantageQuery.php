@@ -1,16 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace backend\modules\content\models\query;
 
-class AdvantageQuery extends \yii\db\ActiveQuery
+use backend\models\BaseActiveQuery;
+
+class AdvantageQuery extends BaseActiveQuery
 {
-    public function all($db = null)
-    {
-        return parent::all($db);
-    }
-    
-    public function one($db = null)
-    {
-        return parent::one($db);
-    }
 }

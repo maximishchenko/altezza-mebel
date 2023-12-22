@@ -1,14 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace backend\modules\catalog\models\search;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use backend\modules\catalog\models\PropertyForm as PropertyFormModel;
+use yii\data\DataProviderInterface;
 
 class PropertyFormSearch extends PropertyFormModel
 {
-    public function rules()
+    public function rules(): array
     {
         return [
             [['id', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
@@ -16,16 +19,14 @@ class PropertyFormSearch extends PropertyFormModel
         ];
     }
 
-    public function scenarios()
+    public function scenarios(): array
     {
         return Model::scenarios();
     }
 
-    public function search($params)
+    public function search(array $params): DataProviderInterface
     {
         $query = PropertyFormModel::find();
-
-        // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -35,12 +36,9 @@ class PropertyFormSearch extends PropertyFormModel
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 
-        // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
             'sort' => $this->sort,

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace frontend\modules\content\models;
 
 use backend\modules\content\models\About as backendAbout;
@@ -11,7 +13,7 @@ class About extends backendAbout implements ImageInterface
 {
     use cacheParamsTrait;
 
-    public static function find()
+    public static function find(): AboutQuery
     {
         return new AboutQuery(get_called_class());
     }

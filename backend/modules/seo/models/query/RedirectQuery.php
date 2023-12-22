@@ -3,33 +3,13 @@
 namespace backend\modules\seo\models\query;
 
 
+use backend\models\BaseActiveQuery;
+
 /**
  * This is the ActiveQuery class for [[Redirect]].
  *
  * @see Redirect
  */
-class RedirectQuery extends \yii\db\ActiveQuery
+class RedirectQuery extends BaseActiveQuery
 {
-    /*public function active()
-    {
-        return $this->andWhere('[[status]]=1');
-    }*/
-
-    /**
-     * {@inheritdoc}
-     * @return Product[]|array
-     */
-    public function all($db = null)
-    {
-        return parent::all($db);
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return Product|array|null
-     */
-    public function one($db = null)
-    {
-        return parent::one($db);
-    }
 }

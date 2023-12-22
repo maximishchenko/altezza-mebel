@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace backend\modules\catalog\models;
 
-use backend\modules\catalog\models\Property;
 use backend\modules\catalog\models\query\PropertyQuery;
 use yii\helpers\ArrayHelper;
 
@@ -11,24 +12,37 @@ class PropertyForm extends Property
     
     const TYPE = 'form';
 
-    public function init()
+    /**
+     * @return void
+     */
+    public function init(): void
     {
         $this->property_type = self::TYPE;
         parent::init();
     }
 
-    public static function find()
+    /**
+     * @return PropertyQuery
+     */
+    public static function find(): PropertyQuery
     {
         return new PropertyQuery(get_called_class(), ['property_type' => self::TYPE]);
     }
 
-    public function beforeSave($insert)
+    /**
+     * @param $insert
+     * @return bool
+     */
+    public function beforeSave($insert): bool
     {
         $this->property_type = self::TYPE;
         return parent::beforeSave($insert);
     }
 
-    public static function getList()
+    /**
+     * @return array
+     */
+    public static function getList(): array
     {
         return ArrayHelper::map(self::find()->all(),'id','name');
     }

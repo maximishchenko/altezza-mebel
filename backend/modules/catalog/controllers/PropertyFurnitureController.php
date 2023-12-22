@@ -1,32 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace backend\modules\catalog\controllers;
 
 use backend\modules\catalog\models\PropertyFurniture;
 use backend\modules\catalog\models\search\PropertyFurnitureSearch;
 use Yii;
+use yii\db\StaleObjectException;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use yii\web\Response;
 
 class PropertyFurnitureController extends Controller
 {
-    public function behaviors()
-    {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
-                    ],
-                ],
-            ]
-        );
-    }
 
-    public function actionIndex()
+    /**
+     * @return string
+     */
+    public function actionIndex(): string
     {
         $searchModel = new PropertyFurnitureSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
@@ -37,7 +29,10 @@ class PropertyFurnitureController extends Controller
         ]);
     }
 
-    public function actionCreate()
+    /**
+     * @return Response|string
+     */
+    public function actionCreate(): Response | string
     {
         $model = new PropertyFurniture();
 
@@ -55,7 +50,12 @@ class PropertyFurnitureController extends Controller
         ]);
     }
 
-    public function actionUpdate($id)
+    /**
+     * @param int $id
+     * @return Response|string
+     * @throws NotFoundHttpException
+     */
+    public function actionUpdate(int $id): Response | string
     {
         $model = $this->findModel($id);
 
@@ -69,7 +69,14 @@ class PropertyFurnitureController extends Controller
         ]);
     }
 
-    public function actionDelete($id)
+    /**
+     * @param int $id
+     * @return Response
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws StaleObjectException
+     */
+    public function actionDelete(int $id): Response
     {
         $this->findModel($id)->delete();
         Yii::$app->session->setFlash('warning', Yii::t('app', 'Record deleted'));
@@ -77,7 +84,12 @@ class PropertyFurnitureController extends Controller
         return $this->redirect(['index']);
     }
 
-    protected function findModel($id)
+    /**
+     * @param int $id
+     * @return PropertyFurniture|null
+     * @throws NotFoundHttpException
+     */
+    protected function findModel(int $id)
     {
         if (($model = PropertyFurniture::findOne(['id' => $id])) !== null) {
             return $model;

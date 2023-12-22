@@ -10,18 +10,28 @@ class PropertyTableTop extends Property
     
     const TYPE = 'table_top';
 
-    public function init()
+    /**
+     * @return void
+     */
+    public function init(): void
     {
         $this->property_type = self::TYPE;
         parent::init();
     }
 
-    public static function find()
+    /**
+     * @return PropertyQuery
+     */
+    public static function find(): PropertyQuery
     {
         return new PropertyQuery(get_called_class(), ['property_type' => self::TYPE]);
     }
 
-    public function beforeSave($insert)
+    /**
+     * @param $insert
+     * @return bool
+     */
+    public function beforeSave($insert): bool
     {
         $this->property_type = self::TYPE;
         return parent::beforeSave($insert);

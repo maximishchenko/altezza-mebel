@@ -46,6 +46,16 @@ use \hail812\adminlte\widgets\SmallBox;
         </div>
         <div class="col-lg-4 col-md-6 col-sm-6 col-12">
             <?= SmallBox::widget([
+                'title' => Yii::t('app', 'Collaborations'),
+                'text' => Yii::t('app', 'Collaborations Edit'),
+                'icon' => 'fas fa-cog',
+                'theme' => 'warning',
+                'linkText' => Yii::t('app', 'GO_LINK'),
+                'linkUrl' => Url::to(['/content/collaboration'])
+            ]) ?>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+            <?= SmallBox::widget([
                 'title' => Yii::t('app', 'QUESTIONS'),
                 'text' => Yii::t('app', 'QUESTIONS Edit'),
                 'icon' => 'fas fa-cog',

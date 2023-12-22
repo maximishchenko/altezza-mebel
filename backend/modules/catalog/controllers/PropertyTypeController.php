@@ -1,33 +1,23 @@
 <?php
 
+declare(strict_types=1);
 namespace backend\modules\catalog\controllers;
 
+use backend\controllers\BaseController;
 use backend\modules\catalog\models\PropertyType;
 use backend\modules\catalog\models\search\PropertyTypeSearch;
 use Yii;
-use yii\web\Controller;
+use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use yii\web\Response;
 
-class PropertyTypeController extends Controller
+class PropertyTypeController extends BaseController
 {
-    
-    public function behaviors()
-    {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
-                    ],
-                ],
-            ]
-        );
-    }
-    
-    public function actionIndex()
+
+    /**
+     * @return string
+     */
+    public function actionIndex(): string
     {
         $searchModel = new PropertyTypeSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
@@ -37,8 +27,11 @@ class PropertyTypeController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-    
-    public function actionCreate()
+
+    /**
+     * @return Response|string
+     */
+    public function actionCreate(): Response | string
     {
         $model = new PropertyType();
 
@@ -56,7 +49,12 @@ class PropertyTypeController extends Controller
         ]);
     }
 
-    public function actionUpdate($id)
+    /**
+     * @param int $id
+     * @return Response|string
+     * @throws NotFoundHttpException
+     */
+    public function actionUpdate(int $id): Response | string
     {
         $model = $this->findModel($id);
 
@@ -70,7 +68,12 @@ class PropertyTypeController extends Controller
         ]);
     }
 
-    public function actionDelete($id)
+    /**
+     * @throws StaleObjectException
+     * @throws \Throwable
+     * @throws NotFoundHttpException
+     */
+    public function actionDelete(int $id): Response
     {
         $this->findModel($id)->delete();
         Yii::$app->session->setFlash('warning', Yii::t('app', 'Record deleted'));
@@ -78,7 +81,12 @@ class PropertyTypeController extends Controller
         return $this->redirect(['index']);
     }
 
-    protected function findModel($id)
+    /**
+     * @param int $id
+     * @return PropertyType
+     * @throws NotFoundHttpException
+     */
+    protected function findModel(int $id): PropertyType
     {
         if (($model = PropertyType::findOne(['id' => $id])) !== null) {
             return $model;

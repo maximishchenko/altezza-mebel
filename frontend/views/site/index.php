@@ -5,6 +5,7 @@
 ?>
 
     <?= $this->render('//layouts/include/_slider', ['sliders' => $sliders]); ?>
+
     <?= $this->render('//layouts/include/_advantage', ['advantages' => $advantages]); ?>
     <?php if($about): ?>
       <?= $this->render('_about', ['about' => $about, 'toAbout' => true]); ?>

@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace backend\modules\content\models;
 
+use backend\models\BaseModel;
 use common\models\Sort;
 use common\models\Status;
 use backend\modules\content\models\query\AdvantageQuery;
 use backend\traits\fileTrait;
 use Yii;
-use yii\behaviors\BlameableBehavior;
-use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "advantage".
@@ -26,41 +28,21 @@ use yii\db\ActiveRecord;
  * @property int|null $created_by
  * @property int|null $updated_by
  */
-class Advantage extends ActiveRecord
+class Advantage extends BaseModel
 {
-
     use fileTrait;
 
     const UPLOAD_PATH = 'upload/advantage/';
 
-    public $imageFile;
+    public UploadedFile | string | null $imageFile = null;
 
 
-    public static function tableName()
+    public static function tableName(): string
     {
         return '{{%advantage}}';
     }
 
-    public function behaviors()
-    {
-        return[
-            [
-                'class' => TimestampBehavior::className(),
-                'createdAtAttribute' => 'created_at',
-                'updatedAtAttribute' => 'updated_at',
-                'value' => function () {
-                    return date('U');
-                },
-            ],
-            [
-                'class' => BlameableBehavior::className(),
-                'createdByAttribute' => 'created_by',
-                'updatedByAttribute' => 'updated_by',
-            ],
-        ];
-    }  
-
-    public function rules()
+    public function rules(): array
     {
         return [
             [['title', 'description'], 'required'],
@@ -75,7 +57,7 @@ class Advantage extends ActiveRecord
         ];
     }
 
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => Yii::t('app', 'ID'),
@@ -93,12 +75,12 @@ class Advantage extends ActiveRecord
         ];
     }
 
-    public static function find()
+    public static function find(): AdvantageQuery
     {
         return new AdvantageQuery(get_called_class());
     }
 
-    public function beforeSave($insert)
+    public function beforeSave($insert): bool
     {
         if (parent::beforeSave($insert)) {
             $this->uploadFile('imageFile', 'image', self::UPLOAD_PATH);
@@ -107,7 +89,7 @@ class Advantage extends ActiveRecord
         return false;
     }
 
-    public function beforeDelete()
+    public function beforeDelete(): bool
     {
         if (parent::beforeDelete()) {
             $this->deleteSingleFile('image', self::UPLOAD_PATH);
