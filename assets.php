@@ -9,6 +9,7 @@ return [
     'deleteSource' => false,
     'bundles' => [
         'frontend\assets\AppAsset',
+        'frontend\assets\NpmAsset',
     ],
     'targets' => [
         'all' => [
