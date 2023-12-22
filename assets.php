@@ -36,6 +36,8 @@ return [
         'linkAssets' => true,
         'appendTimestamp' => true,
         'bundles' => [
+            'frontend\assets\AppAsset',
+            'frontend\assets\NpmAsset',
             'yii\web\JqueryAsset' => false,
             'yii\bootstrap\BootstrapPluginAsset' => false,
             'yii\bootstrap\BootstrapAsset' => false,

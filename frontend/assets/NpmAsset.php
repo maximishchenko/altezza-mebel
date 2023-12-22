@@ -21,7 +21,7 @@ class NpmAsset extends AssetBundle
     public $depends = [
     ];
     public $jsOptions = [
-        // 'position' => \yii\web\View::POS_HEAD,
-        // 'defer' => 'defer',
+         'position' => \yii\web\View::POS_END,
+         'defer' => 'defer',
     ];
 }

@@ -9,7 +9,7 @@ use frontend\modules\seo\models\Script;
 use yii\helpers\Url;
 
 AppAsset::register($this);
-\backend\assets\NpmAsset::register($this);
+//\backend\assets\NpmAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
