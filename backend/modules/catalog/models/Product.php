@@ -10,7 +10,6 @@ use backend\modules\catalog\models\query\ProductQuery;
 use backend\traits\fileTrait;
 use common\models\Sort;
 use common\models\Status;
-use yii\base\InvalidConfigException;
 use yii\behaviors\SluggableBehavior;
 use yii\db\ActiveQuery;
 use yii\helpers\ArrayHelper;
@@ -65,19 +64,19 @@ class Product extends BaseModel
 
     public $imagesFiles = null;
 
-    protected array | string | null $fasadMaterialsArray = [];
+    protected $fasadMaterialsArray;
 
-    protected array | string | null $fasadCoatingsArray = [];
+    protected $fasadCoatingsArray;
 
-    protected array | string | null $decorativeElementsArray = [];
+    protected $decorativeElementsArray;
 
-    protected array | string | null $bodyMaterialsArray = [];
+    protected $bodyMaterialsArray;
 
-    protected array | string | null $furnituresArray = [];
+    protected $furnituresArray;
 
-    protected array | string | null $backlightsArray = [];
+    protected $backlightsArray;
 
-    protected array | string | null $tableTopsArray = [];
+    protected $tableTopsArray;
     
     public static function tableName(): string
     {
@@ -112,7 +111,7 @@ class Product extends BaseModel
             ['view_count', 'default', 'value' => 1],
             ['status', 'in', 'range' => array_keys(Status::getStatusesArray())],
 
-            [['fasadMaterialsArray', 'fasadCoatingsArray', 'decorativeElementsArray', 'bodyMaterialsArray', 'furnituresArray', 'backlightsArray', 'imageFile'], 'safe'],
+            [['fasadMaterialsArray', 'fasadCoatingsArray', 'decorativeElementsArray', 'bodyMaterialsArray', 'furnituresArray', 'backlightsArray', 'imageFile', 'tableTopsArray'], 'safe'],
             [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg, webp'],
             [['imagesFiles'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg, webp', 'maxFiles' => 5],
         ];
@@ -201,12 +200,12 @@ class Product extends BaseModel
     
     public function getFasadMaterials(): ActiveQuery
     {
-        return $this->hasMany(PropertyFasadMaterial::className(), ['id' => 'property_id'])->viaTable('{{%product_property}}', ['product_id' => 'id'], function ($query) {
+        return $this->hasMany(PropertyFasadMaterial::class, ['id' => 'property_id'])->viaTable('{{%product_property}}', ['product_id' => 'id'], function ($query) {
             $query->andWhere(['property_type' => PropertyFasadMaterial::TYPE]);
         });
     }
 
-    public function getFasadMaterialsArray(): array
+    public function getFasadMaterialsArray(): array | string
     {
         if ($this->fasadMaterialsArray === null) {
             $this->fasadMaterialsArray = $this->getFasadMaterials()->select('id')->column();
@@ -214,10 +213,6 @@ class Product extends BaseModel
         return $this->fasadMaterialsArray;
     }
 
-    /**
-     * @param array $value
-     * @return void
-     */
     public function setFasadMaterialsArray(array $value): void
     {
         $this->fasadMaterialsArray = (array)$value;
@@ -225,18 +220,11 @@ class Product extends BaseModel
     
     // Покрытие фасадов
 
-    /**
-     * @return array
-     */
     public function getFasadCoatingsCheckboxListItems(): array
     {
         return PropertyFasadCoating::find()->select(['name', 'id'])->indexBy('id')->column();
     }
     
-    /**
-     * @return ActiveQuery
-     * @throws InvalidConfigException
-     */
     public function getFasadCoatings(): ActiveQuery
     {
         return $this->hasMany(PropertyFasadCoating::className(), ['id' => 'property_id'])->viaTable('{{%product_property}}', ['product_id' => 'id'], function ($query) {
@@ -244,20 +232,15 @@ class Product extends BaseModel
         });
     }
 
-    public function getFasadCoatingsArray(): array
+    public function getFasadCoatingsArray(): array | string
     {
-        /** @var array $this */
         if ($this->fasadCoatingsArray === null) {
             $this->fasadCoatingsArray = $this->getFasadCoatings()->select('id')->column();
         }
         return $this->fasadCoatingsArray;
     }
 
-    /**
-     * @param $value
-     * @return void
-     */
-    public function setFasadCoatingsArray($value): void
+    public function setFasadCoatingsArray(array $value): void
     {
         $this->fasadCoatingsArray = (array)$value;
     }
@@ -276,7 +259,7 @@ class Product extends BaseModel
         });
     }
 
-    public function getDecorativeElementsArray(): array
+    public function getDecorativeElementsArray(): array | string
     {
         if ($this->decorativeElementsArray === null) {
             $this->decorativeElementsArray = $this->getDecorativeElements()->select('id')->column();
@@ -284,26 +267,26 @@ class Product extends BaseModel
         return $this->decorativeElementsArray;
     }
 
-    public function setDecorativeElementsArray($value)
+    public function setDecorativeElementsArray(array $value): void
     {
         $this->decorativeElementsArray = (array)$value;
     }
      
     // Материалы корпуса
 
-    public function getBodyMaterialsCheckboxListItems()
+    public function getBodyMaterialsCheckboxListItems(): array
     {
         return PropertyBodyMaterial::find()->select(['name', 'id'])->indexBy('id')->column();
     }
     
-    public function getBodyMaterials()
+    public function getBodyMaterials(): ActiveQuery
     {
         return $this->hasMany(PropertyBodyMaterial::className(), ['id' => 'property_id'])->viaTable('{{%product_property}}', ['product_id' => 'id'], function ($query) {
             $query->andWhere(['property_type' => PropertyBodyMaterial::TYPE]);
         });
     }
 
-    public function getBodyMaterialsArray()
+    public function getBodyMaterialsArray(): array | string
     {
         if ($this->bodyMaterialsArray === null) {
             $this->bodyMaterialsArray = $this->getBodyMaterials()->select('id')->column();
@@ -311,26 +294,26 @@ class Product extends BaseModel
         return $this->bodyMaterialsArray;
     }
 
-    public function setBodyMaterialsArray($value)
+    public function setBodyMaterialsArray(array $value): void
     {
         $this->bodyMaterialsArray = (array)$value;
     }
      
     // Фурнитура
 
-    public function getFurnituresCheckboxListItems()
+    public function getFurnituresCheckboxListItems(): array
     {
         return PropertyFurniture::find()->select(['name', 'id'])->indexBy('id')->column();
     }
     
-    public function getFurnitures()
+    public function getFurnitures(): ActiveQuery
     {
         return $this->hasMany(PropertyFurniture::className(), ['id' => 'property_id'])->viaTable('{{%product_property}}', ['product_id' => 'id'], function ($query) {
             $query->andWhere(['property_type' => PropertyFurniture::TYPE]);
         });
     }
 
-    public function getFurnituresArray()
+    public function getFurnituresArray(): array | string
     {
         if ($this->furnituresArray === null) {
             $this->furnituresArray = $this->getFurnitures()->select('id')->column();
@@ -338,26 +321,26 @@ class Product extends BaseModel
         return $this->furnituresArray;
     }
 
-    public function setFurnituresArray($value)
+    public function setFurnituresArray(array $value): void
     {
         $this->furnituresArray = (array)$value;
     }
      
     // Подсветка
 
-    public function getBacklightsCheckboxListItems()
+    public function getBacklightsCheckboxListItems(): array
     {
         return PropertyBacklight::find()->select(['name', 'id'])->indexBy('id')->column();
     }
     
-    public function getBacklights()
+    public function getBacklights(): ActiveQuery
     {
         return $this->hasMany(PropertyBacklight::className(), ['id' => 'property_id'])->viaTable('{{%product_property}}', ['product_id' => 'id'], function ($query) {
             $query->andWhere(['property_type' => PropertyBacklight::TYPE]);
         });
     }
 
-    public function getBacklightsArray()
+    public function getBacklightsArray(): array | string
     {
         if ($this->backlightsArray === null) {
             $this->backlightsArray = $this->getBacklights()->select('id')->column();
@@ -365,26 +348,26 @@ class Product extends BaseModel
         return $this->backlightsArray;
     }
 
-    public function setBacklightsArray($value)
+    public function setBacklightsArray($value): void
     {
         $this->backlightsArray = (array)$value;
     }
      
     // Столешница
 
-    public function getTableTopsCheckboxListItems()
+    public function getTableTopsCheckboxListItems(): array
     {
         return PropertyTableTop::find()->select(['name', 'id'])->indexBy('id')->column();
     }
     
-    public function getTableTops()
+    public function getTableTops(): ActiveQuery
     {
         return $this->hasMany(PropertyTableTop::className(), ['id' => 'property_id'])->viaTable('{{%product_property}}', ['product_id' => 'id'], function ($query) {
             $query->andWhere(['property_type' => PropertyTableTop::TYPE]);
         });
     }
 
-    public function getTableTopsArray()
+    public function getTableTopsArray(): array | string
     {
         if ($this->tableTopsArray === null) {
             $this->tableTopsArray = $this->getTableTops()->select('id')->column();
@@ -392,12 +375,12 @@ class Product extends BaseModel
         return $this->tableTopsArray;
     }
 
-    public function setTableTopsArray($value)
+    public function setTableTopsArray($value): void
     {
         $this->tableTopsArray = (array)$value;
     }
 
-    public function beforeSave($insert)
+    public function beforeSave($insert): bool
     {
         if (parent::beforeSave($insert)) {
             $this->uploadFile('imageFile', 'image', self::UPLOAD_PATH);
@@ -406,7 +389,7 @@ class Product extends BaseModel
         return false;
     }
 
-    public function afterSave($insert, $changedAttributes)
+    public function afterSave($insert, $changedAttributes): void
     {
         $this->setImageAttributes();
         $this->updateFasadMaterials();
@@ -419,7 +402,7 @@ class Product extends BaseModel
         parent::afterSave($insert, $changedAttributes);
     }
 
-    public function beforeDelete()
+    public function beforeDelete(): bool
     {
         if (parent::beforeDelete()) {
             $this->deleteSingleFile('image', self::UPLOAD_PATH);
@@ -429,7 +412,7 @@ class Product extends BaseModel
         }
     }
     
-    private function setImageAttributes()
+    private function setImageAttributes(): void
     {
         $this->imagesFiles = UploadedFile::getInstances($this, 'imagesFiles');
         if(isset($this->imagesFiles) && !empty($this->imagesFiles))
@@ -444,7 +427,7 @@ class Product extends BaseModel
         }
     }
 
-    private function updateFasadMaterials()
+    private function updateFasadMaterials(): void
     {
         $currentFasadMaterialsIds = $this->getFasadMaterials()->select('id')->column();
         $newFasadMaterialsIds = $this->getFasadMaterialsArray();
@@ -469,7 +452,7 @@ class Product extends BaseModel
         }
     }
 
-    private function updateFasadCoatings()
+    private function updateFasadCoatings(): void
     {
         $currentFasadCoatingsIds = $this->getFasadCoatings()->select('id')->column();
         $newFasadCoatingsIds = $this->getFasadCoatingsArray();
@@ -494,7 +477,7 @@ class Product extends BaseModel
         }
     }
 
-    private function updateDecorativeElements()
+    private function updateDecorativeElements(): void
     {
         $currentDecorativeElementsIds = $this->getDecorativeElements()->select('id')->column();
         $newDecorativeElementsIds = $this->getDecorativeElementsArray();
@@ -519,7 +502,7 @@ class Product extends BaseModel
         }
     }
 
-    private function updateBodyMaterials()
+    private function updateBodyMaterials(): void
     {
         $currentBodyMaterialsIds = $this->getBodyMaterials()->select('id')->column();
         $newBodyMaterialsIds = $this->getBodyMaterialsArray();
@@ -544,7 +527,7 @@ class Product extends BaseModel
         }
     }
 
-    private function updateFurnitures()
+    private function updateFurnitures(): void
     {
         $currentFurnituresIds = $this->getFurnitures()->select('id')->column();
         $newFurnituresIds = $this->getFurnituresArray();
@@ -569,7 +552,7 @@ class Product extends BaseModel
         }
     }
 
-    private function updateBacklights()
+    private function updateBacklights(): void
     {
         $currentBacklightsIds = $this->getBacklights()->select('id')->column();
         $newBacklightsIds = $this->getBacklightsArray();
@@ -594,7 +577,7 @@ class Product extends BaseModel
         }
     }
 
-    private function updateTableTops()
+    private function updateTableTops(): void
     {
         $currentTableTopsIds = $this->getBacklights()->select('id')->column();
         $newTableTopsIds = $this->getBacklightsArray();
