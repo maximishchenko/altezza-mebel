@@ -67,17 +67,17 @@ class Product extends BaseModel
 
     protected array | string | null $fasadMaterialsArray = [];
 
-    protected array $fasadCoatingsArray = [];
+    protected array | string | null $fasadCoatingsArray = [];
 
-    protected array $decorativeElementsArray = [];
+    protected array | string | null $decorativeElementsArray = [];
 
-    protected array $bodyMaterialsArray = [];
+    protected array | string | null $bodyMaterialsArray = [];
 
-    protected array $furnituresArray = [];
+    protected array | string | null $furnituresArray = [];
 
-    protected array $backlightsArray = [];
+    protected array | string | null $backlightsArray = [];
 
-    protected array $tableTopsArray = [];
+    protected array | string | null $tableTopsArray = [];
     
     public static function tableName(): string
     {
