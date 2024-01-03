@@ -65,7 +65,7 @@ class Product extends BaseModel
 
     public $imagesFiles = null;
 
-    protected array $fasadMaterialsArray = [];
+    protected array | string | null $fasadMaterialsArray = [];
 
     protected array $fasadCoatingsArray = [];
 
