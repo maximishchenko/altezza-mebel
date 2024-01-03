@@ -61,9 +61,9 @@ class Product extends BaseModel
 
     const UPLOAD_PATH = 'upload/product/';
 
-    public ?UploadedFile $imageFile = null;
+    public UploadedFile | string | null $imageFile = null;
 
-    public ?UploadedFile $imagesFiles = null;
+    public UploadedFile | string | null $imagesFiles = null;
 
     protected array $fasadMaterialsArray = [];
 
