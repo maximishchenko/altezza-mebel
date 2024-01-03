@@ -9,7 +9,6 @@ return [
     'deleteSource' => false,
     'bundles' => [
         'frontend\assets\AppAsset',
-        'frontend\assets\NpmAsset',
     ],
     'targets' => [
         'all' => [
@@ -19,12 +18,9 @@ return [
             'jsOptions' => [
                 'defer' => 'defer',
             ],
-            'js' => 'assets/all.min.js',
-            'css' => 'assets/all.min.css',
-            // 'js' => 'assets/all-{hash}.min.js',
-            // 'css' => 'assets/all-{hash}.min.css',
+            'js' => 'assets/all-{hash}.min.js',
+            'css' => 'assets/all-{hash}.min.css',
             'depends' => [
-                'frontend\assets\AppAsset',
                 'frontend\assets\NpmAsset',
             ],
         ],
@@ -36,13 +32,6 @@ return [
         'linkAssets' => true,
         'appendTimestamp' => true,
         'bundles' => [
-            'frontend\assets\AppAsset',
-            'frontend\assets\NpmAsset',
-            'yii\web\JqueryAsset' => false,
-            'yii\bootstrap\BootstrapPluginAsset' => false,
-            'yii\bootstrap\BootstrapAsset' => false,
-            'yii\web\YiiAsset' => false,
-            'yii\widgets\ActiveFormAsset' => false,
         ],
     ],
 ];
