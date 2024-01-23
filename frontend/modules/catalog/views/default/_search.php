@@ -87,7 +87,7 @@ use yii\widgets\ActiveForm;
         <?php endforeach; ?>
     </div>
     <?php endif; ?>
-    <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'button button--dark catalog-filter__section__submit']); ?>
-    <?= Html::button(Yii::t('app', 'Reset Search Parameters'), ['class' => 'button button--light catalog-filter__section__reset clear__search', 'id' => 'catalog__searh-btn']); ?>
+    <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'button button--dark catalog-filter__section__submit', 'id' => 'catalog__searh-btn']); ?>
+    <?= Html::button(Yii::t('app', 'Reset Search Parameters'), ['type' => 'reset', 'class' => 'button button--light catalog-filter__section__reset clear__search']); ?>
   <?php ActiveForm::end(); ?>
 </aside>

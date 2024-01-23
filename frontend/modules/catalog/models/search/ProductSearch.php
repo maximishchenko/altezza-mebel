@@ -19,7 +19,7 @@ class ProductSearch extends Product
 
     public ?string $styleName = null;
     public ?string $formName = null;
-    public ?int $coatingId = null;
+    public $coatingId = null;
 
     public function rules(): array
     {

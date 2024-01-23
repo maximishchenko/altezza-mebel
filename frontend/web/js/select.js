@@ -8,18 +8,5 @@ if (catalog_sort != null) {
     shouldSort: false,
     placeholder: false,
     itemSelectText: "",
-
-
   });
-
-  catalog_sort.addEventListener(
-    "choice",
-    function (event) {
-      console.log(event.detail.choice);
-      console.log(event.detail.choice.id);
-      console.log(event.detail.choice.value);
-    },
-    false,
-
-  )
-  }
+}

@@ -2,7 +2,8 @@
 
 use common\models\SearchForm;
 ?>
-<select form="searchForm" name="sort" onchange="this.form.submit();" class="catalog__sort js-catalog-sort">
+ <!-- onchange="this.form.submit();" -->
+<select form="searchForm" name="sort" class="catalog__sort js-catalog-sort">
     <option value="" disabled selected>сортировка</option>
     <option value="view_count" <?= SearchForm::isSelectSearchParamSelected('sort', 'view_count'); ?> >
         <?= Yii::t('app', 'By popularity'); ?>
