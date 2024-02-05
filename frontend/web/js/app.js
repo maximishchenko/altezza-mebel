@@ -22,9 +22,6 @@ const catalogProductsObserver = new IntersectionObserver((entries) => {
     })
 });
 
-if (catalogList) {
-    let lastCatalogProductItem = catalogList.querySelector('[data-key]:last-child');
-}
 
 function catalogUrlParams() {
     let data = new FormData(filterForm);
@@ -280,8 +277,11 @@ document.addEventListener('DOMContentLoaded', function(event) {
         });
     });
    
-    if (lastCatalogProductItem) {
-        catalogProductsObserver.observe(lastCatalogProductItem);
+    if (catalogList) {
+        let lastCatalogProductItem = catalogList.querySelector('[data-key]:last-child');
+        if (lastCatalogProductItem) {
+            catalogProductsObserver.observe(lastCatalogProductItem);
+        }
     }
 
     searchBtn.addEventListener('click', (e) => {
