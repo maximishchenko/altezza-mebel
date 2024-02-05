@@ -3,7 +3,10 @@ const catalogList = document.querySelector('.catalog__list');
 // const catalogSpinner = document.querySelector('.spinner-container');
 const filterForm = document.querySelector('#searchForm');
 const catalogItemsInformation = document.querySelector('#showMore');
-const csrfToken = catalogItemsInformation.getAttribute('data-csrf-token');
+if (catalogItemsInformation) {
+    const csrfToken = catalogItemsInformation.getAttribute('data-csrf-token');
+}
+// const csrfToken = catalogItemsInformation.getAttribute('data-csrf-token');
 // Фильтр
 const searchBtn = document.querySelector('#catalog__searh-btn');
 const searchFormIntp = document.querySelectorAll('#searchForm input');
