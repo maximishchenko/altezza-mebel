@@ -12,7 +12,6 @@ const searchBtn = document.querySelector('#catalog__searh-btn');
 const searchFormIntp = document.querySelectorAll('#searchForm input');
 const catalogSort = document.querySelector('.catalog__sort');
 const loader = document.getElementsByClassName('loader-wrapper')[0];
-console.log(loader);
    
 const catalogProductsObserver = new IntersectionObserver((entries) => {
     entries.forEach(element => {
@@ -23,8 +22,9 @@ const catalogProductsObserver = new IntersectionObserver((entries) => {
     })
 });
 
-
-let lastCatalogProductItem = catalogList.querySelector('[data-key]:last-child');
+if (catalogList) {
+    let lastCatalogProductItem = catalogList.querySelector('[data-key]:last-child');
+}
 
 function catalogUrlParams() {
     let data = new FormData(filterForm);
