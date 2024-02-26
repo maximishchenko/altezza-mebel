@@ -73,6 +73,15 @@ return [
                         ['url'],
                     ],
                 ],
+                'contactVk' => [
+                    'path' => 'vk',
+                    'label' => Yii::t('app', "CONTACT_VK"),
+                    'description' => Yii::t('app', "CONTACT_VK DESCRIPTION"),
+                    'value' => "https://vk.com/altezza_mebel",
+                    'rules' => [
+                        ['url'],
+                    ],
+                ],
                 'contactAddress' => [
                     'path' => 'address',
                     'label' => Yii::t('app', "CONTACT_ADDRESS"),

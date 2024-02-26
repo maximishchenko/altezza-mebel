@@ -34,7 +34,7 @@ class Setting extends \yii\base\Model
     {
         return [
             self::TAB_CONTACT => [
-                'phone', 'email', 'whatsapp', 'telegram', 'address', 'worktime'
+                'phone', 'email', 'whatsapp', 'telegram', 'vk', 'address', 'worktime'
             ],
             self::TAB_SEO => [
                 'seo_keywords', 'seo_description', 'seo_index_now_key',

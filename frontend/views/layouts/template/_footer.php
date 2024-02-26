@@ -46,6 +46,14 @@
       </a>
     <?php endif; ?>
 
+    <?php if(Yii::$app->configManager->getItemValue('contactVk')): ?>
+      <a href="<?= Yii::$app->configManager->getItemValue('contactVk'); ?>">        
+        <svg role="image" class="icon">
+            <use xlink:href="/static/sprite.svg#vk" />
+        </svg>
+      </a>
+    <?php endif; ?>
+
     <?php if(Yii::$app->configManager->getItemValue('contactEmail')): ?>
       <a href="mailto://<?= Yii::$app->configManager->getItemValue('contactEmail'); ?>" class="contacts__e-mail">
         e-mail: <?= Yii::$app->configManager->getItemValue('contactEmail'); ?>

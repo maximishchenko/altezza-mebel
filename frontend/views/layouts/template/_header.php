@@ -58,6 +58,14 @@ use yii\helpers\Url;
       </a>
     <?php endif; ?>
 
+    <?php if(Yii::$app->configManager->getItemValue('contactVk')): ?>
+    <a href="<?= Yii::$app->configManager->getItemValue('contactVk'); ?>">
+        <svg role="image" class="icon">
+            <use xlink:href="/static/sprite.svg#vk" />
+        </svg>
+    </a>
+    <?php endif; ?>
+
   </address>
   <button class="button nav-menu-button js-nav-menu-button">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="black">
