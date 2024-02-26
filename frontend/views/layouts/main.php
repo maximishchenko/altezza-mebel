@@ -23,6 +23,7 @@ AppAsset::register($this);
     <?php
     $metaTag = new MetaTag();
     $h1title = $metaTag->setH1Title();
+    $metaTag->setMetaTags();
     if (isset($this->blocks['metaTags'])) { 
         echo $this->blocks['metaTags'];
     } else {

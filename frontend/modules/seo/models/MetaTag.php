@@ -243,9 +243,10 @@ class MetaTag
      */
     protected function getPropertiesByCurrentUrl()
     {
-        return backendMetaTag::getDb()->cache(function() {
-            return backendMetaTag::find()->where(['status' => Status::STATUS_ACTIVE, 'url' => parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)])->one();
-        });
+        return backendMetaTag::find()->where(['status' => Status::STATUS_ACTIVE, 'url' => parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)])->one();
+        // return backendMetaTag::getDb()->cache(function() {
+            // return backendMetaTag::find()->where(['status' => Status::STATUS_ACTIVE, 'url' => parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)])->one();
+        // });
     }
 
     /**
