@@ -3,8 +3,18 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 ?>
 
+
 <a href="<?= Url::toRoute('/catalog/' . $model->slug); ?>">
     <li class="catalog__list__item">
+
+        <?php if ($model->is_new): ?>
+        <div class="catalog__list__item__badge--wrapper">
+            <span class="catalog__list__item__badge catalog__list__item__badge--sale">
+                <?= Yii::t('app', 'Is new product'); ?>
+            </span>
+        </div>
+        <?php endif; ?>
+            
         <div class="catalog__img">
         <?= Html::img($model->thumb, ['class' => 'catalog__list__item__img', 'alt' => $model->type->name, 'loading' => 'lazy']); ?>
         <?php if($model->images): ?>

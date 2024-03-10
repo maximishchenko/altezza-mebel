@@ -36,9 +36,11 @@ class SiteController extends BaseController
             return About::find()->active()->ordered()->one();
         }, About::getCacheDuration(), About::getCacheDependency());
         
-        $newProducts = Product::getDb()->cache(function() {
-            return Product::find()->active()->onlyNew()->limit(Product::NEW_LIMIT)->all();
-        }, Product::getCacheDuration(), Product::getCacheDependency());
+        // $newProducts = Product::getDb()->cache(function() {
+        //     return Product::find()->active()->onlyNew()->limit(Product::NEW_LIMIT)->all();
+        // }, Product::getCacheDuration(), Product::getCacheDependency());
+
+        $newProducts = Product::find()->active()->onlyNew()->limit(Product::NEW_LIMIT)->all();
         
         return $this->render('index', [
             'advantages' => $advantages,

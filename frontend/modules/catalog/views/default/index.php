@@ -5,7 +5,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 
-<style>
+<!-- <style>
 .loader {
   width: 96px;
   height: 96px;
@@ -54,7 +54,8 @@ $this->params['breadcrumbs'][] = $this->title;
     transform: rotate(360deg);
   }
 } 
-</style>
+</style> -->
+
 
 <div class="catalog-wrapper">
   
@@ -76,20 +77,20 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= Yii::$app->controller->renderPartial('//layouts/include/product/_productLoop', ['dataProvider' => $dataProvider]); ?>
     </ul>
 
-    <div class="loader-wrapper">
+    <!-- <div class="loader-wrapper">
       <div class="loader"></div>
     </div>
 
     <div 
       id="showMore" 
       class="hidden__service" 
-      data-page="<?= (int)Yii::$app->request->get('page', 1); ?>" 
-      data-page-count="<?= (int)$dataProvider->pagination->pageCount; ?>" 
-      data-csrf-token="<?= Yii::$app->request->csrfToken; ?>" 
-      data-csrf-param="<?= Yii::$app->request->csrfParam; ?>"
+      data-page="<?php // echo (int)Yii::$app->request->get('page', 1); ?>" 
+      data-page-count="<?php // echo (int)$dataProvider->pagination->pageCount; ?>" 
+      data-csrf-token="<?php // echo Yii::$app->request->csrfToken; ?>" 
+      data-csrf-param="<?php // echo Yii::$app->request->csrfParam; ?>"
     >
-      <?= Yii::t('app', 'Show more'); ?>
-    </div>
+      <?php // echo Yii::t('app', 'Show more'); ?>
+    </div> -->
 
   </section>
 </div>

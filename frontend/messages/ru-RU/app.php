@@ -69,5 +69,6 @@ return [
     'By popularity' => 'по популярности',
     'By form' => 'по форме изделия',
     'By style' => 'по стилю',
-    'Show more' => 'Показать еще'
+    'Show more' => 'Показать еще',
+    'Is new product' => 'Новинка',
 ];
