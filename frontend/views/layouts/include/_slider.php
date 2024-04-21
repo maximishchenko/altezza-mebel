@@ -12,7 +12,7 @@ use yii\helpers\Html;
       <div class="promo-slider__item__text">
         <?= $slider->description; ?>
         
-        <?= Html::button(Yii::t('app', 'Send Callback for cooperation'), ['class' => 'product-card__info__button button button--dark js-send-request']); ?>
+        <?= Html::button(Yii::t('app', 'Send Callback for cooperation'), ['class' => 'product-card__info__button button button--light js-send-request']); ?>
       </div>
     </div>
     <?php endforeach; ?>
