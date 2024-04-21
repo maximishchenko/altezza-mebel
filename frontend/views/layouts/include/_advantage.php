@@ -15,7 +15,7 @@ use yii\helpers\Html;
     <section class="advantages">
         <div class="block center">
             <h2>
-                Наши особенные преимущества
+                <?= Yii::t('app', 'Our favorite advantages'); ?>
             </h2>
         </div>
         <div class="grid">
@@ -34,5 +34,9 @@ use yii\helpers\Html;
             <?php endforeach; ?>
         </div>
 
+        <div class="block center">
+            <?= Yii::t('app', 'Need advantage question'); ?>
+            <?= Html::button(Yii::t('app', 'Send Callback Request a call'), ['class' => 'product-card__info__button button button--dark js-send-request']); ?>
+        </div>
     </section>
 <?php endif; ?>

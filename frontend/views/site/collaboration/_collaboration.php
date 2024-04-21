@@ -28,5 +28,6 @@ use yii\helpers\Html;
         <?php elseif($collaboration->link): ?>
             <?= Html::a(Yii::t('app', "More info"), $collaboration->link, ['class' => "button button--dark button--small"]); ?>
         <?php endif; ?>
+        <?= Html::button(Yii::t('app', 'Send Callback Request a call'), ['class' => 'product-card__info__button button button--dark js-send-request']); ?>
     </div>
 </div>

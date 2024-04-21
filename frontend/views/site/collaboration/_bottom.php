@@ -1,4 +1,7 @@
+<?php
 
+use frontend\modules\content\models\Lead;
+?>
 <div class="about-us__item">
     <div class="about-us__item__title-wraper">
         <div class="parallax" style="background-image: url('/static/bonus.jpg');"></div>
@@ -38,3 +41,5 @@
         </ul>
     </div>
 </div>
+<?php $lead = new Lead(); ?>
+<?= $this->render('//layouts/include/_contact_inline', ['lead' => $lead]); ?>

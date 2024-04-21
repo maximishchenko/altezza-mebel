@@ -29,6 +29,9 @@ use yii\helpers\Url;
         <?= Yii::t('app', 'FAQ'); ?>
       </a>
     </li>
+    <li class="nav-menu__list__item">
+      <?= Html::a(Yii::t('app', 'Send Callback Request a call'), 'javascript::void(0);', ['class' => 'js-send-request']); ?>
+    </li>
   </menu>
 </nav>
 <div class="row-wraper">

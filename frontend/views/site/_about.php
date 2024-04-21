@@ -21,10 +21,13 @@ use yii\helpers\Html;
         </h3>
         <?= $about->description; ?>
       
-        <?php if(isset($toAbout) && !empty($toAbout)): ?>
-            <?= Html::a(Yii::t('app', "More info"), ['/about'], ['class' => "button button--dark button--small"]); ?>
-        <?php elseif($about->link): ?>
-            <?= Html::a(Yii::t('app', "More info"), $about->link, ['class' => "button button--dark button--small"]); ?>
-        <?php endif; ?>
+        <div class="inline__btn" style="text-align: center;">
+            <?php if(isset($toAbout) && !empty($toAbout)): ?>
+                <?= Html::a(Yii::t('app', "More info"), ['/about'], ['class' => "button button--dark button--small"]); ?>
+            <?php elseif($about->link): ?>
+                <?= Html::a(Yii::t('app', "More info"), $about->link, ['class' => "button button--dark button--small"]); ?>
+            <?php endif; ?>
+            <?= Html::button(Yii::t('app', 'Send Callback Request a call'), ['class' => 'product-card__info__button button button--dark js-send-request']); ?>
+        </div>
     </div>
 </div>
