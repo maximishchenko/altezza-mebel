@@ -74,5 +74,6 @@ return [
     'Our favorite advantages' => 'Наши особенные преимущества',
     'Send Callback for cooperation' => 'Уточнить условия сотрудничества',
     'Send Callback Request a call' => 'Заказать звонок',
-    'Need advantage question' => 'Вы заинтересованы в сотрудничестве?'
+    'Need advantage question' => 'Вы заинтересованы в сотрудничестве?',
+    'Popular Product' => 'Популярные модели',
 ];

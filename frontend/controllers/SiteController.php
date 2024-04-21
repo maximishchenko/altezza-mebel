@@ -41,12 +41,14 @@ class SiteController extends BaseController
         // }, Product::getCacheDuration(), Product::getCacheDependency());
 
         $newProducts = Product::find()->active()->onlyNew()->limit(Product::NEW_LIMIT)->all();
+        $populars = Product::find()->active()->limit(Product::NEW_LIMIT)->orderBy(['view_count' => SORT_DESC])->all();
         
         return $this->render('index', [
             'advantages' => $advantages,
             'sliders' => $sliders,
             'about' => $about,
             'newProducts' => $newProducts,
+            'populars' => $populars,
         ]);
     }
     

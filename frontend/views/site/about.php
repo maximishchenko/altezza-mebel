@@ -11,3 +11,4 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php endforeach; ?>
   <?php endif; ?>
 </section>
+<?= $this->render('//layouts/include/_map'); ?>
