@@ -26,6 +26,7 @@ use yii\helpers\Html;
                         <h2>
                             <?= $advantage->title; ?>
                         </h2>
+                        <?= Html::button($advantage->getCallbackButtonText(), ['class' => 'product-card__info__button button button--light js-send-request']); ?>
                         <p>
                             <?= $advantage->description; ?>
                         </p>
@@ -35,8 +36,8 @@ use yii\helpers\Html;
         </div>
 
         <div class="block center">
-            <?= Yii::t('app', 'Need advantage question'); ?>
-            <?= Html::button(Yii::t('app', 'Send Callback Request a call'), ['class' => 'product-card__info__button button button--dark js-send-request']); ?>
+            &nbsp;
+            
         </div>
     </section>
 <?php endif; ?>

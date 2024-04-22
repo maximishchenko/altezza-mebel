@@ -211,4 +211,5 @@ return [
     'Collaborations Edit' => 'Управление разделом "Сотрудничество"',
     'Image File' => 'Изображение',
     'Update Collaboration: {name}' => '{name}',
+    'Callback Button Text' => 'Текст кнопки обратной связи',
 ];

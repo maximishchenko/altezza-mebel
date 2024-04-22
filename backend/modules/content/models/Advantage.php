@@ -10,7 +10,6 @@ use common\models\Status;
 use backend\modules\content\models\query\AdvantageQuery;
 use backend\traits\fileTrait;
 use Yii;
-use yii\db\ActiveRecord;
 use yii\web\UploadedFile;
 
 /**
@@ -21,6 +20,7 @@ use yii\web\UploadedFile;
  * @property string $description
  * @property string|null $image
  * @property string|null $comment
+ * @property string|null $callback_button_text
  * @property int|null $sort
  * @property int|null $status
  * @property int|null $created_at
@@ -47,7 +47,7 @@ class Advantage extends BaseModel
         return [
             [['title', 'description'], 'required'],
             [['title'], 'unique'],
-            [['description', 'comment'], 'string'],
+            [['description', 'comment', 'callback_button_text'], 'string'],
             [['sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['title', 'image'], 'string', 'max' => 255],
             ['sort', 'default', 'value' => Sort::DEFAULT_SORT_VALUE],
@@ -63,6 +63,7 @@ class Advantage extends BaseModel
             'id' => Yii::t('app', 'ID'),
             'title' => Yii::t('app', 'Title'),
             'description' => Yii::t('app', 'Description'),
+            'callback_button_text' => Yii::t('app', 'Callback Button Text'),
             'image' => Yii::t('app', 'Image'),
             'imageFile' => Yii::t('app', 'Image'),
             'comment' => Yii::t('app', 'Comment'),

@@ -30,6 +30,7 @@ use yii\bootstrap5\ActiveForm;
                     <div class="row">
                         <div class="col-md-6">
                             <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+                            <?= $form->field($model, 'callback_button_text')->textInput(['maxlength' => true]) ?>
                             <?= $form->field($model, 'sort')->textInput() ?>
                             <?= $form->field($model, 'status')->checkbox() ?>
                             <?= $form->field($model, 'imageFile', ['template' => '{label}<br/> {input} {error}'])->fileInput() ?>

@@ -1,8 +1,3 @@
-<?php
-
-
-// $this->title = 'Altezza';
-?>
 
     <?= $this->render('//layouts/include/_slider', ['sliders' => $sliders]); ?>
 
@@ -27,7 +22,10 @@
     <?php if($about): ?>
       <?= $this->render('_about', ['about' => $about, 'toAbout' => true]); ?>
     <?php endif; ?>
-    <?= $this->render('//layouts/include/_map'); ?>
+
+    <?php $this->beginBlock('custom_map'); ?>
+        <?= $this->render('//layouts/include/_map'); ?>
+    <?php $this->endBlock(); ?>
 
     <?php if($newProducts): ?>
     <section class="catalog catalog--new">

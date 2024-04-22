@@ -8,6 +8,7 @@ use backend\modules\content\models\Advantage as backendAdvantage;
 use frontend\modules\content\models\query\AdvantageQuery;
 use frontend\interfaces\ImageInterface;
 use frontend\traits\cacheParamsTrait;
+use Yii;
 
 class Advantage extends backendAdvantage implements ImageInterface
 {
@@ -20,6 +21,11 @@ class Advantage extends backendAdvantage implements ImageInterface
 
     public function getThumb(): ?string
     {
-        return ($this->image) ? '/' . self::UPLOAD_PATH . $this->image : null;
+        return ($this->image) ? '/' . static::UPLOAD_PATH . $this->image : null;
+    }
+
+    public function getCallbackButtonText()
+    {
+        return (isset($this->callback_button_text) && !empty($this->callback_button_text)) ? $this->callback_button_text : Yii::t('app', 'Send Callback Request a call');
     }
 }

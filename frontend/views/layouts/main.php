@@ -75,6 +75,12 @@ AppAsset::register($this);
         <?php $lead = new Lead(); ?>
         <?= $this->render('//layouts/include/_contact_inline', ['lead' => $lead]); ?>
         <?= $this->render("//layouts/include/_contact_modal", ['lead' => $lead]); ?>
+        <?php
+        
+        if (isset($this->blocks['custom_map'])) {
+            echo $this->blocks['custom_map'];
+        }
+        ?>
     </div>
 </main>
 
