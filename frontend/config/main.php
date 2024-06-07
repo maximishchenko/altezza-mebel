@@ -33,7 +33,8 @@ return [
     },
     'components' => [
         'assetManager' => [
-            'bundles' => YII_ENV_PROD ? require(__DIR__.'/assets-prod.php') : [],
+            // 'bundles' => YII_ENV_PROD ? require(__DIR__.'/assets-prod.php') : [],
+            'bundles' => [],
             'linkAssets' => true,
             'appendTimestamp' => true,
         ],
@@ -88,6 +89,7 @@ return [
                 'feedback' => 'site/feedback',
                 'about' => 'site/about',
                 'collaboration' => 'site/collaboration',
+                'gallery' => 'site/gallery',
             ],
         ],
     ],

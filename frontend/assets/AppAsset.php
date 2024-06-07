@@ -29,7 +29,7 @@ class AppAsset extends AssetBundle
         'frontend\assets\NpmAsset',
     ];
     public $jsOptions = [
-        'position' => \yii\web\View::POS_END,
-        'defer' => 'defer',
+        // 'position' => \yii\web\View::POS_END,
+        // 'defer' => 'defer',
     ];
 }

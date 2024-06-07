@@ -1,22 +1,23 @@
 <?php
 
-declare(strict_types=1);
-
 namespace backend\modules\content\controllers;
 
 use backend\controllers\BaseController;
-use backend\modules\content\models\Slider;
-use backend\modules\content\models\search\SliderSearch;
+use backend\modules\content\models\Gallery;
+use backend\modules\content\models\GalleryImage;
+use backend\modules\content\models\search\GallerySearch;
 use Yii;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
-class SliderController extends BaseController
+/**
+ * GalleryController implements the CRUD actions for Gallery model.
+ */
+class GalleryController extends BaseController
 {
-
-    public function actionIndex(): string
+    public function actionIndex()
     {
-        $searchModel = new SliderSearch();
+        $searchModel = new GallerySearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -25,9 +26,9 @@ class SliderController extends BaseController
         ]);
     }
 
-    public function actionCreate(): Response | string
+    public function actionCreate()
     {
-        $model = new Slider();
+        $model = new Gallery();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -43,7 +44,7 @@ class SliderController extends BaseController
         ]);
     }
 
-    public function actionUpdate(int $id): Response | string
+    public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
@@ -57,7 +58,7 @@ class SliderController extends BaseController
         ]);
     }
 
-    public function actionDelete(int $id): Response
+    public function actionDelete($id)
     {
         $this->findModel($id)->delete();
         Yii::$app->session->setFlash('warning', Yii::t('app', 'Record deleted'));
@@ -65,10 +66,20 @@ class SliderController extends BaseController
         return $this->redirect(['index']);
     }
 
+    protected function findModel($id)
+    {
+        if (($model = Gallery::findOne(['id' => $id])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+
     public function actionDeleteImage(int $id): Response
     {
         $model = $this->findModel($id);
-        $file = $model->getPath(Slider::UPLOAD_PATH, $model->image);
+        $file = $model->getPath(Gallery::UPLOAD_PATH, $model->image);
         $model->removeSingleFileIfExist($file);
         $model->image = null;
         $model->save();
@@ -76,9 +87,31 @@ class SliderController extends BaseController
         return $this->redirect(Yii::$app->request->referrer);
     }
 
-    protected function findModel(int $id): Slider
+
+    public function actionSaveImageSort(): void
     {
-        if (($model = Slider::findOne(['id' => $id])) !== null) {
+        $order = Yii::$app->request->post('order');
+        foreach($order as $sort => $imageId) {
+            if(isset($imageId) && !empty($imageId)) {
+                $image = GalleryImage::findOne($imageId);
+                $image->sort = $sort;
+                $image->save();
+            }
+        }
+        print_r($order);
+    }
+    
+    public function actionDeleteImages(int $id): Response
+    {
+        $model = $this->findImagesModel($id);
+        $model->delete();
+        Yii::$app->session->setFlash('danger', Yii::t('app', 'Record deleted!'));
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    protected function findImagesModel(int $id): GalleryImage
+    {
+        if (($model = GalleryImage::findOne($id)) !== null) {
             return $model;
         }
 

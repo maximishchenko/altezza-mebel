@@ -76,4 +76,5 @@ return [
     'Send Callback Request a call' => 'Заказать звонок',
     'Need advantage question' => 'Вы заинтересованы в сотрудничестве?',
     'Popular Product' => 'Популярные модели',
+    'Gallery' => 'Галерея',
 ];

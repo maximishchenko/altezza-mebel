@@ -284,15 +284,20 @@ document.addEventListener('DOMContentLoaded', function(event) {
         }
     }
 
-    searchBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        catalogAjaxSearch();
-    });
+    if (searchBtn) {
+        searchBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            catalogAjaxSearch();
+        });
+    }
 
-    filterForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        catalogAjaxSearch();
-    });
+    if (filterForm) {
+        filterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            catalogAjaxSearch();
+        });
+    }
+
 
     // searchFormIntp.forEach(el => {
     //     el.addEventListener('change', (e) => {
@@ -301,19 +306,22 @@ document.addEventListener('DOMContentLoaded', function(event) {
     //     });
     // });
 
-    catalogSort.addEventListener(
-    //   "choice",
-      "change",
-      function (e) {
-        e.preventDefault();
-        catalogAjaxSearch();
-        // console.log(e.detail.choice);
-        // console.log(e.detail.choice.id);
-        // console.log(e.detail.choice.value);
-      },
-      false,
-  
-    )
+    if (catalogSort) {
+        catalogSort.addEventListener(
+            //   "choice",
+            "change",
+            function (e) {
+                e.preventDefault();
+                catalogAjaxSearch();
+                // console.log(e.detail.choice);
+                // console.log(e.detail.choice.id);
+                // console.log(e.detail.choice.value);
+            },
+            false,
+    
+        )
+    }
+
 
     // renderSearchLabels();
 

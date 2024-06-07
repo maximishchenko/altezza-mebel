@@ -7,6 +7,7 @@ use frontend\modules\content\models\About;
 use frontend\modules\content\models\Collaboration;
 use frontend\modules\content\models\Advantage;
 use frontend\modules\content\models\Lead;
+use frontend\modules\content\models\search\GallerySearch;
 use frontend\modules\content\models\Slider;
 use Yii;
 
@@ -75,6 +76,18 @@ class SiteController extends BaseController
         return $this->render('collaboration', [
             'collaborations' => $collaborations,
         ]);
+    }
+
+    public function actionGallery()
+    {
+        $searchModel = new GallerySearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        return $this->render(
+            'gallery', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]
+        );
     }
     
     public function actionFeedback(): string

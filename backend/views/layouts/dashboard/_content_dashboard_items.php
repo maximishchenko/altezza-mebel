@@ -16,6 +16,16 @@ use \hail812\adminlte\widgets\SmallBox;
         </div>
         <div class="col-lg-4 col-md-6 col-sm-6 col-12">
             <?= SmallBox::widget([
+                'title' => Yii::t('app', 'Galleries'),
+                'text' => Yii::t('app', 'Gallery Edit'),
+                'icon' => 'fas fa-cog',
+                'theme' => 'warning',
+                'linkText' => Yii::t('app', 'GO_LINK'),
+                'linkUrl' => Url::to(['/content/gallery'])
+            ]) ?>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+            <?= SmallBox::widget([
                 'title' => Yii::t('app', 'SLIDER'),
                 'text' => Yii::t('app', 'SLIDER Edit'),
                 'icon' => 'fas fa-cog',

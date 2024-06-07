@@ -212,4 +212,7 @@ return [
     'Image File' => 'Изображение',
     'Update Collaboration: {name}' => '{name}',
     'Callback Button Text' => 'Текст кнопки обратной связи',
+    'Galleries' => 'Галерея',
+    'Update Gallery: {name}' => '{name}',
+    'Gallery Edit' => 'Управление галереей',
 ];

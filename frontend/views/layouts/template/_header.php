@@ -17,9 +17,9 @@ use yii\helpers\Url;
     <li class="nav-menu__list__item">
       <?= Html::a(Yii::t('app', 'Catalog'), ['/catalog'], []); ?>
     </li>
-    <!-- <li class="nav-menu__list__item"> -->
-      <?php // echo Html::a(Yii::t('app', 'Gallery'), ['/gallery'], []); ?>
-    <!-- </li> -->
+    <li class="nav-menu__list__item">
+      <?= Html::a(Yii::t('app', 'Gallery'), ['/gallery'], []); ?>
+    </li>
     <li class="nav-menu__list__item">
       <?= Html::a(Yii::t('app', 'Collaboration'), ['/collaboration'], []); ?>
     </li>
